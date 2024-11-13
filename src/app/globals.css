@@ -12,3 +12,17 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.custom-navbar {
+  background-color: #7CFBDF;
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1030; /* Ensure it stays above other content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tutorial-row{
+  background-color: #7CFBDF;
+}

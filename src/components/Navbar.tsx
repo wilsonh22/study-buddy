@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import '../app/globals.css';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -14,7 +15,7 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar style={{ backgroundColor: '#7CFBDF' }} expand="lg">
+    <Navbar className="custom-navbar" expand="lg">
       <Container>
       <Navbar.Brand href="/">LOGO</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
