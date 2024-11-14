@@ -9,11 +9,25 @@ const Home = () => (
         <Col xs={12} className="d-flex flex-column justify-content-center align-items-center">
           <h1>Study Buddy</h1>
           <p>&quot;Your study success starts with a buddy&quot;</p>
-          <Button>Get Started</Button>
+          <Button className="get-started">Get Started</Button>
         </Col>
       </Row>
       <Row id="tutorial" className="tutorial-row vh-100">
-        <h1>What is Study Buddy?</h1>
+        <h1 className="mt-5">What is Study Buddy?</h1>
+        <Col className="col-centered">
+          <div className="container_temp">
+            <div className="overlay_temp" />
+          </div>
+        </Col>
+        <Col className="col-centered">
+          <div className="container">
+            <div className="overlay" />
+            <p className="text">
+              Study buddy is an application to find a buddy to study with.
+              With study buddy, you can find and schedule study sessions.
+            </p>
+          </div>
+        </Col>
       </Row>
     </Container>
   </main>

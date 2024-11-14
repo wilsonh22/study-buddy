@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
       <Navbar.Brand href="/">LOGO</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto justify-content-start">
+      <Nav className="mx-auto justify-content-start">
         <Nav.Link id="about-stuff-nav" href="#about" key="about" active={pathName === '/about'}>
           About
         </Nav.Link>
@@ -44,8 +44,8 @@ const NavBar: React.FC = () => {
         ) : (
           ''
         )}
-        </Nav>
-        <Nav>
+      </Nav>
+      <Nav className="ml-auto">
         {session ? (
           <NavDropdown id="login-dropdown" title={currentUser}>
           <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
@@ -69,7 +69,7 @@ const NavBar: React.FC = () => {
           </NavDropdown.Item>
           </NavDropdown>
         )}
-        </Nav>
+      </Nav>
       </Navbar.Collapse>
       </Container>
     </Navbar>
