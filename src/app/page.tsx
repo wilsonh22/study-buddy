@@ -7,7 +7,8 @@ const Home = () => (
     <Container id="landing-page" fluid className="py-3">
       <Row id="about" className="about-row align-middle text-center vh-100">
         <Col xs={12} className="d-flex flex-column justify-content-center align-items-center">
-          <h1>Study Buddy</h1>
+          <h1 className="title">Study</h1>
+          <h1 className="title">Buddy</h1>
           <p>&quot;Your study success starts with a buddy&quot;</p>
           <Button className="get-started">Get Started</Button>
         </Col>
