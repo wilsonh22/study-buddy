@@ -44,7 +44,7 @@ const SignUp = () => {
   };
 
   return (
-    <main>
+    <main className="main-container">
       <Container>
         <Row className="justify-content-center">
           <Col xs={5}>
