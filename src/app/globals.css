@@ -5,10 +5,101 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  scroll-padding-top: 70px; /* Offset for fixed navbar, change this based on navbar height */
 }
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.custom-navbar {
+  background-color: #7cfbdf;
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1030; /* Ensure it stays above other content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.tutorial-row {
+  background-color: #7cfbdf;
+}
+
+.col-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container_temp {
+  position: relative;
+  width: 50%;
+  height: 50%;
+}
+
+.container {
+  position: relative;
+  width: 90% !important;
+  height: 50%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.overlay_temp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 25px;
+}
+
+.get-started {
+  background-color: #7cfbdf !important;
+  border-color: #7cfbdf !important;
+  color: black !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.title:nth-child(1) {
+  top: 0%;
+  left: 0%;
+  transform: translate(-50%, 0%);
+  font-size: 50px;
+}
+
+.title:nth-child(2) {
+  top: 0%;
+  left: 0%;
+  transform: translate(50%, 0%);
+  font-size: 50px;
+}
+
+.main-container {
+  margin-top: 150px !important;
 }
