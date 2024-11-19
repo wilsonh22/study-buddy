@@ -6,6 +6,7 @@ body {
   padding: 0;
   margin: 0;
   scroll-padding-top: 70px; /* Offset for fixed navbar, change this based on navbar height */
+  scroll-padding-top: 70px; /* Offset for fixed navbar, change this based on navbar height */
 }
 .wrapper {
   box-sizing: border-box;
