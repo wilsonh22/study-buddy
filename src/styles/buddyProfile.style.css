@@ -1,0 +1,122 @@
+.myBuddyTitle {
+  padding-top: 120px;
+  padding-bottom: 50px;
+  color: black;
+  text-align: center;
+  font-size: 50px;
+}
+
+.myBuddyDiv {
+  background-color: lightgrey;
+  height: 400px;
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+.myBuddyPic {
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  margin-right: 20px;
+  background-color: white;
+}
+.myBuddyInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 450px;
+  height: 300px;
+  border-radius: 25px;
+}
+
+/* Custom button styles */
+.theirBuddiesBtn {
+  background-color: #7cfbdf;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 100px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+/* Custom hover, focus, and active states */
+.myBuddiesBtn:hover,
+.myBuddiesBtn:focus,
+.myBuddiesBtn:active {
+  background-color: #0cc89f;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.myBuddiesBtn:focus,
+.myBuddiesBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #0cc89f !important;
+  color: black;
+}
+
+.editProfileBtn {
+  background-color: #7cfbdf;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 120px;
+  margin-bottom: 350px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+/* Custom hover, focus, and active states */
+.editProfileBtn:hover,
+.editProfileBtn:focus,
+.editProfileBtn:active {
+  background-color: #0cc89f;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.editProfileBtn:focus,
+.editProfileBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #0cc89f !important;
+  color: black;
+}
+
+.sessionListDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sessionsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 5px;
+  max-width: 1600px;
+  width: 100%;
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-bottom: 40px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
