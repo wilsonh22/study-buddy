@@ -6,6 +6,7 @@ body {
   padding: 0;
   margin: 0;
   scroll-padding-top: 70px; /* Offset for fixed navbar, change this based on navbar height */
+  scroll-padding-top: 70px; /* Offset for fixed navbar, change this based on navbar height */
 }
 .wrapper {
   box-sizing: border-box;
@@ -15,7 +16,7 @@ body {
 }
 
 .custom-navbar {
-  background-color: #7CFBDF;
+  background-color: #7cfbdf;
   position: fixed !important;
   top: 0;
   width: 100%;
@@ -24,8 +25,8 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.tutorial-row{
-  background-color: #7CFBDF;
+.tutorial-row {
+  background-color: #7cfbdf;
 }
 
 .col-centered {
@@ -79,21 +80,21 @@ body {
   font-size: 25px;
 }
 
-.get-started{
-  background-color: #7CFBDF !important;
-  border-color: #7CFBDF !important;
+.get-started {
+  background-color: #7cfbdf !important;
+  border-color: #7cfbdf !important;
   color: black !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.title:nth-child(1){
+.title:nth-child(1) {
   top: 0%;
   left: 0%;
   transform: translate(-50%, 0%);
   font-size: 50px;
 }
 
-.title:nth-child(2){
+.title:nth-child(2) {
   top: 0%;
   left: 0%;
   transform: translate(50%, 0%);

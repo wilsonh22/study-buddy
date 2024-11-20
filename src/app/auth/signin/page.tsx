@@ -21,6 +21,7 @@ const SignIn = () => {
 
     if (result?.error) {
       console.error('Sign in failed: ', result.error);
+      console.log('error');
     }
   };
 
