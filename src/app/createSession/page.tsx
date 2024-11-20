@@ -6,7 +6,7 @@ import '../../styles/createSession.style.css';
 const createSession = () => (
   <div className="p-5">
     <h1 className="createSessionTitle text-center">
-      <strong>Sessions</strong>
+      <strong>Create Sessions</strong>
     </h1>
     <Container className="py-3">
       <Row className="justify-content-center">
