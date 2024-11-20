@@ -1,4 +1,4 @@
-.sessionsPageTitle {
+.buddiesPageTitle {
   padding-top: 120px;
   padding-bottom: 50px;
   color: black;
@@ -24,17 +24,18 @@
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
-.sessionListDiv {
+.buddiesListDiv {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.sessionsList {
+.buddiesList {
+  padding-top: 25px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 5px;
   max-width: 1600px;
+  gap: 5px;
   width: 100%;
   padding-left: 80px;
   padding-right: 80px;
