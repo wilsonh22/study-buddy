@@ -27,22 +27,14 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="First Name"
-                      />
+                      <input type="text" className="form-control" placeholder="First Name" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Last Name"
-                      />
+                      <input type="text" className="form-control" placeholder="Last Name" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
@@ -51,11 +43,7 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Username"
-                      />
+                      <input type="text" className="form-control" placeholder="Username" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
@@ -64,32 +52,21 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Major"
-                      />
+                      <input type="text" className="form-control" placeholder="Major" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Socials"
-                      />
+                      <input type="text" className="form-control" placeholder="Socials" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group>
                   <Form.Label />
-                  <textarea
-                    className="form-control"
-                    placeholder="Bio: Tell us about yourself!"
-                  />
+                  <textarea className="form-control" placeholder="Bio: Tell us about yourself!" />
                   <div className="invalid-feedback" />
                 </Form.Group>
                 <input type="hidden" />
@@ -100,7 +77,7 @@ const createSession = () => (
                     <Col />
                     <Col>
                       <Button className="cSbutton" type="submit" variant="primary">
-                        Add Session
+                        Save Profile
                       </Button>
                     </Col>
                     <Col />
