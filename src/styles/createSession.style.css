@@ -1,0 +1,48 @@
+.createSessionTitle {
+    padding-top: 120px;
+    padding-bottom: 50px;
+    color: black;
+    text-align: center;
+    font-size: 50px;
+  }
+
+.thebox {
+    border-radius: 15px; /* Adjust the value as needed */
+    overflow: hidden;    /* Ensures that content stays within rounded corners */
+    background-color: lightgray; /* Fallback color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for better visual appeal */
+    border: 1px solid #ddd; /* Optional: Adds a light border */
+}
+
+/* Custom button styles */
+.cSbutton {
+    background-color: #7cfbdf;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border: none;
+    width: 200px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Custom hover, focus, and active states */
+  .cSbutton:hover,
+  .cSbutton:focus,
+  .cSbutton:active {
+    background-color: #0cc89f;
+    color: black;
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .cSbutton:focus,
+  .cSbutton:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #0cc89f !important;
+    color: black;
+  }
