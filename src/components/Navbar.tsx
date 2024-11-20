@@ -51,6 +51,10 @@ const NavBar: React.FC = () => {
           <Nav className="ml-auto">
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
+                <NavDropdown.Item id="login-dropdown-sign-out" href="/myProfile">
+                  <PersonFill />
+                  My Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight />
                   Sign Out
