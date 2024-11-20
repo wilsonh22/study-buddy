@@ -18,11 +18,7 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Title"
-                      />
+                      <input type="text" className="form-control" placeholder="Title" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
@@ -31,22 +27,14 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Class"
-                      />
+                      <input type="text" className="form-control" placeholder="Class" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Place"
-                      />
+                      <input type="text" className="form-control" placeholder="Place" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
@@ -55,32 +43,21 @@ const createSession = () => (
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Date"
-                      />
+                      <input type="text" className="form-control" placeholder="Date" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group>
                       <Form.Label />
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Time"
-                      />
+                      <input type="text" className="form-control" placeholder="Time" />
                       <div className="invalid-feedback" />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group>
                   <Form.Label />
-                  <textarea
-                    className="form-control"
-                    placeholder="Enter a description"
-                  />
+                  <textarea className="form-control" placeholder="Enter a description" />
                   <div className="invalid-feedback" />
                 </Form.Group>
                 <input type="hidden" />
