@@ -35,8 +35,9 @@ const NavBar: React.FC = () => {
                   <Nav.Link id="buddies" href="/buddies" key="buddies" active={pathName === '/buddies'}>
                     Buddies
                   </Nav.Link>,
-                  <Nav.Link id="list-stuff-nav" href="/list" key="list" active={pathName === '/list'}>
-                    My Sessions
+                  // eslint-disable-next-line max-len
+                  <Nav.Link id="list-stuff-nav" href="/openSessions" key="openSessions" active={pathName === '/openSessions'}>
+                    Open Sessions
                   </Nav.Link>,
                 ]
               : ''}

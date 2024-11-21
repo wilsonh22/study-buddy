@@ -2,6 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 import { Button, Col, Row } from 'react-bootstrap';
+import '../../../styles/auth.style.css';
 
 /** After the user clicks the "SignOut" link in the NavBar, log them out and display this page. */
 const SignOut = () => (
