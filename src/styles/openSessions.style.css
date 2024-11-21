@@ -1,0 +1,26 @@
+.sessionListDiv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sessionsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 5px;
+    max-width: 1600px;
+    width: 100%;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-bottom: 80px;
+    margin-top: 80px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+body {
+    padding-top: 70px; /* Adjust this value based on the height of your navbar */
+}
+
+.sessionCard {
+    margin-bottom: 20px; /* Adjust this value to control the spacing between session cards */
+}

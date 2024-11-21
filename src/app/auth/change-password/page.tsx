@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { changePassword } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import '../../../styles/auth.style.css';
 
 type ChangePasswordForm = {
   oldpassword: string;
