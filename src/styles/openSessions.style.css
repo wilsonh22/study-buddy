@@ -10,12 +10,17 @@
     gap: 5px;
     max-width: 1600px;
     width: 100%;
-    padding-left: 80px;
-    padding-right: 80px;
-    padding-bottom: 40px;
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-bottom: 80px;
+    margin-top: 80px;
     margin: 0 auto;
     box-sizing: border-box;
   }
 body {
     padding-top: 70px; /* Adjust this value based on the height of your navbar */
+}
+
+.sessionCard {
+    margin-bottom: 20px; /* Adjust this value to control the spacing between session cards */
 }

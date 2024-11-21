@@ -1,11 +1,11 @@
 import React from 'react';
 import SessionCard from '../../components/SessionCard';
-import '../../styles/mySessions.style.css';
+import '../../styles/openSessions.style.css';
 
-const MySessionsPage = () => (
+const openSessionsPage = () => (
   <div>
     <h1 className="py-4 px-5">
-      <strong>My Sessions</strong>
+      <strong>Open Sessions</strong>
     </h1>
 
     <div className="sessionListDiv">
@@ -19,4 +19,4 @@ const MySessionsPage = () => (
   </div>
 );
 
-export default MySessionsPage;
+export default openSessionsPage;
