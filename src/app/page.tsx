@@ -21,7 +21,7 @@ const Home = () => (
         <h1 className="mt-5">What is Study Buddy?</h1>
         <Col className="col-centered">
           <div className="container_temp">
-            <div className="overlay_temp" />
+            <div className="overlay_temp text-center">Project Image Here</div>
           </div>
         </Col>
         <Col className="col-centered">
@@ -36,10 +36,10 @@ const Home = () => (
       </Row>
       <Row id="tutorial" className=" vh-100">
         <h1 className="mt-5">Tutorial</h1>
-        <Col className="col-centered">
+        <Col className="vid-col-centered">
           <div className="container">
-            <div className="overlay" />
-            <p className="text">This is the video demo</p>
+            <div className="vid-overlay" />
+            <p className="text pt-5">This is the video demo</p>
           </div>
         </Col>
       </Row>
