@@ -36,7 +36,12 @@ const NavBar: React.FC = () => {
                     Buddies
                   </Nav.Link>,
                   // eslint-disable-next-line max-len
-                  <Nav.Link id="list-stuff-nav" href="/openSessions" key="openSessions" active={pathName === '/openSessions'}>
+                  <Nav.Link
+                    id="list-stuff-nav"
+                    href="/openSessions"
+                    key="openSessions"
+                    active={pathName === '/openSessions'}
+                  >
                     Open Sessions
                   </Nav.Link>,
                 ]
@@ -53,15 +58,15 @@ const NavBar: React.FC = () => {
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/myProfile">
-                  <PersonFill />
+                  <PersonFill className="mx-2" />
                   My Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight />
+                  <BoxArrowRight className="mx-2" />
                   Sign Out
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
-                  <Lock />
+                  <Lock className="mx-2" />
                   Change Password
                 </NavDropdown.Item>
               </NavDropdown>
