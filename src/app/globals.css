@@ -24,6 +24,17 @@ body {
   z-index: 1030; /* Ensure it stays above other content */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
+.custom-navbar a {
+  text-decoration: none;
+  color: inherit;
+  transition: font-weight 0.3s;
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus,
+.custom-navbar a:active {
+  font-weight: bold;
+}
 
 .tutorial-row {
   background-color: #7cfbdf;
