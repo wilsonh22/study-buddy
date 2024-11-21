@@ -15,7 +15,7 @@ const SessionCard = () => (
           style={{ height: '150px', objectFit: 'cover' }}
         />
         <Card.Body>
-          <Card.Title>Studdy Session Title</Card.Title>
+          <Card.Title>Study Session Title</Card.Title>
           <Card.Text>Come Study for ICS311 Final</Card.Text>
           <Card.Text>
             <strong>Buddies: </strong>
