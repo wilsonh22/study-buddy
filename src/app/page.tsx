@@ -13,7 +13,7 @@ const Home = () => (
           <h1 className="title">
             <strong>Buddy</strong>
           </h1>
-          <h2>&quot;Your study success starts with a buddy&quot;</h2>
+          <h2 className="py-4">&quot;Your study success starts with a buddy&quot;</h2>
           <Button className="get-started">Get Started</Button>
         </Col>
       </Row>

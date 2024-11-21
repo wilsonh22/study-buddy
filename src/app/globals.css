@@ -85,6 +85,10 @@ body {
   background-color: #7cfbdf !important;
   border-color: #7cfbdf !important;
   color: black !important;
+  height: 60px;
+  width: 150px;
+  font-size: 20px !important;
+  border-radius: 20px !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
