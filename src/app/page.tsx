@@ -14,7 +14,11 @@ const Home = () => (
             <strong>Buddy</strong>
           </h1>
           <h2 className="py-4">&quot;Your study success starts with a buddy&quot;</h2>
-          <Button className="get-started">Get Started</Button>
+          <Button className="get-started">
+            <a href="/sessions" className="text-decoration-none" style={{ color: 'black' }}>
+              Get Started
+            </a>
+          </Button>
         </Col>
       </Row>
       <Row id="about" className="tutorial-row vh-100">
