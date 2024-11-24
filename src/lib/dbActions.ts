@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Profile } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -50,6 +50,36 @@ export async function editStuff(stuff: Stuff) {
   redirect('/list');
 }
 
+export async function createProfile(profile: Profile) {
+  // Check if a profile with the given userId exists
+  const existingProfile = await prisma.profile.findUnique({
+    where: { userId: profile.userId },
+  });
+
+  if (existingProfile) {
+    // If profile exists, update it
+    await prisma.profile.update({
+      where: { userId: profile.userId },
+      data: {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+      },
+    });
+  } else {
+    // If profile does not exist, create a new one
+    await prisma.profile.create({
+      data: {
+        userId: profile.userId,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+      },
+    });
+  }
+
+  // Redirect after operation (server-side redirect)
+  return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
 /**
  * Deletes an existing stuff from the database.
  * @param id, the id of the stuff to delete.
@@ -67,10 +97,7 @@ export async function deleteStuff(id: number) {
  * Creates a new user in the database.
  * @param credentials, an object with the following properties: email, password.
  */
-export async function createUser(credentials: {
-  email: string;
-  password: string;
-}) {
+export async function createUser(credentials: { email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.create({

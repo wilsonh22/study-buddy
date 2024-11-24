@@ -1,8 +1,11 @@
+import { Profile } from '@prisma/client';
 import { Button } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import SessionCard from '../../components/SessionCard';
 
-const myProfile = () => (
+const userId = parseInt(session?.user?.id, 10);
+
+const myProfile = ({ profile }: { profile: Profile }) => (
   <div className="myProfile p-5">
     <h1 className="myProfileTitle text-center">
       <strong>My Profile</strong>
@@ -12,7 +15,7 @@ const myProfile = () => (
       <div className="myProfileInfo">
         <h5>
           <strong>Name: </strong>
-          John Foo jfoo26
+          {profile.firstName}
         </h5>
         <h5>
           <strong>Major:</strong>

@@ -14,3 +14,8 @@ export const EditStuffSchema = Yup.object({
   condition: Yup.string().oneOf(['excellent', 'good', 'fair', 'poor']).required(),
   owner: Yup.string().required(),
 });
+
+export const CreateProfileSchema = Yup.object({
+  firstName: Yup.string().required(),
+  lastName: Yup.string().required(),
+});
