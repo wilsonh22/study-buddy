@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { Button } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
-import { authOptions } from '../api/auth/[...nextauth]/route';
+import authOptions from '@/lib/auth';
 import SessionCard from '../../components/SessionCard';
 
 // const userId = parseInt(session?.user?.id, 10);
