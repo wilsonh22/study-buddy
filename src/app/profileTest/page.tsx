@@ -14,7 +14,7 @@ import '../../styles/editProfile.style.css';
 const onSubmit = async (data: { firstName: string; lastName: string }, session: any) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
-  await createProfile({ ...data, userId });
+  await createProfile({ ...data, userId, id: userId });
 
   swal('Success', 'created profile', 'success', {
     timer: 1000,
