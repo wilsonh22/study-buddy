@@ -32,6 +32,7 @@ const myProfile = async () => {
               .map((profile) => (
                 <div key={profile.userId}>
                   <h5>{`${profile.firstName} ${profile.lastName}`}</h5>
+                  {/* add profile.major here within h5 tag and other datafields */}
                 </div>
               ))}
           </h5>
