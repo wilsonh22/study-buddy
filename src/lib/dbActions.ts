@@ -89,6 +89,9 @@ export async function createSession(studySession: StudySession) {
       title: studySession.title,
       added: studySession.added,
       userId: studySession.userId,
+      users: {
+        connect: { id: studySession.userId },
+      },
     },
   });
   // After adding, redirect to the sessions page
