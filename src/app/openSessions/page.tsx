@@ -1,5 +1,5 @@
 import React from 'react';
-import SessionCard from '../../components/SessionCard';
+// import SessionCard from '../../components/SessionCard';
 import '../../styles/openSessions.style.css';
 
 const openSessionsPage = () => (
@@ -10,10 +10,10 @@ const openSessionsPage = () => (
 
     <div className="sessionListDiv">
       <div className="sessionsList">
+        {/* <SessionCard />
         <SessionCard />
         <SessionCard />
-        <SessionCard />
-        <SessionCard />
+        <SessionCard /> */}
       </div>
     </div>
   </div>
