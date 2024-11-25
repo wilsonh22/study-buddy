@@ -1,6 +1,6 @@
 'use server';
 
-import { Stuff, Condition, Profile } from '@prisma/client';
+import { Stuff, Condition, Profile, StudySession } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
@@ -78,6 +78,20 @@ export async function createProfile(profile: Profile) {
 
   // Redirect after operation (server-side redirect)
   return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
+export async function createSession(studySession: StudySession) {
+  // Check if a study session with the given userId exists
+  // If profile does not exist, create a new one
+
+  await prisma.studySession.create({
+    data: {
+      title: studySession.title,
+      added: studySession.added,
+    },
+  });
+  // After adding, redirect to the sessions page
+  redirect('/sessions');
 }
 
 /**

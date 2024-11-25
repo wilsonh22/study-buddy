@@ -62,14 +62,7 @@ const myProfile = async () => {
         <strong>My Sessions</strong>
       </h1>
 
-      <div className="sessionListDiv">
-        <div className="sessionsList">
-          <SessionCard />
-          <SessionCard />
-          <SessionCard />
-          <SessionCard />
-        </div>
-      </div>
+      <div className="sessionListDiv">{/* <div className="sessionsList"></div> */}</div>
     </div>
   );
 };

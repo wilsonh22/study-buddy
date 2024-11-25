@@ -23,12 +23,12 @@ enum Role {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String
-  role     Role      @default(USER)
-  profile  Profile?
-  sessions Session[] @relation("UserSessions")
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  profile       Profile?
+  studySessions StudySession[] @relation("UserSessions")
 }
 
 model Profile {
@@ -39,12 +39,13 @@ model Profile {
   user      User   @relation(fields: [userId], references: [id])
 }
 
-model Session {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  requested Boolean @default(false)
-  accepted  Boolean @default(false)
-  users     User[]  @relation("UserSessions")
+model StudySession {
+  id    Int     @id @default(autoincrement())
+  title String  @unique
+  // requested Boolean @default(false)
+  // accepted  Boolean @default(false)
+  added Boolean @default(false)
+  users User[]  @relation("UserSessions")
 }
 
 enum Condition {
