@@ -5,8 +5,17 @@ import { Card, Col, Row, Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import '../styles/sessionCard.style.css';
 
+type ExtendedStudySession = StudySession & {
+  owner: {
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
+  };
+};
+
 // Remove the async and change to a regular functional component
-const SessionCard = ({ studySessions }: { studySessions: StudySession[] }) => (
+const SessionCard = ({ studySessions }: { studySessions: ExtendedStudySession[] }) => (
   <div className="sessionCard">
     {studySessions.map((studySessionInfo) => (
       <div key={studySessionInfo.id} className="sessionCardBorder">
@@ -37,7 +46,9 @@ const SessionCard = ({ studySessions }: { studySessions: StudySession[] }) => (
                   <ListGroup.Item className="p-1">
                     <strong>Organizer:</strong>
                     <br />
-                    John Foo
+                    {studySessionInfo.owner?.profile
+                      ? `${studySessionInfo.owner.profile.firstName} ${studySessionInfo.owner.profile.lastName}`
+                      : 'Unknown'}
                   </ListGroup.Item>
                 </Col>
               </Row>
@@ -58,7 +69,7 @@ const SessionCard = ({ studySessions }: { studySessions: StudySession[] }) => (
                 </Col>
               </Row>
             </ListGroup>
-            <Button className="requestBtn">Request</Button>
+            <Button className="requestBtn">Add</Button>
           </Card.Body>
         </Card>
       </div>

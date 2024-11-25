@@ -1,11 +1,11 @@
 import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/auth';
 import { prisma } from '@/lib/prisma'; // Make sure to import prisma
-import { StudySession } from '@prisma/client';
+import { MySession } from '@prisma/client';
 import SessionCard from '../../components/SessionCard';
 import '../../styles/sessions.style.css';
 
-type ExtendedStudySession = StudySession & {
+type ExtendedMySession = MySession & {
   owner: {
     profile?: {
       firstName: string;
@@ -13,14 +13,14 @@ type ExtendedStudySession = StudySession & {
     };
   };
 };
-const Sessions = async () => {
+const mySessions = async () => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.email) {
     return <div>Session not found</div>;
   }
 
   // Fetch study sessions on the server
-  const studySessions: ExtendedStudySession[] = (await prisma.studySession.findMany({
+  const studySessions: ExtendedMySession[] = (await prisma.mySession.findMany({
     include: {
       owner: {
         include: {
@@ -28,12 +28,12 @@ const Sessions = async () => {
         },
       },
     },
-  })) as ExtendedStudySession[];
+  })) as ExtendedMySession[];
 
   return (
     <div className="sessions">
       <h1 className="sessionsPageTitle">
-        <strong>Sessions</strong>
+        <strong>My Sessions</strong>
       </h1>
       <div className="createBtnDiv">
         <a href="../createSession" className="createBtn" style={{ textDecoration: 'none' }}>
@@ -49,4 +49,4 @@ const Sessions = async () => {
   );
 };
 
-export default Sessions;
+export default mySessions;

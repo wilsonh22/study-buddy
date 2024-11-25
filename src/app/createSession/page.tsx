@@ -13,7 +13,7 @@ import '../../styles/createSession.style.css';
 
 const onSubmit = async (data: { title: string }, session: any) => {
   const currentUser = parseInt(session?.user?.id, 10);
-  await createSession({ ...data, id: currentUser, added: true });
+  await createSession({ ...data, id: currentUser, userId: currentUser, added: true });
 
   swal('Success', 'created session', 'success', {
     timer: 1000,
