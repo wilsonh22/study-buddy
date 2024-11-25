@@ -19,6 +19,9 @@ const Sessions = async () => {
     return <div>Session not found</div>;
   }
 
+  const userSession = session as unknown as { user: { email: string; id: string; randomKey: string } };
+  const currentUser = parseInt(userSession.user.id, 10);
+
   // Fetch study sessions on the server
   const studySessions: ExtendedStudySession[] = (await prisma.studySession.findMany({
     include: {
@@ -42,7 +45,7 @@ const Sessions = async () => {
       </div>
       <div className="sessionListDiv">
         <div className="sessionsList">
-          <SessionCard studySessions={studySessions} />
+          <SessionCard studySessions={studySessions} currentUser={currentUser} />
         </div>
       </div>
     </div>

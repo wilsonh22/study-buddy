@@ -12,6 +12,9 @@ type ExtendedMySession = StudySession & {
       lastName: string;
     };
   };
+  users: {
+    id: number;
+  }[];
 };
 const mySessions = async () => {
   const session = await getServerSession(authOptions);
@@ -19,22 +22,30 @@ const mySessions = async () => {
     return <div>Session not found</div>;
   }
   const userSession = session as unknown as { user: { email: string; id: string; randomKey: string } };
+  const currentUser = parseInt(userSession.user.id, 10);
 
   // Fetch study sessions on the server
   const studySessions: ExtendedMySession[] = (await prisma.studySession.findMany({
+    where: {
+      users: {
+        some: {
+          id: currentUser,
+        },
+      },
+    },
     include: {
       owner: {
         include: {
           profile: true,
         },
       },
-      users: true,
+      users: {
+        select: {
+          id: true,
+        },
+      },
     },
   })) as ExtendedMySession[];
-
-  const filteredSessions = studySessions.filter(
-    (addedSession) => addedSession.userId === parseInt(userSession.user?.id, 10),
-  );
 
   return (
     <div className="sessions">
@@ -48,7 +59,7 @@ const mySessions = async () => {
       </div>
       <div className="sessionListDiv">
         <div className="sessionsList">
-          <SessionCard studySessions={filteredSessions} />
+          <SessionCard studySessions={studySessions} currentUser={currentUser} />
         </div>
       </div>
     </div>
