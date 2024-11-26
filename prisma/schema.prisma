@@ -28,8 +28,8 @@ model User {
   password     String
   role         Role           @default(USER)
   profile      Profile?
-  userSessions StudySession[] @relation("UserSessions")
-  //public sessions:
+  mySessions   StudySession[] @relation("mySessions")
+  //public sessions all sessions:
   StudySession StudySession[]
 }
 
@@ -49,18 +49,8 @@ model StudySession {
   userId Int
   owner  User    @relation(fields: [userId], references: [id])
   added  Boolean @default(false)
-  users  User[]  @relation("UserSessions")
+  users  User[]  @relation("mySessions")
 }
-
-// model MySession {
-//   id             Int          @id @default(autoincrement())
-//   userId         Int
-//   user           User         @relation(fields: [userId], references: [id])
-//   myStudySession StudySession @relation(fields: [studySessionId], references: [id])
-//   studySessionId Int
-
-//   @@unique([userId, studySessionId])
-// }
 
 enum Condition {
   excellent
