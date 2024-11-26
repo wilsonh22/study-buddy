@@ -48,7 +48,6 @@ const ProfileTest: React.FC = () => {
                 <Form onSubmit={handleSubmit((data) => onSubmit(data, session))}>
                   <Form.Group controlId="formFirstName">
                     <Form.Label>First Name</Form.Label>
-                    <input type="hidden" />
                     <input
                       type="text"
                       {...register('firstName')}
