@@ -23,22 +23,44 @@ enum Role {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  role     Role   @default(USER)
-  profile Profile?
-
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  password     String
+  role         Role           @default(USER)
+  profile      Profile?
+  userSessions StudySession[] @relation("UserSessions")
+  //public sessions:
+  StudySession StudySession[]
 }
 
 model Profile {
-  id Int @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   firstName String
-  lastName String
-  userId Int @unique
-  user User @relation(fields: [userId], references: [id])
-
+  lastName  String
+  userId    Int    @unique
+  user      User   @relation(fields: [userId], references: [id])
 }
+
+model StudySession {
+  id     Int     @id @default(autoincrement())
+  title  String  @unique
+  // requested Boolean @default(false)
+  // accepted  Boolean @default(false)
+  userId Int
+  owner  User    @relation(fields: [userId], references: [id])
+  added  Boolean @default(false)
+  users  User[]  @relation("UserSessions")
+}
+
+// model MySession {
+//   id             Int          @id @default(autoincrement())
+//   userId         Int
+//   user           User         @relation(fields: [userId], references: [id])
+//   myStudySession StudySession @relation(fields: [studySessionId], references: [id])
+//   studySessionId Int
+
+//   @@unique([userId, studySessionId])
+// }
 
 enum Condition {
   excellent

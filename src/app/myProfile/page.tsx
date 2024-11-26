@@ -3,8 +3,8 @@ import { getServerSession } from 'next-auth';
 import { Button } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
-import { authOptions } from '../api/auth/[...nextauth]/route';
-import SessionCard from '../../components/SessionCard';
+import authOptions from '@/lib/auth';
+// import SessionCard from '../../components/SessionCard';
 
 // const userId = parseInt(session?.user?.id, 10);
 
@@ -62,14 +62,7 @@ const myProfile = async () => {
         <strong>My Sessions</strong>
       </h1>
 
-      <div className="sessionListDiv">
-        <div className="sessionsList">
-          <SessionCard />
-          <SessionCard />
-          <SessionCard />
-          <SessionCard />
-        </div>
-      </div>
+      <div className="sessionListDiv">{/* <div className="sessionsList"></div> */}</div>
     </div>
   );
 };
