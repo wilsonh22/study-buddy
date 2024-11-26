@@ -25,21 +25,21 @@ const myProfile = async () => {
       <div className="myProfileDiv">
         <div className="myProfilePic" />
         <div className="myProfileInfo">
-          <h5>
-            <strong>Name: </strong>
-            {profiles
-              .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))
-              .map((profile) => (
-                <div key={profile.userId}>
-                  <h5>{`${profile.firstName} ${profile.lastName}`}</h5>
-                  {/* add profile.major here within h5 tag and other datafields */}
-                </div>
-              ))}
-          </h5>
-          <h5>
-            <strong>Major:</strong>
-            Computer Science
-          </h5>
+          {profiles
+            .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))
+            .map((profile) => (
+              <div key={profile.userId}>
+                <h5>
+                  <strong>Name:</strong>
+                  {`${profile.firstName} ${profile.lastName}`}
+                </h5>
+                <h5>
+                  <strong>Major:</strong>
+                  {profile.major}
+                </h5>
+                {/* add profile.major here within h5 tag and other datafields */}
+              </div>
+            ))}
           <h5>
             <strong>Bio: </strong>
             TA for Calculus 2

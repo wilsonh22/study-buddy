@@ -58,9 +58,7 @@ const mySessions = async () => {
         </a>
       </div>
       <div className="sessionListDiv">
-        <div className="sessionsList">
-          <SessionCard studySessions={studySessions} currentUser={currentUser} />
-        </div>
+        <SessionCard studySessions={studySessions} currentUser={currentUser} />
       </div>
     </div>
   );

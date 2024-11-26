@@ -44,9 +44,9 @@ const Sessions = async () => {
         </a>
       </div>
       <div className="sessionListDiv">
-        <div className="sessionsList">
-          <SessionCard studySessions={studySessions} currentUser={currentUser} />
-        </div>
+        {/* <div className="sessionsList"> */}
+        <SessionCard studySessions={studySessions} currentUser={currentUser} />
+        {/* </div> */}
       </div>
     </div>
   );

@@ -36,7 +36,7 @@ const SessionCard = ({
   };
 
   return (
-    <div className="sessionCard">
+    <div className="sessionCards">
       {studySessions.map((studySessionInfo) => (
         <div key={studySessionInfo.id} className="sessionCardBorder">
           <Card className="sessionCardCont">

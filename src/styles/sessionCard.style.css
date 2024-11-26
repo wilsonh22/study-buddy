@@ -2,28 +2,36 @@
 .sessionCardBorder {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   border: none;
+  margin: 10px auto;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   padding: 15px;
   width: 320px;
+  transition: all 0.3s ease;
   height: 458.6px;
   background-color: #7cfbdf;
 }
-.sessionCard {
-  width: 100%;
-  height: 100%;
-  display: flex;
+.sessionCards {
+  padding-top: 15px;
+  display: grid;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 5px;
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 .sessionCardCont {
   width: 300px;
   height: 430px;
   font-size: small;
   border: none;
+  transition: all 0.3s ease;
   border-radius: 20px;
 }
 .cardImg {
@@ -65,4 +73,18 @@
   box-shadow: none !important;
   background-color: #0cc89f !important;
   color: black;
+}
+
+/* transitions */
+
+.sessionCardBorder:hover {
+  cursor: pointer;
+  transform: translateY(-15px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.sessionCardCont:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
