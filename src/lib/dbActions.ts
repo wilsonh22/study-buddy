@@ -63,6 +63,7 @@ export async function createProfile(profile: Profile) {
       data: {
         firstName: profile.firstName,
         lastName: profile.lastName,
+        major: profile.major,
       },
     });
   } else {
@@ -72,6 +73,7 @@ export async function createProfile(profile: Profile) {
         userId: profile.userId,
         firstName: profile.firstName,
         lastName: profile.lastName,
+        major: profile.major,
       },
     });
   }
@@ -96,6 +98,26 @@ export async function createSession(studySession: StudySession) {
   });
   // After adding, redirect to the sessions page
   redirect('/sessions');
+}
+export async function addSession(studySessionId: number, userId: number) {
+  // Check if the study session exists
+  const sessionExists = await prisma.studySession.findUnique({
+    where: { id: studySessionId },
+  });
+
+  if (!sessionExists) {
+    throw new Error(`Study session with ID ${studySessionId} does not exist.`);
+  }
+
+  // Update the session to include the current user
+  await prisma.studySession.update({
+    where: { id: studySessionId },
+    data: {
+      users: {
+        connect: { id: userId }, // Ensure userId is defined
+      },
+    },
+  });
 }
 
 /**
