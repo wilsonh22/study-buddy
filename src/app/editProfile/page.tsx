@@ -3,7 +3,7 @@
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import '../../styles/editProfile.style.css';
 
-const createSession = () => (
+const editProfile = () => (
   <div className="p-5">
     <h1 className="createSessionTitle text-center">
       <strong>Edit Profile</strong>
@@ -94,4 +94,4 @@ const createSession = () => (
   </div>
 );
 
-export default createSession;
+export default editProfile;
