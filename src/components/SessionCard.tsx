@@ -3,6 +3,7 @@
 import { addSession } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 import { Card, Col, Row, Button } from 'react-bootstrap';
+import swal from 'sweetalert';
 import ListGroup from 'react-bootstrap/ListGroup';
 import '../styles/sessionCard.style.css';
 
@@ -32,7 +33,9 @@ const SessionCard = ({
     console.log('Study Session ID:', studySession.id);
     console.log('Current User ID:', currentUser);
     await addSession(studySession.id, currentUser);
-    alert('Session Added'); // Use alert instead of returning a div
+    swal('Success', 'Added Session', 'success', {
+      timer: 1000,
+    });
   };
 
   return (
