@@ -100,7 +100,7 @@ const createSession = () => (
                     <Col />
                     <Col>
                       <Button className="cSbutton" type="submit" variant="primary">
-                        Add Session
+                        Save Profile
                       </Button>
                     </Col>
                     <Col />
