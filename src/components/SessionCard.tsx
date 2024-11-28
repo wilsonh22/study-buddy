@@ -51,7 +51,9 @@ const SessionCard = ({
   });
   return (
     <div>
-      <SearchSessions search={search} setSearch={setSearch} />
+      <div>
+        <SearchSessions search={search} setSearch={setSearch} />
+      </div>
       <div className="sessionCards">
         {studySessionsSearch.map((studySessionInfo) => (
           <div key={studySessionInfo.id} className="sessionCardBorder">
