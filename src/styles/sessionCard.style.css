@@ -88,3 +88,22 @@
   transform: translateY(-5px);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
+
+p {
+  padding: 0;
+  line-height: 1.8;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.fixOverflow {
+  display: inline-block;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

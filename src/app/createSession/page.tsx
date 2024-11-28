@@ -4,14 +4,27 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { useSession } from 'next-auth/react';
 import { createSession } from '@/lib/dbActions';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import swal from 'sweetalert';
+import DatePicker from 'react-datepicker';
 import { redirect } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { CreateSessionSchema } from '@/lib/validationSchemas';
+import 'react-datepicker/dist/react-datepicker.css';
 import '../../styles/createSession.style.css';
 
-const onSubmit = async (data: { title: string; description: string; class: string; place: string }, session: any) => {
+const onSubmit = async (
+  data: {
+    title: string;
+    description: string;
+    class: string;
+    place: string;
+    sessionDate: Date;
+    startTime: Date;
+    endTime: Date;
+  },
+  session: any,
+) => {
   const currentUser = parseInt(session?.user?.id, 10);
   await createSession({ ...data, id: currentUser, userId: currentUser, added: true });
 
@@ -22,7 +35,7 @@ const onSubmit = async (data: { title: string; description: string; class: strin
 
 const CreateSessionPage: React.FC = () => {
   const { data: session, status } = useSession();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, control } = useForm({
     resolver: yupResolver(CreateSessionSchema),
   });
   if (status === 'loading') {
@@ -39,26 +52,80 @@ const CreateSessionPage: React.FC = () => {
       <Container className="py-3">
         <Row className="justify-content-center">
           <Col xs={10}>
-            <Card className="thebox">
+            <Card className="cardBox">
               <Card.Body>
                 <Form onSubmit={handleSubmit((data) => onSubmit(data, session))}>
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label />
-                        <input type="text" {...register('title')} className="form-control" placeholder="Title" />
+                        <Form.Label>Session Title</Form.Label>
+                        <input type="text" {...register('title')} className="form-control" placeholder="Enter Title" />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label />
-                        <input
-                          type="text"
-                          {...register('description')}
-                          className="form-control"
-                          placeholder="Description"
+                        <Form.Label>Date</Form.Label>
+                        <Controller
+                          name="sessionDate"
+                          control={control}
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={field.value}
+                              className="form-control"
+                              onChange={(date) => field.onChange(date)}
+                              dateFormat="MMMM d, yyyy"
+                              placeholderText="Select session date"
+                              todayButton="Today"
+                            />
+                          )}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label>Start Time</Form.Label>
+                        <Controller
+                          name="startTime"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              id="startTime"
+                              type="time"
+                              className="form-control"
+                              value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
+                              onChange={(e) => {
+                                const time = new Date();
+                                const [hours, minutes] = e.target.value.split(':');
+                                time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+                                field.onChange(time);
+                              }}
+                            />
+                          )}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label>End Time</Form.Label>
+                        <Controller
+                          name="endTime"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              id="endTime"
+                              type="time"
+                              className="form-control"
+                              value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
+                              onChange={(e) => {
+                                const time = new Date();
+                                const [hours, minutes] = e.target.value.split(':');
+                                time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+                                field.onChange(time);
+                              }}
+                            />
+                          )}
                         />
                       </Form.Group>
                     </Col>
@@ -66,15 +133,28 @@ const CreateSessionPage: React.FC = () => {
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label />
-                        <input type="text" {...register('class')} className="form-control" placeholder="Class" />
+                        <Form.Label>Description</Form.Label>
+                        <input
+                          type="text"
+                          {...register('description')}
+                          className="form-control"
+                          placeholder="Enter Session Description"
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col>
                       <Form.Group>
-                        <Form.Label />
+                        <Form.Label>Class</Form.Label>
+                        <input type="text" {...register('class')} className="form-control" placeholder="Enter Class" />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label>Place</Form.Label>
                         <input
                           type="text"
                           {...register('place')}
@@ -84,46 +164,6 @@ const CreateSessionPage: React.FC = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-
-                  {/*
-                  <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label />
-                      <input type="text" className="form-control" placeholder="Class" />
-                      <div className="invalid-feedback" />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label />
-                      <input type="text" className="form-control" placeholder="Place" />
-                      <div className="invalid-feedback" />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label />
-                      <input type="text" className="form-control" placeholder="Date" />
-                      <div className="invalid-feedback" />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label />
-                      <input type="text" className="form-control" placeholder="Time" />
-                      <div className="invalid-feedback" />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Form.Group>
-                  <Form.Label />
-                  <textarea className="form-control" placeholder="Enter a description" />
-                  <div className="invalid-feedback" />
-                </Form.Group>
-                <input type="hidden" /> */}
                   <Form.Group className="form-group">
                     <Row className="pt-3">
                       <Col />

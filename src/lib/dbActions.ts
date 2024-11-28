@@ -94,6 +94,9 @@ export async function createSession(studySession: StudySession) {
       description: studySession.description,
       class: studySession.class,
       place: studySession.place,
+      sessionDate: studySession.sessionDate,
+      startTime: studySession.startTime,
+      endTime: studySession.endTime,
       users: {
         connect: { id: studySession.userId },
       },
