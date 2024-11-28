@@ -11,7 +11,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { CreateSessionSchema } from '@/lib/validationSchemas';
 import '../../styles/createSession.style.css';
 
-const onSubmit = async (data: { title: string }, session: any) => {
+const onSubmit = async (data: { title: string; description: string; class: string; place: string }, session: any) => {
   const currentUser = parseInt(session?.user?.id, 10);
   await createSession({ ...data, id: currentUser, userId: currentUser, added: true });
 
@@ -50,7 +50,43 @@ const CreateSessionPage: React.FC = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  {/* <Row>
+                  <Row>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label />
+                        <input
+                          type="text"
+                          {...register('description')}
+                          className="form-control"
+                          placeholder="Description"
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label />
+                        <input type="text" {...register('class')} className="form-control" placeholder="class" />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group>
+                        <Form.Label />
+                        <input
+                          type="text"
+                          {...register('place')}
+                          className="form-control"
+                          placeholder="Where to study"
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  {/*
+                  <Row>
                   <Col>
                     <Form.Group>
                       <Form.Label />

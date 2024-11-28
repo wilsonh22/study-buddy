@@ -91,6 +91,9 @@ export async function createSession(studySession: StudySession) {
       title: studySession.title,
       added: studySession.added,
       userId: studySession.userId,
+      description: studySession.description,
+      class: studySession.class,
+      place: studySession.place,
       users: {
         connect: { id: studySession.userId },
       },
@@ -99,6 +102,7 @@ export async function createSession(studySession: StudySession) {
   // After adding, redirect to the sessions page
   redirect('/sessions');
 }
+
 export async function addSession(studySessionId: number, userId: number) {
   // Check if the study session exists
   const sessionExists = await prisma.studySession.findUnique({
