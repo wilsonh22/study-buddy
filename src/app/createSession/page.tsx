@@ -67,7 +67,7 @@ const CreateSessionPage: React.FC = () => {
                     <Col>
                       <Form.Group>
                         <Form.Label />
-                        <input type="text" {...register('class')} className="form-control" placeholder="class" />
+                        <input type="text" {...register('class')} className="form-control" placeholder="Class" />
                       </Form.Group>
                     </Col>
                   </Row>
