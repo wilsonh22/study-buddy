@@ -26,4 +26,7 @@ export const CreateSessionSchema = Yup.object({
   description: Yup.string().required(),
   class: Yup.string().required(),
   place: Yup.string().required(),
+  sessionDate: Yup.date().required(),
+  startTime: Yup.date().required(),
+  endTime: Yup.date().required().min(Yup.ref('startTime')),
 });

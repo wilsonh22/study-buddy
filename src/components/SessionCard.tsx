@@ -30,7 +30,6 @@ const SessionCard = ({
       timer: 1000,
     });
   };
-
   return (
     <div className="sessionCards">
       {studySessions.map((studySessionInfo) => (
@@ -43,28 +42,52 @@ const SessionCard = ({
               style={{ height: '150px', objectFit: 'cover' }}
             />
             <Card.Body>
-              <Card.Title>{studySessionInfo.title}</Card.Title>
-              <Card.Text style={{ lineHeight: '2' }}>
-                {studySessionInfo.description}
-                <br />
-                <strong>Organizer: </strong>
-                {studySessionInfo.owner?.profile
-                  ? `${studySessionInfo.owner.profile.firstName} ${studySessionInfo.owner.profile.lastName}`
-                  : 'Unknown'}
-                <br />
-                <strong>Buddies: </strong>
-                Ralph, Wilson, Lukas, Reo
-                <br />
-                <strong>Class: </strong>
-                {studySessionInfo.class}
-                <br />
-                <strong>Where: </strong>
-                {studySessionInfo.place}
-                <br />
-                <strong>When: </strong>
-                12/12/2024 5pm - 8pm
-                <br />
-              </Card.Text>
+              <Card.Title className="fixOverflow">{studySessionInfo.title}</Card.Title>
+              <div>
+                <p>{studySessionInfo.description}</p>
+                <p>
+                  <strong>Organizer: </strong>
+                  {studySessionInfo.owner?.profile
+                    ? `${studySessionInfo.owner.profile.firstName} ${studySessionInfo.owner.profile.lastName}`
+                    : 'Unknown'}
+                </p>
+                <p>
+                  <strong>Buddies: </strong>
+                  Ralph, Wilson, Lukas, Reo the quick boasjkd;lfajskdf l;ajs
+                </p>
+                <p>
+                  <strong>Class: </strong>
+                  {studySessionInfo.class}
+                </p>
+                <p>
+                  <strong>Where: </strong>
+                  {studySessionInfo.place}
+                </p>
+                <p>
+                  <strong>Date: </strong>
+                  {new Date(studySessionInfo.sessionDate).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+                <p>
+                  <strong>Time: </strong>
+                  {new Date(studySessionInfo.startTime).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                  })}
+                  -
+                  {new Date(studySessionInfo.endTime).toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                  })}
+                </p>
+              </div>
+              <div className="py-1" />
+
               <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
                 Add
               </Button>

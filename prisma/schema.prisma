@@ -43,17 +43,20 @@ model Profile {
 }
 
 model StudySession {
-  id          Int     @id @default(autoincrement())
-  title       String  @unique
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
   // requested Boolean @default(false)
   // accepted  Boolean @default(false)
   userId      Int
-  owner       User    @relation(fields: [userId], references: [id])
-  added       Boolean @default(false)
-  users       User[]  @relation("mySessions")
+  owner       User     @relation(fields: [userId], references: [id])
+  added       Boolean  @default(false)
+  users       User[]   @relation("mySessions")
   description String
   class       String
   place       String
+  sessionDate DateTime
+  startTime   DateTime
+  endTime     DateTime
 }
 
 enum Condition {
