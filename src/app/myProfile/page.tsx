@@ -1,6 +1,6 @@
 import { Profile } from '@prisma/client';
 import { getServerSession } from 'next-auth';
-import { Button } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/auth';
@@ -38,13 +38,18 @@ const myProfile = async () => {
                   {profile.major}
                 </h5>
                 <h5>
-                  <strong>Bio: </strong>
-                  {profile.bio}
+                  <strong>College Role:</strong>
+                  {profile.collegeRole}
                 </h5>
                 <h5>
                   <strong>Socials: </strong>
                   {profile.social}
                 </h5>
+                <h5>
+                  <strong>Bio: </strong>
+                  {profile.bio}
+                </h5>
+
                 {/* add profile.major here within h5 tag and other datafields */}
               </div>
             ))}
