@@ -84,11 +84,11 @@ const SessionCard = ({
                   </p>
                   <p>
                     <strong>Buddies: </strong>
-                    {studySessionInfo.users?.length > 0
-                      ? studySessionInfo.users
-                          .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
-                          .join(', ')
-                      : 'No buddies yet'}
+                    {studySessionInfo.users?.length > 0 &&
+                      studySessionInfo.users
+                        .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
+                        .join(', ')}
+                    {(!studySessionInfo.users || studySessionInfo.users.length === 0) && 'No buddies yet'}
                   </p>
                   <p>
                     <strong>Class: </strong>
