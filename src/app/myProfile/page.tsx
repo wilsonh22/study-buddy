@@ -1,6 +1,6 @@
 import { Profile } from '@prisma/client';
 import { getServerSession } from 'next-auth';
-import { Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/auth';
