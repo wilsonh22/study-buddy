@@ -15,8 +15,13 @@ type ExtendedMySession = StudySession & {
   };
   users: {
     id: number;
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
   }[];
 };
+
 const mySessions = async () => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.email) {
@@ -43,6 +48,12 @@ const mySessions = async () => {
       users: {
         select: {
           id: true,
+          profile: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
         },
       },
     },
