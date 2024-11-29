@@ -25,4 +25,10 @@ export const CreateProfileSchema = Yup.object({
 
 export const CreateSessionSchema = Yup.object({
   title: Yup.string().required(),
+  description: Yup.string().required(),
+  class: Yup.string().required(),
+  place: Yup.string().required(),
+  sessionDate: Yup.date().required(),
+  startTime: Yup.date().required(),
+  endTime: Yup.date().required().min(Yup.ref('startTime')),
 });

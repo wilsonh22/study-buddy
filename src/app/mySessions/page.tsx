@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/auth';
 import { prisma } from '@/lib/prisma'; // Make sure to import prisma
 import { StudySession } from '@prisma/client';
+import { Button } from 'react-bootstrap';
 import SessionCard from '../../components/SessionCard';
 import '../../styles/sessions.style.css';
 
@@ -14,8 +15,13 @@ type ExtendedMySession = StudySession & {
   };
   users: {
     id: number;
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
   }[];
 };
+
 const mySessions = async () => {
   const session = await getServerSession(authOptions);
   if (!session || !session.user || !session.user.email) {
@@ -42,6 +48,12 @@ const mySessions = async () => {
       users: {
         select: {
           id: true,
+          profile: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
         },
       },
     },
@@ -52,11 +64,9 @@ const mySessions = async () => {
       <h1 className="sessionsPageTitle">
         <strong>My Sessions</strong>
       </h1>
-      <div className="createBtnDiv">
-        <a href="../createSession" className="createBtn" style={{ textDecoration: 'none' }}>
-          + Create Session
-        </a>
-      </div>
+      <Button as="a" href="../createSession" className="createBtn" style={{ textDecoration: 'none' }}>
+        +
+      </Button>
       <div className="sessionListDiv">
         <SessionCard studySessions={studySessions} currentUser={currentUser} />
       </div>
