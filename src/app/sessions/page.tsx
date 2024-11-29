@@ -13,6 +13,13 @@ type ExtendedStudySession = StudySession & {
       lastName: string;
     };
   };
+  users: {
+    id: number;
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
+  }[];
 };
 const Sessions = async () => {
   const session = await getServerSession(authOptions);
@@ -27,6 +34,11 @@ const Sessions = async () => {
   const studySessions: ExtendedStudySession[] = (await prisma.studySession.findMany({
     include: {
       owner: {
+        include: {
+          profile: true,
+        },
+      },
+      users: {
         include: {
           profile: true,
         },

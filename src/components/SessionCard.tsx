@@ -15,6 +15,13 @@ type ExtendedStudySession = StudySession & {
       lastName: string;
     };
   };
+  users: {
+    id: number;
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
+  }[];
 };
 
 const SessionCard = ({
@@ -25,6 +32,7 @@ const SessionCard = ({
   currentUser: number;
 }) => {
   const [search, setSearch] = useState('');
+
   const addSessionBtn = async (studySession: ExtendedStudySession) => {
     console.log('Study Session ID:', studySession.id);
     console.log('Current User ID:', currentUser);
@@ -76,7 +84,11 @@ const SessionCard = ({
                   </p>
                   <p>
                     <strong>Buddies: </strong>
-                    Ralph, Wilson, Lukas, Reo the quick boasjkd;lfajskdf l;ajs
+                    {studySessionInfo.users?.length > 0
+                      ? studySessionInfo.users
+                          .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
+                          .join(', ')
+                      : 'No buddies yet'}
                   </p>
                   <p>
                     <strong>Class: </strong>
