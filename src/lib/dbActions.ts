@@ -64,6 +64,8 @@ export async function createProfile(profile: Profile) {
         firstName: profile.firstName,
         lastName: profile.lastName,
         major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
       },
     });
   } else {
@@ -74,6 +76,8 @@ export async function createProfile(profile: Profile) {
         firstName: profile.firstName,
         lastName: profile.lastName,
         major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
       },
     });
   }

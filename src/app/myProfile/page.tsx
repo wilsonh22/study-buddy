@@ -37,17 +37,17 @@ const myProfile = async () => {
                   <strong>Major:</strong>
                   {profile.major}
                 </h5>
+                <h5>
+                  <strong>Bio: </strong>
+                  {profile.bio}
+                </h5>
+                <h5>
+                  <strong>Socials: </strong>
+                  {profile.social}
+                </h5>
                 {/* add profile.major here within h5 tag and other datafields */}
               </div>
             ))}
-          <h5>
-            <strong>Bio: </strong>
-            TA for Calculus 2
-          </h5>
-          <h5>
-            <strong>Socials: </strong>
-            IG: jfoo26 Discord: jfoo#26
-          </h5>
         </div>
         <div className="px-4">
           <Button className="myBuddiesBtn">Buddies</Button>

@@ -11,7 +11,12 @@ import { createProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
-const onSubmit = async (data: { firstName: string; lastName: string; major: string }, session: any) => {
+const onSubmit = async (data: {
+  firstName: string;
+  lastName: string;
+  major: string;
+  social: string;
+  bio: string; }, session: any) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
   await createProfile({ ...data, userId, id: userId });
@@ -100,7 +105,7 @@ const EditProfile: React.FC = () => {
                         <input
                           type="text"
                           {...register('major')}
-                          className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
+                          className={`form-control ${errors.major ? 'is-invalid' : ''}`}
                           placeholder="Major"
                         />
                         <div className="invalid-feedback" />
@@ -109,14 +114,23 @@ const EditProfile: React.FC = () => {
                     <Col>
                       <Form.Group>
                         <Form.Label />
-                        <input type="text" className="form-control" placeholder="Socials" />
+                        <input
+                          type="text"
+                          {...register('social')}
+                          className={`form-control ${errors.social ? 'is-invalid' : ''}`}
+                          placeholder="Social"
+                        />
                         <div className="invalid-feedback" />
                       </Form.Group>
                     </Col>
                   </Row>
                   <Form.Group>
                     <Form.Label />
-                    <textarea className="form-control" placeholder="Bio: Tell us about yourself!" />
+                    <textarea
+                      {...register('bio')}
+                      className={`form-control ${errors.bio ? 'is-invalid' : ''}`}
+                      placeholder="Bio: Tell us about yourself!"
+                    />
                     <div className="invalid-feedback" />
                   </Form.Group>
                   <input type="hidden" />

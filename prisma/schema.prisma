@@ -40,6 +40,8 @@ model Profile {
   userId    Int    @unique
   user      User   @relation(fields: [userId], references: [id])
   major     String
+  social    String
+  bio       String
 }
 
 model StudySession {
