@@ -45,9 +45,9 @@ const myProfile = async () => {
                   <strong>Socials: </strong>
                   {profile.socials}
                 </h5>
-              {/* add profile.major here within h5 tag and other datafields */}
-            </div>
-          ))}
+                {/* add profile.major here within h5 tag and other datafields */}
+              </div>
+            ))}
         </div>
         <div className="px-4">
           <Button className="myBuddiesBtn">Buddies</Button>
