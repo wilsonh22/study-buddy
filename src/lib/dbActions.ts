@@ -125,6 +125,7 @@ export async function addSession(studySessionId: number, userId: number) {
       },
     },
   });
+  redirect('/mySessions');
 }
 
 /**
