@@ -42,6 +42,13 @@ model Profile {
   major     String
   social    String
   bio       String
+  collegeRole   CollegeRole
+}
+
+enum CollegeRole {
+  TA       
+  LA       
+  Student   
 }
 
 model StudySession {
