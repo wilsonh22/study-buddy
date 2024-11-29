@@ -43,7 +43,7 @@ const myProfile = async () => {
                 </h5>
                 <h5>
                   <strong>Socials: </strong>
-                  {profile.socials}
+                  {profile.social}
                 </h5>
                 {/* add profile.major here within h5 tag and other datafields */}
               </div>
