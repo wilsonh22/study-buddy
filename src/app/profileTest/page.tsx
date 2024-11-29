@@ -11,7 +11,12 @@ import { createProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
-const onSubmit = async (data: { firstName: string; lastName: string; major: string }, session: any) => {
+const onSubmit = async (data: {
+  firstName: string;
+  lastName: string;
+  major: string;
+  social: string;
+  bio: string }, session: any) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
   await createProfile({ ...data, userId, id: userId });
@@ -72,6 +77,24 @@ const ProfileTest: React.FC = () => {
                       className={`form-control ${errors.major ? 'is-invalid' : ''}`}
                     />
                     <div className="invalid-feedback">{errors.major?.message}</div>
+                  </Form.Group>
+                  <Form.Group controlId="formFirstName">
+                    <Form.Label>Socials</Form.Label>
+                    <input
+                      type="text"
+                      {...register('social')}
+                      className={`form-control ${errors.social ? 'is-invalid' : ''}`}
+                    />
+                    <div className="invalid-feedback">{errors.major?.message}</div>
+                  </Form.Group>
+                  <Form.Group controlId="formFirstName">
+                    <Form.Label>Bio</Form.Label>
+                    <input
+                      type="text"
+                      {...register('bio')}
+                      className={`form-control ${errors.bio ? 'is-invalid' : ''}`}
+                    />
+                    <div className="invalid-feedback">{errors.bio?.message}</div>
                   </Form.Group>
                   <Button type="submit" className="mt-3 ">
                     Save Profile
