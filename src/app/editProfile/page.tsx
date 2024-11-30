@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { redirect } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { createProfile } from '@/lib/dbActions';
+import { editProfile, getProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
@@ -26,7 +26,7 @@ const onSubmit = async (
 ) => {
   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
-  await createProfile({ ...data, userId, id: userId });
+  await editProfile({ ...data, userId, id: userId });
 
   swal('Success', 'Saved profile', 'success', {
     timer: 1000,
@@ -36,6 +36,24 @@ const onSubmit = async (
 const EditProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (session?.user?.id) {
+        const profileData = await getProfile(session.user.id);
+        if (profileData) {
+          setValue('firstName', profileData.firstName);
+          setValue('lastName', profileData.lastName);
+          setValue('major', profileData.major);
+          setValue('social', profileData.social);
+          setValue('bio', profileData.bio);
+          setSelectedRole(profileData.collegeRole);
+        }
+      }
+    };
+
+    fetchProfile();
+  }, [session, setValue]);
 
   const {
     register,

@@ -83,9 +83,75 @@ export async function createProfile(profile: Profile) {
       },
     });
   }
-
   // Redirect after operation (server-side redirect)
   return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
+export async function editProfile(profile: Profile) {
+  // Check if a profile with the given userId exists
+  const existingProfile = await prisma.profile.findUnique({
+    where: { userId: profile.userId },
+  });
+
+  if (existingProfile) {
+    // If profile exists, update it
+    await prisma.profile.update({
+      where: { userId: profile.userId },
+      data: {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+      },
+    });
+  } else {
+    // If profile does not exist, create a new one
+    await prisma.profile.create({
+      data: {
+        userId: profile.userId,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+      },
+    });
+  }
+  // Redirect after operation (server-side redirect)
+  return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
+export async function getProfile(userId: number | string) {
+  // Ensure userId is converted to a number
+  const parsedUserId = typeof userId === 'string' ? parseInt(userId, 10) : userId;
+
+  try {
+    // Fetch the profile from the database
+    const profile = await prisma.profile.findUnique({
+      where: {
+        userId: parsedUserId,
+      },
+      select: {
+        // Select only the fields you want to return
+        firstName: true,
+        lastName: true,
+        major: true,
+        social: true,
+        bio: true,
+        collegeRole: true,
+        userId: true,
+      },
+    });
+
+    // Return the profile or null if not found
+    return profile;
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    return null;
+  }
 }
 
 export async function createSession(studySession: StudySession) {
