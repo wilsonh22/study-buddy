@@ -63,11 +63,6 @@ const myProfile = async () => {
           </Button>
         </div>
       </div>
-      <h1 className="py-4 px-5">
-        <strong>My Sessions</strong>
-      </h1>
-
-      <div className="sessionListDiv">{/* <div className="sessionsList"></div> */}</div>
     </div>
   );
 };

@@ -28,12 +28,12 @@ const onSubmit = async (
   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
   await createProfile({ ...data, userId, id: userId });
 
-  swal('Success', 'Saved profile', 'success', {
+  swal('Success', 'Created profile', 'success', {
     timer: 1000,
   });
 };
 
-const EditProfile: React.FC = () => {
+const CreateProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
 
@@ -64,7 +64,7 @@ const EditProfile: React.FC = () => {
   return (
     <div className="p-5">
       <h1 className="createSessionTitle text-center">
-        <strong>Edit Profile</strong>
+        <strong>Create Profile</strong>
       </h1>
       <Container className="py-3">
         <Row className="justify-content-center">
@@ -182,7 +182,7 @@ const EditProfile: React.FC = () => {
                       <Col />
                       <Col>
                         <Button className="cSbutton" type="submit" variant="primary">
-                          Save Profile
+                          Create Profile
                         </Button>
                       </Col>
                       <Col />
@@ -200,4 +200,4 @@ const EditProfile: React.FC = () => {
   );
 };
 
-export default EditProfile;
+export default CreateProfile;
