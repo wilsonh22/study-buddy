@@ -82,7 +82,7 @@ const EditProfile: React.FC = () => {
                 {/* Form Section */}
                 <Form onSubmit={handleSubmit((data) => onSubmit(data, session))}>
                   <Row>
-                    <Col>
+                    <Col xs={5}>
                       <Form.Group>
                         <Form.Label />
                         <input
@@ -94,7 +94,7 @@ const EditProfile: React.FC = () => {
                         <div className="invalid-feedback" />
                       </Form.Group>
                     </Col>
-                    <Col>
+                    <Col xs={5}>
                       <Form.Group>
                         <Form.Label />
                         <input
@@ -104,6 +104,28 @@ const EditProfile: React.FC = () => {
                           placeholder="Last Name"
                         />
                         <div className="invalid-feedback" />
+                      </Form.Group>
+                    </Col>
+                    <Col xs={2} className="collegeRoleCol">
+                      <Form.Group>
+                        <Form.Label />
+                        <DropdownButton
+                          id="roleDropdown"
+                          title={selectedRole || 'College Role'}
+                          onSelect={handleRoleSelect}
+                          variant="custom"
+                          className={`w-100${errors.collegeRole ? 'is-invalid' : ''}`}
+                        >
+                          {Object.values(CollegeRole).map((role) => (
+                            <Dropdown.Item className="roleDropdownItem" key={role} eventKey={role}>
+                              {role}
+                            </Dropdown.Item>
+                          ))}
+                        </DropdownButton>
+                        <input type="hidden" {...register('collegeRole')} value={selectedRole || ''} />
+                        {errors.collegeRole && (
+                          <div className="invalid-feedback d-block">{errors.collegeRole.message}</div>
+                        )}
                       </Form.Group>
                     </Col>
                   </Row>
@@ -132,36 +154,17 @@ const EditProfile: React.FC = () => {
                     <Col>
                       <Form.Group>
                         <Form.Label />
-                        <DropdownButton
-                          id="dropdown-basic-button"
-                          title={selectedRole || 'College Role'}
-                          onSelect={handleRoleSelect}
-                          className={`${errors.collegeRole ? 'is-invalid' : ''}`}
-                        >
-                          {Object.values(CollegeRole).map((role) => (
-                            <Dropdown.Item key={role} eventKey={role}>
-                              {role}
-                            </Dropdown.Item>
-                          ))}
-                        </DropdownButton>
-                        {/* Hidden input to work with react-hook-form */}
-                        <input type="hidden" {...register('collegeRole')} value={selectedRole || ''} />
-                        {errors.collegeRole && (
-                          <div className="invalid-feedback d-block">{errors.collegeRole.message}</div>
-                        )}
+                        <input
+                          type="text"
+                          {...register('social')}
+                          className={`form-control ${errors.social ? 'is-invalid' : ''}`}
+                          placeholder="Social"
+                        />
+                        <div className="invalid-feedback" />
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Form.Group>
-                    <Form.Label />
-                    <input
-                      type="text"
-                      {...register('social')}
-                      className={`form-control ${errors.social ? 'is-invalid' : ''}`}
-                      placeholder="Social"
-                    />
-                    <div className="invalid-feedback" />
-                  </Form.Group>
+
                   <Form.Group>
                     <Form.Label />
                     <textarea
