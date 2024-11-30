@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
@@ -13,47 +13,30 @@ import { editProfile, getProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
-const onSubmit = async (
-  data: {
-    firstName: string;
-    lastName: string;
-    major: string;
-    social: string;
-    bio: string;
-    collegeRole: CollegeRole;
-  },
-  session: any,
-) => {
-  // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-  const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
-  await editProfile({ ...data, userId, id: userId });
+// const onSubmit = async (
+//   data: {
+//     firstName: string;
+//     lastName: string;
+//     major: string;
+//     social: string;
+//     bio: string;
+//     collegeRole: CollegeRole;
+//   },
+//   session: any,
+// ) => {
+//   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
+//   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
+//   await editProfile({ ...data, userId, id: userId });
 
-  swal('Success', 'Saved profile', 'success', {
-    timer: 1000,
-  });
-};
+//   swal('Success', 'Saved profile', 'success', {
+//     timer: 1000,
+//   });
+// };
 
 const EditProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (session?.user?.id) {
-        const profileData = await getProfile(session.user.id);
-        if (profileData) {
-          setValue('firstName', profileData.firstName);
-          setValue('lastName', profileData.lastName);
-          setValue('major', profileData.major);
-          setValue('social', profileData.social);
-          setValue('bio', profileData.bio);
-          setSelectedRole(profileData.collegeRole);
-        }
-      }
-    };
-
-    fetchProfile();
-  }, [session, setValue]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     register,
@@ -63,21 +46,92 @@ const EditProfile: React.FC = () => {
   } = useForm({
     resolver: yupResolver(CreateProfileSchema),
   });
-  if (status === 'loading') {
-    return <LoadingSpinner />;
-  }
-  if (status === 'unauthenticated') {
-    redirect('/auth/signin');
-  }
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        // Use type assertion to handle the any type
+        const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
+
+        if (userId) {
+          const profileData = await getProfile(userId);
+
+          if (profileData) {
+            // Populate form fields
+            setValue('firstName', profileData.firstName || '');
+            setValue('lastName', profileData.lastName || '');
+            setValue('major', profileData.major || '');
+            setValue('social', profileData.social || '');
+            setValue('bio', profileData.bio || '');
+
+            // Set the selected role
+            if (profileData.collegeRole) {
+              setSelectedRole(profileData.collegeRole);
+              setValue('collegeRole', profileData.collegeRole);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+        swal('Error', 'Failed to load profile', 'error');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (status === 'authenticated') {
+      fetchProfile();
+    }
+  }, [session, setValue, status]);
+
+  const onSubmit = async (data: {
+    firstName: string;
+    lastName: string;
+    major: string;
+    social: string;
+    bio: string;
+    collegeRole: CollegeRole;
+  }) => {
+    try {
+      // Use type assertion to handle the any type
+      const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
+
+      if (!userId) {
+        throw new Error('No user ID found');
+      }
+
+      await editProfile({
+        ...data,
+        userId,
+        id: userId,
+      });
+
+      swal('Success', 'Profile saved successfully', 'success', {
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error('Profile save error:', error);
+      swal('Error', 'Failed to save profile', 'error');
+    }
+  };
 
   const handleRoleSelect = (eventKey: string | null) => {
     if (eventKey) {
       const role = eventKey as CollegeRole;
       setSelectedRole(role);
-      // This ensures the value is registered with react-hook-form
       setValue('collegeRole', role);
     }
   };
+
+  // Loading state
+  if (status === 'loading' || isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  // Unauthenticated state
+  if (status === 'unauthenticated') {
+    redirect('/auth/signin');
+  }
 
   return (
     <div className="p-5">
@@ -98,7 +152,7 @@ const EditProfile: React.FC = () => {
                   </div>
                 </div>
                 {/* Form Section */}
-                <Form onSubmit={handleSubmit((data) => onSubmit(data, session))}>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                   <Row>
                     <Col xs={5}>
                       <Form.Group>
