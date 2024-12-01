@@ -8,6 +8,7 @@ import '../../styles/sessions.style.css';
 
 type ExtendedMySession = StudySession & {
   owner: {
+    id: number;
     profile?: {
       firstName: string;
       lastName: string;
