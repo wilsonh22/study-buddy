@@ -52,7 +52,7 @@ interface Session {
   userId: number;
 }
 
-const EditSessionContent = () => {
+const EditSessionContent = ({ currentUser }: { currentUser: number }) => {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const [session, setSession] = useState<Session | null>(null);
@@ -96,142 +96,156 @@ const EditSessionContent = () => {
       <h1 className="createSessionTitle text-center">
         <strong>Edit Session</strong>
       </h1>
-      <Container className="py-3">
-        <Row className="justify-content-center">
-          <Col xs={10}>
-            <Card className="cardBox">
-              <Card.Body>
-                <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Row>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Session Title</Form.Label>
-                        <input type="text" {...register('title')} className="form-control" placeholder="Enter Title" />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Date</Form.Label>
-                        <Controller
-                          name="sessionDate"
-                          control={control}
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={field.value}
-                              className="form-control"
-                              onChange={(date) => field.onChange(date)}
-                              dateFormat="MMMM d, yyyy"
-                              placeholderText="Select session date"
-                              todayButton="Today"
-                            />
-                          )}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Start Time</Form.Label>
-                        <Controller
-                          name="startTime"
-                          control={control}
-                          render={({ field }) => (
-                            <input
-                              id="startTime"
-                              type="time"
-                              className="form-control"
-                              value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
-                              onChange={(e) => {
-                                const time = new Date();
-                                const [hours, minutes] = e.target.value.split(':');
-                                time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-                                field.onChange(time);
-                              }}
-                            />
-                          )}
-                        />
-                      </Form.Group>
-                    </Col>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>End Time</Form.Label>
-                        <Controller
-                          name="endTime"
-                          control={control}
-                          render={({ field }) => (
-                            <input
-                              id="endTime"
-                              type="time"
-                              className="form-control"
-                              value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
-                              onChange={(e) => {
-                                const time = new Date();
-                                const [hours, minutes] = e.target.value.split(':');
-                                time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
-                                field.onChange(time);
-                              }}
-                            />
-                          )}
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Description</Form.Label>
-                        <input
-                          type="text"
-                          {...register('description')}
-                          className="form-control"
-                          placeholder="Enter Session Description"
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Class</Form.Label>
-                        <input type="text" {...register('class')} className="form-control" placeholder="Enter Class" />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Form.Group>
-                        <Form.Label>Place</Form.Label>
-                        <input
-                          type="text"
-                          {...register('place')}
-                          className="form-control"
-                          placeholder="Where to study"
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Form.Group className="form-group">
-                    <Row className="pt-3">
-                      <Col />
-                      <Col />
-                      <Col />
+      {currentUser === session?.userId ? (
+        <Container className="py-3">
+          <Row className="justify-content-center">
+            <Col xs={10}>
+              <Card className="cardBox">
+                <Card.Body>
+                  <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Row>
                       <Col>
-                        <Button className="cSbutton" type="submit" variant="primary">
-                          Edit Session
-                        </Button>
+                        <Form.Group>
+                          <Form.Label>Session Title</Form.Label>
+                          <input
+                            type="text"
+                            {...register('title')}
+                            className="form-control"
+                            placeholder="Enter Title"
+                          />
+                        </Form.Group>
                       </Col>
-                      <Col />
-                      <Col />
-                      <Col />
                     </Row>
-                  </Form.Group>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+                    <Row>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>Date</Form.Label>
+                          <Controller
+                            name="sessionDate"
+                            control={control}
+                            render={({ field }) => (
+                              <DatePicker
+                                selected={field.value}
+                                className="form-control"
+                                onChange={(date) => field.onChange(date)}
+                                dateFormat="MMMM d, yyyy"
+                                placeholderText="Select session date"
+                                todayButton="Today"
+                              />
+                            )}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>Start Time</Form.Label>
+                          <Controller
+                            name="startTime"
+                            control={control}
+                            render={({ field }) => (
+                              <input
+                                id="startTime"
+                                type="time"
+                                className="form-control"
+                                value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
+                                onChange={(e) => {
+                                  const time = new Date();
+                                  const [hours, minutes] = e.target.value.split(':');
+                                  time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+                                  field.onChange(time);
+                                }}
+                              />
+                            )}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>End Time</Form.Label>
+                          <Controller
+                            name="endTime"
+                            control={control}
+                            render={({ field }) => (
+                              <input
+                                id="endTime"
+                                type="time"
+                                className="form-control"
+                                value={field.value ? field.value.toTimeString().slice(0, 5) : ''}
+                                onChange={(e) => {
+                                  const time = new Date();
+                                  const [hours, minutes] = e.target.value.split(':');
+                                  time.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+                                  field.onChange(time);
+                                }}
+                              />
+                            )}
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>Description</Form.Label>
+                          <input
+                            type="text"
+                            {...register('description')}
+                            className="form-control"
+                            placeholder="Enter Session Description"
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>Class</Form.Label>
+                          <input
+                            type="text"
+                            {...register('class')}
+                            className="form-control"
+                            placeholder="Enter Class"
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <Form.Group>
+                          <Form.Label>Place</Form.Label>
+                          <input
+                            type="text"
+                            {...register('place')}
+                            className="form-control"
+                            placeholder="Where to study"
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Form.Group className="form-group">
+                      <Row className="pt-3">
+                        <Col />
+                        <Col />
+                        <Col />
+                        <Col>
+                          <Button className="cSbutton" type="submit" variant="primary">
+                            Edit Session
+                          </Button>
+                        </Col>
+                        <Col />
+                        <Col />
+                        <Col />
+                      </Row>
+                    </Form.Group>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <div />
+      )}
     </div>
   );
 };
