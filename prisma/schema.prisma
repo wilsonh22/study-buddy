@@ -34,21 +34,21 @@ model User {
 }
 
 model Profile {
-  id        Int    @id @default(autoincrement())
-  firstName String
-  lastName  String
-  userId    Int    @unique
-  user      User   @relation(fields: [userId], references: [id])
-  major     String
-  social    String
-  bio       String
-  collegeRole   CollegeRole
+  id          Int         @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  userId      Int         @unique
+  user        User        @relation(fields: [userId], references: [id])
+  major       String
+  social      String
+  bio         String
+  collegeRole CollegeRole
 }
 
 enum CollegeRole {
-  TA       
-  LA       
-  Student   
+  TA
+  LA
+  Student
 }
 
 model StudySession {

@@ -200,6 +200,44 @@ export async function addSession(studySessionId: number, userId: number) {
   redirect('/mySessions');
 }
 
+export async function updateSession(studySessionId: number, studySession: Partial<StudySession>) {
+  await prisma.studySession.update({
+    where: { id: studySessionId },
+    data: {
+      title: studySession.title,
+      description: studySession.description,
+      class: studySession.class,
+      place: studySession.place,
+      sessionDate: studySession.sessionDate,
+      startTime: studySession.startTime,
+      endTime: studySession.endTime,
+      users: {
+        connect: { id: studySession.userId },
+      },
+    },
+  });
+
+  return redirect('/sessions');
+}
+
+export async function getSessionById(id: number) {
+  return prisma.studySession.findUnique({
+    where: { id },
+    include: {
+      owner: {
+        select: {
+          id: true,
+          profile: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
 /**
  * Deletes an existing stuff from the database.
  * @param id, the id of the stuff to delete.
