@@ -10,6 +10,7 @@ import '../styles/sessionCard.style.css';
 
 type ExtendedStudySession = StudySession & {
   owner: {
+    id: number;
     profile?: {
       firstName: string;
       lastName: string;
@@ -123,9 +124,15 @@ const SessionCard = ({
                 </div>
                 <div className="py-1" />
 
-                <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
-                  Add
-                </Button>
+                {currentUser === studySessionInfo.owner.id ? (
+                  <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
+                    Edit
+                  </Button>
+                ) : (
+                  <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
+                    Add
+                  </Button>
+                )}
               </Card.Body>
             </Card>
           </div>
