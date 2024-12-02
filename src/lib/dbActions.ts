@@ -147,6 +147,7 @@ export async function getProfile(userId: number | string) {
         bio: true,
         collegeRole: true,
         userId: true,
+        profilePicUrl: true,
       },
     });
 
