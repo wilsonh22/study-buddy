@@ -1,6 +1,6 @@
 import { Profile } from '@prisma/client';
 import { getServerSession } from 'next-auth';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/auth';
@@ -23,7 +23,12 @@ const myProfile = async () => {
         <strong>My Profile</strong>
       </h1>
       <div className="myProfileDiv">
-        <div className="myProfilePic" />
+        {profiles
+          .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))
+          .map((profile) => (
+            <Image key={profile.userId} src={profile.profilePicUrl || ''} roundedCircle className="myProfilePic" />
+          ))}
+
         <div className="myProfileInfo">
           {profiles
             .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))
@@ -37,17 +42,22 @@ const myProfile = async () => {
                   <strong>Major:</strong>
                   {profile.major}
                 </h5>
+                <h5>
+                  <strong>College Role:</strong>
+                  {profile.collegeRole}
+                </h5>
+                <h5>
+                  <strong>Socials: </strong>
+                  {profile.social}
+                </h5>
+                <h5>
+                  <strong>Bio: </strong>
+                  {profile.bio}
+                </h5>
+
                 {/* add profile.major here within h5 tag and other datafields */}
               </div>
             ))}
-          <h5>
-            <strong>Bio: </strong>
-            TA for Calculus 2
-          </h5>
-          <h5>
-            <strong>Socials: </strong>
-            IG: jfoo26 Discord: jfoo#26
-          </h5>
         </div>
         <div className="px-4">
           <Button className="myBuddiesBtn">Buddies</Button>
@@ -58,11 +68,6 @@ const myProfile = async () => {
           </Button>
         </div>
       </div>
-      <h1 className="py-4 px-5">
-        <strong>My Sessions</strong>
-      </h1>
-
-      <div className="sessionListDiv">{/* <div className="sessionsList"></div> */}</div>
     </div>
   );
 };

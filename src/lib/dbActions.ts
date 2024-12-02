@@ -64,6 +64,10 @@ export async function createProfile(profile: Profile) {
         firstName: profile.firstName,
         lastName: profile.lastName,
         major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   } else {
@@ -74,12 +78,85 @@ export async function createProfile(profile: Profile) {
         firstName: profile.firstName,
         lastName: profile.lastName,
         major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   }
-
   // Redirect after operation (server-side redirect)
   return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
+export async function editProfile(profile: Profile) {
+  // Check if a profile with the given userId exists
+  const existingProfile = await prisma.profile.findUnique({
+    where: { userId: profile.userId },
+  });
+
+  if (existingProfile) {
+    // If profile exists, update it
+    await prisma.profile.update({
+      where: { userId: profile.userId },
+      data: {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
+      },
+    });
+  } else {
+    // If profile does not exist, create a new one
+    await prisma.profile.create({
+      data: {
+        userId: profile.userId,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        major: profile.major,
+        social: profile.social,
+        bio: profile.bio,
+        collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
+      },
+    });
+  }
+  // Redirect after operation (server-side redirect)
+  return redirect('/myProfile'); // Ensure you're using the proper `redirect` function
+}
+
+export async function getProfile(userId: number | string) {
+  // Ensure userId is converted to a number
+  const parsedUserId = typeof userId === 'string' ? parseInt(userId, 10) : userId;
+
+  try {
+    // Fetch the profile from the database
+    const profile = await prisma.profile.findUnique({
+      where: {
+        userId: parsedUserId,
+      },
+      select: {
+        // Select only the fields you want to return
+        firstName: true,
+        lastName: true,
+        major: true,
+        social: true,
+        bio: true,
+        collegeRole: true,
+        userId: true,
+        profilePicUrl: true,
+      },
+    });
+
+    // Return the profile or null if not found
+    return profile;
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    return null;
+  }
 }
 
 export async function createSession(studySession: StudySession) {
@@ -91,6 +168,12 @@ export async function createSession(studySession: StudySession) {
       title: studySession.title,
       added: studySession.added,
       userId: studySession.userId,
+      description: studySession.description,
+      class: studySession.class,
+      place: studySession.place,
+      sessionDate: studySession.sessionDate,
+      startTime: studySession.startTime,
+      endTime: studySession.endTime,
       users: {
         connect: { id: studySession.userId },
       },
@@ -99,6 +182,7 @@ export async function createSession(studySession: StudySession) {
   // After adding, redirect to the sessions page
   redirect('/sessions');
 }
+
 export async function addSession(studySessionId: number, userId: number) {
   // Check if the study session exists
   const sessionExists = await prisma.studySession.findUnique({
@@ -118,8 +202,54 @@ export async function addSession(studySessionId: number, userId: number) {
       },
     },
   });
+  redirect('/mySessions');
 }
 
+export async function updateSession(studySessionId: number, studySession: Partial<StudySession>) {
+  await prisma.studySession.update({
+    where: { id: studySessionId },
+    data: {
+      title: studySession.title,
+      description: studySession.description,
+      class: studySession.class,
+      place: studySession.place,
+      sessionDate: studySession.sessionDate,
+      startTime: studySession.startTime,
+      endTime: studySession.endTime,
+      users: {
+        connect: { id: studySession.userId },
+      },
+    },
+  });
+
+  return redirect('/sessions');
+}
+
+export async function getSessionById(id: number) {
+  return prisma.studySession.findUnique({
+    where: { id },
+    include: {
+      owner: {
+        select: {
+          id: true,
+          profile: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
+export async function deleteSession(id: number) {
+  await prisma.studySession.delete({
+    where: { id },
+  });
+  redirect('/sessions');
+}
 /**
  * Deletes an existing stuff from the database.
  * @param id, the id of the stuff to delete.
