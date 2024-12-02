@@ -60,3 +60,39 @@ form label {
   font-weight: bold;
   padding-top: 5px;
 }
+
+.deleteBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1000;
+  background-color: rgb(226, 129, 129);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 60px;
+  margin-bottom: 350px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+/* Custom hover, focus, and active states */
+.deleteBtn:hover,
+.deleteBtn:focus,
+.deleteBtn:active {
+  background-color: red;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.deleteBtn:focus,
+.deleteBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: red !important;
+  color: black;
+}

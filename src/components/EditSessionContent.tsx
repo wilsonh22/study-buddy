@@ -1,34 +1,15 @@
 'use client';
 
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { TrashFill } from 'react-bootstrap-icons';
 import { useEffect, useState } from 'react';
-import { updateSession, getSessionById } from '@/lib/dbActions';
+import { updateSession, getSessionById, deleteSession } from '@/lib/dbActions';
 import { useForm, Controller } from 'react-hook-form';
 import swal from 'sweetalert';
 import DatePicker from 'react-datepicker';
 import { useSearchParams } from 'next/navigation';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../styles/createSession.style.css';
-
-// const onSubmit = async (
-//   data: {
-//     title: string;
-//     description: string;
-//     class: string;
-//     place: string;
-//     sessionDate: Date;
-//     startTime: Date;
-//     endTime: Date;
-//   },
-//   session: any,
-// ) => {
-//   const currentUser = parseInt(session?.user?.id, 10);
-//   await createSession({ ...data, id: currentUser, userId: currentUser, added: true });
-
-//   swal('Success', 'created session', 'success', {
-//     timer: 1000,
-//   });
-// };
 
 interface FormData {
   title: string;
@@ -237,6 +218,31 @@ const EditSessionContent = ({ currentUser }: { currentUser: number }) => {
                         <Col />
                       </Row>
                     </Form.Group>
+                    <Button
+                      className="deleteBtn"
+                      type="button"
+                      variant="danger"
+                      onClick={() => {
+                        swal({
+                          title: 'Confirm Deletion',
+                          text: 'Are you sure you want to delete this session? This action cannot be undone.',
+                          icon: 'warning',
+                          buttons: ['Cancel', 'Delete'],
+                          dangerMode: true,
+                        }).then(async (isConfirmed) => {
+                          if (isConfirmed) {
+                            await deleteSession(parseInt(id as string, 10));
+                            swal('Session has been successfully deleted.', {
+                              icon: 'success',
+                            });
+                          } else {
+                            swal('Deletion has been canceled.');
+                          }
+                        });
+                      }}
+                    >
+                      <TrashFill />
+                    </Button>
                   </Form>
                 </Card.Body>
               </Card>
