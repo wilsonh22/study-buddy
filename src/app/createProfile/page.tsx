@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, ChangeEvent } from 'react';
-import AWS from 'aws-sdk';
+import s3 from '@/lib/s3';
 import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton, Image } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
@@ -13,26 +13,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { createProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
-// import { env } from 'process';
-
-// AWS.config.update({
-//   region: 'us-west-1', // e.g., 'us-west-2'
-//   credentials: new AWS.CognitoIdentityCredentials({
-//     IdentityPoolId: env.AWS_IDENTITY_POOL_ID!,
-//   }),
-// });
-
-// const s3 = new AWS.S3({
-//   apiVersion: '2012-10-17',
-//   params: { Bucket: 'uhm-studymax-img' }, // Your bucket name
-// });
-
-const s3 = new AWS.S3({
-  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
-  region: process.env.NEXT_PUBLIC_AWS_REGION,
-  params: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
-});
 
 const onSubmit = async (
   data: {
@@ -89,8 +69,8 @@ const CreateProfile: React.FC = () => {
       const file = e.target.files[0];
 
       const uploadParams = {
-        Bucket: 'uhm-studymax-img', // Your S3 bucket name
-        Key: `public/${file.name}`, // Uploads to 'public/' folder
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
+        Key: `public/${file.name}`,
         Body: file,
         ContentType: file.type,
       };
