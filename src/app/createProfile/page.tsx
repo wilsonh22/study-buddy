@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, ChangeEvent } from 'react';
+import AWS from 'aws-sdk';
 import { useSession } from 'next-auth/react';
-import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton, Image } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
 import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,6 +13,26 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { createProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
+// import { env } from 'process';
+
+// AWS.config.update({
+//   region: 'us-west-1', // e.g., 'us-west-2'
+//   credentials: new AWS.CognitoIdentityCredentials({
+//     IdentityPoolId: env.AWS_IDENTITY_POOL_ID!,
+//   }),
+// });
+
+// const s3 = new AWS.S3({
+//   apiVersion: '2012-10-17',
+//   params: { Bucket: 'uhm-studymax-img' }, // Your bucket name
+// });
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+  region: process.env.NEXT_PUBLIC_AWS_REGION,
+  params: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
+});
 
 const onSubmit = async (
   data: {
@@ -37,6 +58,7 @@ const onSubmit = async (
 const CreateProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -63,11 +85,26 @@ const CreateProfile: React.FC = () => {
   };
 
   function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {};
-      reader.readAsDataURL(file);
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const uploadParams = {
+        Bucket: 'uhm-studymax-img', // Your S3 bucket name
+        Key: `public/${file.name}`, // Uploads to 'public/' folder
+        Body: file,
+        ContentType: file.type,
+      };
+
+      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+        if (err) {
+          console.error('Error uploading image:', err);
+        } else {
+          console.log('Image uploaded successfully:', data.Location);
+          // Update the profilePicUrl field with the image URL
+          setValue('profilePicUrl', data.Location);
+          setProfilePicUrl(data.Location);
+        }
+      });
     }
   }
   return (
@@ -83,6 +120,11 @@ const CreateProfile: React.FC = () => {
                 {/* Profile Image Section */}
                 <div className="profile-image-container">
                   <div className="profile-image">
+                    {profilePicUrl ? (
+                      <Image src={profilePicUrl} alt="Profile" className="uploaded-image" />
+                    ) : (
+                      <div className="placeholder-image">No image uploaded</div>
+                    )}
                     <Button
                       className="add-icon-circle"
                       onClick={() => document.getElementById('profilePicUrl')?.click()}
