@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.48.2",
+    "@types/aws-sdk": "^0.0.42",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.5.4",
