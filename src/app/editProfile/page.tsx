@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useSession } from 'next-auth/react';
-import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import s3 from '@/lib/s3';
+import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton, Image } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
 import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,30 +14,12 @@ import { editProfile, getProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
-// const onSubmit = async (
-//   data: {
-//     firstName: string;
-//     lastName: string;
-//     major: string;
-//     social: string;
-//     bio: string;
-//     collegeRole: CollegeRole;
-//   },
-//   session: any,
-// ) => {
-//   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-//   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
-//   await editProfile({ ...data, userId, id: userId });
-
-//   swal('Success', 'Saved profile', 'success', {
-//     timer: 1000,
-//   });
-// };
-
 const EditProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
+  // const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -58,6 +41,11 @@ const EditProfile: React.FC = () => {
 
           if (profileData) {
             // Populate form fields
+            if (profileData.profilePicUrl) {
+              setValue('profilePicUrl', profileData.profilePicUrl);
+              setProfilePicUrl(profileData.profilePicUrl);
+            }
+
             setValue('firstName', profileData.firstName || '');
             setValue('lastName', profileData.lastName || '');
             setValue('major', profileData.major || '');
@@ -91,6 +79,7 @@ const EditProfile: React.FC = () => {
     social: string;
     bio: string;
     collegeRole: CollegeRole;
+    profilePicUrl: string;
   }) => {
     try {
       // Use type assertion to handle the any type
@@ -123,6 +112,30 @@ const EditProfile: React.FC = () => {
     }
   };
 
+  function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const uploadParams = {
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
+        Key: `public/${file.name}`,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+        if (err) {
+          console.error('Error uploading image:', err);
+        } else {
+          console.log('Image uploaded successfully:', data.Location);
+          // Update the profilePicUrl field with the image URL
+          setValue('profilePicUrl', data.Location);
+          setProfilePicUrl(data.Location);
+        }
+      });
+    }
+  }
+
   // Loading state
   if (status === 'loading' || isLoading) {
     return <LoadingSpinner />;
@@ -146,9 +159,24 @@ const EditProfile: React.FC = () => {
                 {/* Profile Image Section */}
                 <div className="profile-image-container">
                   <div className="profile-image">
-                    <div className="add-icon-circle">
+                    {profilePicUrl ? (
+                      <Image src={profilePicUrl} alt="Profile" className="uploaded-image" />
+                    ) : (
+                      <div className="placeholder-image">No image uploaded</div>
+                    )}
+                    <Button
+                      className="add-icon-circle"
+                      onClick={() => document.getElementById('profilePicUrl')?.click()}
+                    >
                       <span className="add-icon">+</span>
-                    </div>
+                    </Button>
+                    <input
+                      id="profilePicUrl"
+                      type="file"
+                      accept="image/png, image/jpeg image/jpg"
+                      style={{ display: 'none' }}
+                      onChange={handleImgUpload}
+                    />
                   </div>
                 </div>
                 {/* Form Section */}

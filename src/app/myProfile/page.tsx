@@ -1,6 +1,6 @@
 import { Profile } from '@prisma/client';
 import { getServerSession } from 'next-auth';
-import { Button } from 'react-bootstrap';
+import { Button, Image } from 'react-bootstrap';
 import '../../styles/myProfile.style.css';
 import { prisma } from '@/lib/prisma';
 import authOptions from '@/lib/auth';
@@ -23,7 +23,12 @@ const myProfile = async () => {
         <strong>My Profile</strong>
       </h1>
       <div className="myProfileDiv">
-        <div className="myProfilePic" />
+        {profiles
+          .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))
+          .map((profile) => (
+            <Image key={profile.userId} src={profile.profilePicUrl || ''} roundedCircle className="myProfilePic" />
+          ))}
+
         <div className="myProfileInfo">
           {profiles
             .filter((profile) => profile.userId === parseInt(userSession.user?.id, 10))

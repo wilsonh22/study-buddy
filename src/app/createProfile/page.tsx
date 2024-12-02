@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
+import s3 from '@/lib/s3';
 import { useSession } from 'next-auth/react';
-import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton, Image } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
 import swal from 'sweetalert';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,6 +22,7 @@ const onSubmit = async (
     social: string;
     bio: string;
     collegeRole: CollegeRole;
+    profilePicUrl: string;
   },
   session: any,
 ) => {
@@ -36,6 +38,7 @@ const onSubmit = async (
 const CreateProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
+  const [profilePicUrl, setProfilePicUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -61,6 +64,29 @@ const CreateProfile: React.FC = () => {
     }
   };
 
+  function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const uploadParams = {
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
+        Key: `public/${file.name}`,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+        if (err) {
+          console.error('Error uploading image:', err);
+        } else {
+          console.log('Image uploaded successfully:', data.Location);
+          // Update the profilePicUrl field with the image URL
+          setValue('profilePicUrl', data.Location);
+          setProfilePicUrl(data.Location);
+        }
+      });
+    }
+  }
   return (
     <div className="p-5">
       <h1 className="createSessionTitle text-center">
@@ -74,9 +100,24 @@ const CreateProfile: React.FC = () => {
                 {/* Profile Image Section */}
                 <div className="profile-image-container">
                   <div className="profile-image">
-                    <div className="add-icon-circle">
+                    {profilePicUrl ? (
+                      <Image src={profilePicUrl} alt="Profile" className="uploaded-image" />
+                    ) : (
+                      <div className="placeholder-image">No image uploaded</div>
+                    )}
+                    <Button
+                      className="add-icon-circle"
+                      onClick={() => document.getElementById('profilePicUrl')?.click()}
+                    >
                       <span className="add-icon">+</span>
-                    </div>
+                    </Button>
+                    <input
+                      id="profilePicUrl"
+                      type="file"
+                      accept="image/png, image/jpeg image/jpg"
+                      style={{ display: 'none' }}
+                      onChange={handleImgUpload}
+                    />
                   </div>
                 </div>
                 {/* Form Section */}

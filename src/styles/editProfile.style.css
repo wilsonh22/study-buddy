@@ -54,7 +54,6 @@
 }
 
 .profile-image {
-  padding-top: 100px;
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -119,4 +118,11 @@
 .roleDropdownItem:active {
   color: black !important;
   background-color: #7cfbdf !important;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
