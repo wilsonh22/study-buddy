@@ -15,14 +15,16 @@ const NavBar: React.FC = () => {
   return (
     <Navbar className="custom-navbar" expand="lg">
       <Container>
+        <div className="navbar-div">
         <Navbar.Brand href="/">
           <Image
             src="/public/logo-png.png"
             width="30"
             height="30"
-            className="d-inline-block align-top"
+            className="logo d-inline-block align-top"
           />
         </Navbar.Brand>
+        </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto justify-content-center">
@@ -47,7 +49,8 @@ const NavBar: React.FC = () => {
                 ]
               : ''}
           </Nav>
-          <Nav className="ml-auto">
+          <div className="navbar-div">
+          <Nav className="justify-content-end">
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/myProfile">
@@ -76,6 +79,7 @@ const NavBar: React.FC = () => {
               </NavDropdown>
             )}
           </Nav>
+          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
