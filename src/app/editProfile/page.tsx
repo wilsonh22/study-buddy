@@ -117,7 +117,7 @@ const EditProfile: React.FC = () => {
       const file = e.target.files[0];
 
       const uploadParams = {
-        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
+        Bucket: 'uhm-studymax-img', // Your S3 bucket name
         Key: `public/${file.name}`,
         Body: file,
         ContentType: file.type,
