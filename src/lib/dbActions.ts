@@ -238,6 +238,13 @@ export async function getSessionById(id: number) {
     },
   });
 }
+
+export async function deleteSession(id: number) {
+  await prisma.studySession.delete({
+    where: { id },
+  });
+  redirect('/sessions');
+}
 /**
  * Deletes an existing stuff from the database.
  * @param id, the id of the stuff to delete.
