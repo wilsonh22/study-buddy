@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mx-auto justify-content-start">
+          <Nav className="mx-auto justify-content-center">
             <Nav.Link id="about-stuff-nav" href="/#about" key="about" active={pathName === '/about'}>
               About
             </Nav.Link>
@@ -48,13 +48,6 @@ const NavBar: React.FC = () => {
                   </Nav.Link>,
                 ]
               : ''}
-            {currentUser && role === 'ADMIN' ? (
-              <Nav.Link id="admin-stuff-nav" href="/admin" key="admin" active={pathName === '/admin'}>
-                Admin
-              </Nav.Link>
-            ) : (
-              ''
-            )}
           </Nav>
           <Nav className="ml-auto">
             {session ? (
