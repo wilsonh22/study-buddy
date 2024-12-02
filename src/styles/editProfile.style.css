@@ -126,3 +126,9 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+.placeholder-image {
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+}

@@ -103,7 +103,11 @@ const CreateProfile: React.FC = () => {
                     {profilePicUrl ? (
                       <Image src={profilePicUrl} alt="Profile" className="uploaded-image" />
                     ) : (
-                      <div className="placeholder-image">No image uploaded</div>
+                      <div className="placeholder-image py-5">
+                        No image
+                        <br />
+                        uploaded
+                      </div>
                     )}
                     <Button
                       className="add-icon-circle"
