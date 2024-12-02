@@ -67,6 +67,7 @@ export async function createProfile(profile: Profile) {
         social: profile.social,
         bio: profile.bio,
         collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   } else {
@@ -80,6 +81,7 @@ export async function createProfile(profile: Profile) {
         social: profile.social,
         bio: profile.bio,
         collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   }
@@ -104,6 +106,7 @@ export async function editProfile(profile: Profile) {
         social: profile.social,
         bio: profile.bio,
         collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   } else {
@@ -117,6 +120,7 @@ export async function editProfile(profile: Profile) {
         social: profile.social,
         bio: profile.bio,
         collegeRole: profile.collegeRole,
+        profilePicUrl: profile.profilePicUrl,
       },
     });
   }
@@ -143,6 +147,7 @@ export async function getProfile(userId: number | string) {
         bio: true,
         collegeRole: true,
         userId: true,
+        profilePicUrl: true,
       },
     });
 
