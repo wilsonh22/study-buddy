@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
@@ -21,6 +21,7 @@ const onSubmit = async (
     social: string;
     bio: string;
     collegeRole: CollegeRole;
+    profilePicUrl: string;
   },
   session: any,
 ) => {
@@ -61,6 +62,14 @@ const CreateProfile: React.FC = () => {
     }
   };
 
+  function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {};
+      reader.readAsDataURL(file);
+    }
+  }
   return (
     <div className="p-5">
       <h1 className="createSessionTitle text-center">
@@ -74,9 +83,19 @@ const CreateProfile: React.FC = () => {
                 {/* Profile Image Section */}
                 <div className="profile-image-container">
                   <div className="profile-image">
-                    <div className="add-icon-circle">
+                    <Button
+                      className="add-icon-circle"
+                      onClick={() => document.getElementById('profilePicUrl')?.click()}
+                    >
                       <span className="add-icon">+</span>
-                    </div>
+                    </Button>
+                    <input
+                      id="profilePicUrl"
+                      type="file"
+                      accept="image/png, image/jpeg image/jpg"
+                      style={{ display: 'none' }}
+                      onChange={handleImgUpload}
+                    />
                   </div>
                 </div>
                 {/* Form Section */}

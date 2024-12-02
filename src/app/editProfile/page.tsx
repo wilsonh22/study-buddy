@@ -13,26 +13,6 @@ import { editProfile, getProfile } from '@/lib/dbActions';
 import { CreateProfileSchema } from '@/lib/validationSchemas';
 import '../../styles/editProfile.style.css';
 
-// const onSubmit = async (
-//   data: {
-//     firstName: string;
-//     lastName: string;
-//     major: string;
-//     social: string;
-//     bio: string;
-//     collegeRole: CollegeRole;
-//   },
-//   session: any,
-// ) => {
-//   // console.log(`onSubmit data: ${JSON.stringify(data, null, 2)}`);
-//   const userId = parseInt(session?.user?.id, 10); // Assuming userId is available in session
-//   await editProfile({ ...data, userId, id: userId });
-
-//   swal('Success', 'Saved profile', 'success', {
-//     timer: 1000,
-//   });
-// };
-
 const EditProfile: React.FC = () => {
   const { data: session, status } = useSession();
   const [selectedRole, setSelectedRole] = useState<CollegeRole | null>(null);
@@ -91,6 +71,7 @@ const EditProfile: React.FC = () => {
     social: string;
     bio: string;
     collegeRole: CollegeRole;
+    profilePicUrl: string;
   }) => {
     try {
       // Use type assertion to handle the any type
@@ -146,9 +127,9 @@ const EditProfile: React.FC = () => {
                 {/* Profile Image Section */}
                 <div className="profile-image-container">
                   <div className="profile-image">
-                    <div className="add-icon-circle">
+                    <Button className="add-icon-circle">
                       <span className="add-icon">+</span>
-                    </div>
+                    </Button>
                   </div>
                 </div>
                 {/* Form Section */}
