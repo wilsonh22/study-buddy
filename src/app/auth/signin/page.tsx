@@ -15,7 +15,7 @@ const SignIn = () => {
     const email = target.email.value;
     const password = target.password.value;
     const result = await signIn('credentials', {
-      callbackUrl: '/editProfile',
+      callbackUrl: '/sessions',
       email,
       password,
     });

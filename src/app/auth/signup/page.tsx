@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
+import './signup.css';
 
 type SignUpForm = {
   email: string;
@@ -49,34 +50,34 @@ const SignUp = () => {
         <Row className="justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Sign Up</h1>
-            <Card>
+            <Card className="grayCard">
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className="form-group">
-                    <Form.Label>Email</Form.Label>
                     <input
                       type="text"
                       {...register('email')}
                       className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      placeholder="Email"
                     />
                     <div className="invalid-feedback">{errors.email?.message}</div>
                   </Form.Group>
 
                   <Form.Group className="form-group">
-                    <Form.Label>Password</Form.Label>
                     <input
                       type="password"
                       {...register('password')}
                       className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      placeholder="Password"
                     />
                     <div className="invalid-feedback">{errors.password?.message}</div>
                   </Form.Group>
                   <Form.Group className="form-group">
-                    <Form.Label>Confirm Password</Form.Label>
                     <input
                       type="password"
                       {...register('confirmPassword')}
                       className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                      placeholder="Confirm Password"
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                   </Form.Group>
