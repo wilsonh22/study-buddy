@@ -23,6 +23,7 @@ export const CreateProfileSchema = Yup.object({
   social: Yup.string().required(),
   bio: Yup.string().required(),
   collegeRole: Yup.string().oneOf(Object.values(CollegeRole)).required(),
+  profilePicUrl: Yup.string().required(),
 });
 
 export const CreateSessionSchema = Yup.object({
