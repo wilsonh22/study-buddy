@@ -4,7 +4,7 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 import '../app/globals.css';
 
@@ -17,7 +17,14 @@ const NavBar: React.FC = () => {
   return (
     <Navbar className="custom-navbar" expand="lg">
       <Container>
-        <Navbar.Brand href="/">LOGO</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <Image
+            src="/public/logo-png.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto justify-content-start">
