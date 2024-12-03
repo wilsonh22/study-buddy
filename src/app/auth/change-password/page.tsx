@@ -55,7 +55,7 @@ const ChangePassword = () => {
   return (
     <main>
       <Container className="main-container">
-        <Row className= "justify-content-center">
+        <Row className="justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Change Password</h1>
             <Card className="grayCard ">
