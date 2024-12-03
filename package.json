@@ -15,6 +15,7 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-sts": "^3.699.0",
     "@hookform/resolvers": "^3.6.0",
     "@ngneat/falso": "^7.2.0",
     "@prisma/client": "^5.22.0",
