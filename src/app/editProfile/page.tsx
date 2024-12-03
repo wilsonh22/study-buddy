@@ -40,10 +40,11 @@ const EditProfile: React.FC = () => {
           const profileData = await getProfile(userId);
 
           if (profileData) {
-            // Populate form fields
+            // Prioritize the most recent profile picture
             if (profileData.profilePicUrl) {
-              setValue('profilePicUrl', profileData.profilePicUrl);
-              setProfilePicUrl(profileData.profilePicUrl);
+              const latestProfilePicUrl = profileData.profilePicUrl;
+              setValue('profilePicUrl', latestProfilePicUrl);
+              setProfilePicUrl(latestProfilePicUrl);
             }
 
             setValue('firstName', profileData.firstName || '');
@@ -118,20 +119,19 @@ const EditProfile: React.FC = () => {
 
       const uploadParams = {
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-        Key: `public/${file.name}`,
+        Key: `public/${Date.now()}_${file.name}`,
         Body: file,
         ContentType: file.type,
-        // ACL: 'public-read',
       };
 
       s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
         if (err) {
           console.error('Error uploading image:', err);
+          swal('Error', 'Failed to upload image', 'error');
         } else {
-          console.log('Image uploaded successfully:', data.Location);
-          // Update the profilePicUrl field with the image URL
           setValue('profilePicUrl', data.Location);
           setProfilePicUrl(data.Location);
+          swal('Success', 'Profile image uploaded. Please complete editing other fields.', 'success');
         }
       });
     }
