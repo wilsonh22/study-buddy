@@ -2,7 +2,7 @@
 
 import '../styles/searchSessions.style.css';
 import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+//import { Container } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
 
 interface SearchBarProps {
@@ -13,19 +13,21 @@ interface SearchBarProps {
 const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
   const [activeButton, setActiveButton] = useState<string>('');
 
+  /*
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? '' : buttonName);
   };
+  */
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
-  return (
+  return(
     <div className="filterDiv">
       <div 
         style={{
-          paddingTop:'15px'
+          paddingTop: '15px',
         }}
       >
         <div className="searchBar px-3">
