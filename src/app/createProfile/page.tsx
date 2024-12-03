@@ -2,6 +2,7 @@
 
 import React, { useState, ChangeEvent } from 'react';
 import s3 from '@/lib/s3';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { useSession } from 'next-auth/react';
 import { Container, Row, Col, Card, Form, Button, Dropdown, DropdownButton, Image } from 'react-bootstrap';
 import { CollegeRole } from '@prisma/client';
@@ -64,30 +65,60 @@ const CreateProfile: React.FC = () => {
     }
   };
 
-  function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
 
-      const uploadParams = {
-        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-        Key: `public/${file.name}`,
-        Body: file,
-        ContentType: file.type,
-        // ACL: 'public-read',
-      };
+  //     const uploadParams = {
+  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
+  //       Key: `public/${file.name}`,
+  //       Body: file,
+  //       ContentType: file.type,
+  //       // ACL: 'public-read',
+  //     };
 
-      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
-        if (err) {
-          console.error('Error uploading image:', err);
-        } else {
-          console.log('Image uploaded successfully:', data.Location);
-          // Update the profilePicUrl field with the image URL
-          setValue('profilePicUrl', data.Location);
-          setProfilePicUrl(data.Location);
-        }
-      });
+  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+  //       if (err) {
+  //         console.error('Error uploading image:', err);
+  //       } else {
+  //         console.log('Image uploaded successfully:', data.Location);
+  //         // Update the profilePicUrl field with the image URL
+  //         setValue('profilePicUrl', data.Location);
+  //         setProfilePicUrl(data.Location);
+  //       }
+  //     });
+  //   }
+  // }
+
+  async function handleImgUpload(e: ChangeEvent<HTMLInputElement>): Promise<void> {
+    try {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
+
+        const uploadParams = {
+          Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
+          Key: `public/${file.name}`,
+          Body: file,
+          ContentType: file.type,
+        };
+
+        const command = new PutObjectCommand(uploadParams);
+        await s3.send(command);
+
+        const imageUrl =
+          `https://${uploadParams.Bucket}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/` +
+          `${uploadParams.Key}`;
+
+        console.log('Image uploaded successfully:', imageUrl);
+        setValue('profilePicUrl', imageUrl);
+        setProfilePicUrl(imageUrl);
+      }
+    } catch (err) {
+      console.error('Error uploading image:', err);
+      swal('Upload Error', 'Failed to upload image', 'error');
     }
   }
+
   return (
     <div className="p-5">
       <h1 className="createSessionTitle text-center">
