@@ -1,3 +1,6 @@
+padding-top {
+    padding-top: 120px;
+}
 .grayCard{
     background-color: #ECECEC;
     border-radius: 20px;
@@ -10,7 +13,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-top: 20px;
 }
-button{
+.btn{
     background-color: #7cfbdf !important ;
     color: black !important;
     font-weight: bold !important;
@@ -20,7 +23,7 @@ button{
     border-radius: 20px !important;
     border-color: #7cfbdf !important;
 }
-/*reset-button{
+.btn-warning{
     background-color: #fb7c7c !important ;
     color: black !important;
     font-weight: bold !important;
@@ -29,4 +32,5 @@ button{
     font-size: 18px !important;
     border-radius: 20px !important;
     border-color: #fb7c7c !important;
-}*/
+    justify-content: right;
+}

@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { changePassword } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import '../../../styles/auth.style.css';
+import '../../../styles/signup.style.css';
 
 type ChangePasswordForm = {
   oldpassword: string;
@@ -54,51 +54,50 @@ const ChangePassword = () => {
 
   return (
     <main>
-      <Container>
-        <Row className="justify-content-center">
+      <Container className="main-container">
+        <Row className= "justify-content-center">
           <Col xs={5}>
             <h1 className="text-center">Change Password</h1>
-            <Card>
+            <Card className="grayCard ">
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className="form-group">
-                    <Form.Label>Old Passord</Form.Label>
                     <input
                       type="password"
                       {...register('oldpassword')}
                       className={`form-control ${errors.oldpassword ? 'is-invalid' : ''}`}
+                      placeholder="Old Password"
                     />
                     <div className="invalid-feedback">{errors.oldpassword?.message}</div>
                   </Form.Group>
-
                   <Form.Group className="form-group">
-                    <Form.Label>New Password</Form.Label>
                     <input
                       type="password"
                       {...register('password')}
                       className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      placeholder="New Password"
                     />
                     <div className="invalid-feedback">{errors.password?.message}</div>
                   </Form.Group>
                   <Form.Group className="form-group">
-                    <Form.Label>Confirm Password</Form.Label>
                     <input
                       type="password"
                       {...register('confirmPassword')}
                       className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                      placeholder="Confirm Password"
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                   </Form.Group>
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Change
+                        <Button type="button" onClick={() => reset()} className="btn-warning float-start">
+                          Reset
                         </Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
-                          Reset
+                        <Button type="submit" className="btn float-end">
+                          Change
                         </Button>
                       </Col>
                     </Row>

@@ -84,13 +84,13 @@ const SignUp = () => {
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Register
+                        <Button type="button" onClick={() => reset()} className="btn-warning float-start">
+                          Reset
                         </Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
-                          Reset
+                        <Button type="submit" className="btn float-end">
+                          Register
                         </Button>
                       </Col>
                     </Row>
@@ -98,8 +98,8 @@ const SignUp = () => {
                 </Form>
               </Card.Body>
               <Card.Footer>
-                Already have an account?
-                <a href="/auth/signin"> Sign in</a>
+                Already have an account?&nbsp;
+                <a href="/auth/signin">Sign in</a>
               </Card.Footer>
             </Card>
           </Col>
