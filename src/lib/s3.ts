@@ -13,7 +13,8 @@ import { S3Client } from '@aws-sdk/client-s3';
 import { awsCredentialsProvider } from '@vercel/functions/oidc';
 
 const s3 = new S3Client({
-  region: process.env.NEXT_PUBLIC_AWS_REGION,
+  // region: process.env.NEXT_PUBLIC_AWS_REGION!,
+  region: 'us-west-1',
   credentials: awsCredentialsProvider({
     roleArn: process.env.NEXT_PUBLIC_AWS_ROLE_ARN!,
   }),
