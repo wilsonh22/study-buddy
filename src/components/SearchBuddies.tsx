@@ -55,6 +55,7 @@ const SearchBuddies: React.FC<SearchBarProps> = ({ search, setSearch }) => {
           >
             My Buddies
           </button>
+          {/*
           <button
             type="button"
             className={`filterBtn ${activeButton === 'Requests' ? 'active' : ''}`}
@@ -69,6 +70,7 @@ const SearchBuddies: React.FC<SearchBarProps> = ({ search, setSearch }) => {
           >
             Requested
           </button>
+          */}
         </Container>
       </div>
     </div>

@@ -1,8 +1,11 @@
 'use client';
 
 import '../styles/searchSessions.style.css';
+/*
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
+*/
+import React from 'react';
 import { Search } from 'react-bootstrap-icons';
 
 interface SearchBarProps {
@@ -11,11 +14,12 @@ interface SearchBarProps {
 }
 
 const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
-  const [activeButton, setActiveButton] = useState<string>('');
-
+  /*
+  const [] = useState<string>('');
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? '' : buttonName);
   };
+  */
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -25,7 +29,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
     <div className="filterDiv">
       <div
         style={{
-          width: '100%',
+          paddingTop: '15px',
         }}
       >
         <div className="searchBar px-3">
@@ -47,6 +51,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             size={20}
           />
         </div>
+        {/*
         <Container className="btnContainer">
           <button
             type="button"
@@ -63,6 +68,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             Accepted
           </button>
         </Container>
+        */}
       </div>
     </div>
   );
