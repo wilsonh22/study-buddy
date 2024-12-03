@@ -112,62 +112,62 @@ const EditProfile: React.FC = () => {
     }
   };
 
-  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0];
-
-  //     const uploadParams = {
-  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-  //       Key: `public/${file.name}`,
-  //       Body: file,
-  //       ContentType: file.type,
-  //       // ACL: 'public-read',
-  //     };
-
-  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
-  //       if (err) {
-  //         console.error('Error uploading image:', err);
-  //       } else {
-  //         console.log('Image uploaded successfully:', data.Location);
-  //         // Update the profilePicUrl field with the image URL
-  //         setValue('profilePicUrl', data.Location);
-  //         setProfilePicUrl(data.Location);
-  //       }
-  //     });
-  //   }
-  // }
-
   function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-    console.log('DEBUGGING S3 UPLOAD');
-    console.log('Bucket:', process.env.NEXT_PUBLIC_S3_BUCKET);
-    console.log('Access Key ID:', process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID?.slice(0, 5));
-    console.log('Region:', process.env.NEXT_PUBLIC_AWS_REGION);
-
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      // Log the exact parameters being used
       const uploadParams = {
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
         Key: `public/${file.name}`,
         Body: file,
         ContentType: file.type,
+        // ACL: 'public-read',
       };
-
-      console.log('Upload Params:', JSON.stringify(uploadParams, null, 2));
 
       s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
         if (err) {
-          console.error('FULL ERROR DETAILS:', err);
-          console.error('Error Name:', err.name);
-          console.error('Error Message:', err.message);
-          console.error('Error Stack:', err.stack);
+          console.error('Error uploading image:', err);
         } else {
-          console.log('Upload Successful:', data);
+          console.log('Image uploaded successfully:', data.Location);
+          // Update the profilePicUrl field with the image URL
+          setValue('profilePicUrl', data.Location);
+          setProfilePicUrl(data.Location);
         }
       });
     }
   }
+
+  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+  //   console.log('DEBUGGING S3 UPLOAD');
+  //   console.log('Bucket:', process.env.NEXT_PUBLIC_S3_BUCKET);
+  //   console.log('Access Key ID:', process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID?.slice(0, 5));
+  //   console.log('Region:', process.env.NEXT_PUBLIC_AWS_REGION);
+
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+
+  //     // Log the exact parameters being used
+  //     const uploadParams = {
+  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
+  //       Key: `public/${file.name}`,
+  //       Body: file,
+  //       ContentType: file.type,
+  //     };
+
+  //     console.log('Upload Params:', JSON.stringify(uploadParams, null, 2));
+
+  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+  //       if (err) {
+  //         console.error('FULL ERROR DETAILS:', err);
+  //         console.error('Error Name:', err.name);
+  //         console.error('Error Message:', err.message);
+  //         console.error('Error Stack:', err.stack);
+  //       } else {
+  //         console.log('Upload Successful:', data);
+  //       }
+  //     });
+  //   }
+  // }
 
   // Loading state
   if (status === 'loading' || isLoading) {
