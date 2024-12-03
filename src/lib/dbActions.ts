@@ -210,9 +210,9 @@ export async function leaveSession(studySessionId: number, userId: number) {
     where: { id: studySessionId },
     data: {
       users: {
-        disconnect: { id: userId }
-      }
-    }
+        disconnect: { id: userId },
+      },
+    },
   });
   redirect('/mySessions');
 }

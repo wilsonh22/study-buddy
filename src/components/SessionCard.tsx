@@ -132,13 +132,13 @@ const SessionCard = ({
                 </div>
                 <div className="py-1" />
 
-                {currentUser === studySessionInfo.owner.id ? (
+                {currentUser == studySessionInfo.owner.id ? (
                   <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
                     Edit
                   </Button>
-                ) :  studySessionInfo.users.some(user => user.id === currentUser) ? (
-                  <Button 
-                    className="requestBtn" 
+                ) : studySessionInfo.users.some(user => user.id === currentUser) ? (
+                  <Button
+                    className="requestBtn"
                     onClick={() => leaveSessionBtn(studySessionInfo)}
                   >
                     Leave Session
