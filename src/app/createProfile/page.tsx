@@ -70,7 +70,7 @@ const CreateProfile: React.FC = () => {
 
       const uploadParams = {
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
-        Key: `public/${Date.now()}-${file.name}`,
+        Key: `public/${file.name}`,
         Body: file,
         ContentType: file.type,
         // ACL: 'public-read',
