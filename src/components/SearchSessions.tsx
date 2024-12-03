@@ -25,7 +25,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
 
   return(
     <div className="filterDiv">
-      <div 
+      <div
         style={{
           paddingTop: '15px',
         }}
