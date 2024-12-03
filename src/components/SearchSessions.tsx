@@ -1,8 +1,8 @@
 'use client';
 
 import '../styles/searchSessions.style.css';
-import React, { useState } from 'react';
 /*
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 */
 import { Search } from 'react-bootstrap-icons';
@@ -13,8 +13,8 @@ interface SearchBarProps {
 }
 
 const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
-  const [] = useState<string>('');
   /*
+  const [] = useState<string>('');
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? '' : buttonName);
   };
