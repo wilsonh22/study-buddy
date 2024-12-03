@@ -25,10 +25,53 @@ const EditProfile: React.FC = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(CreateProfileSchema),
   });
+
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     try {
+  //       // Use type assertion to handle the any type
+  //       const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
+
+  //       if (userId) {
+  //         const profileData = await getProfile(userId);
+
+  //         if (profileData) {
+  //           // Populate form fields
+  //           if (profileData.profilePicUrl) {
+  //             setValue('profilePicUrl', profileData.profilePicUrl);
+  //             setProfilePicUrl(profileData.profilePicUrl);
+  //           }
+
+  //           setValue('firstName', profileData.firstName || '');
+  //           setValue('lastName', profileData.lastName || '');
+  //           setValue('major', profileData.major || '');
+  //           setValue('social', profileData.social || '');
+  //           setValue('bio', profileData.bio || '');
+
+  //           // Set the selected role
+  //           if (profileData.collegeRole) {
+  //             setSelectedRole(profileData.collegeRole);
+  //             setValue('collegeRole', profileData.collegeRole);
+  //           }
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching profile:', error);
+  //       swal('Error', 'Failed to load profile', 'error');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (status === 'authenticated') {
+  //     fetchProfile();
+  //   }
+  // }, [session, setValue, status]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -40,10 +83,11 @@ const EditProfile: React.FC = () => {
           const profileData = await getProfile(userId);
 
           if (profileData) {
-            // Populate form fields
+            // Prioritize the most recent profile picture
             if (profileData.profilePicUrl) {
-              setValue('profilePicUrl', profileData.profilePicUrl);
-              setProfilePicUrl(profileData.profilePicUrl);
+              const latestProfilePicUrl = profileData.profilePicUrl;
+              setValue('profilePicUrl', latestProfilePicUrl);
+              setProfilePicUrl(latestProfilePicUrl);
             }
 
             setValue('firstName', profileData.firstName || '');
@@ -112,26 +156,74 @@ const EditProfile: React.FC = () => {
     }
   };
 
+  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+
+  //     const uploadParams = {
+  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
+  //       Key: `public/${file.name}`,
+  //       Body: file,
+  //       ContentType: file.type,
+  //       // ACL: 'public-read',
+  //     };
+
+  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+  //       if (err) {
+  //         console.error('Error uploading image:', err);
+  //       } else {
+  //         console.log('Image uploaded successfully:', data.Location);
+  //         // Update the profilePicUrl field with the image URL
+  //         setValue('profilePicUrl', data.Location);
+  //         setProfilePicUrl(data.Location);
+  //       }
+  //     });
+  //   }
+  // }
+
   function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
       const uploadParams = {
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-        Key: `public/${file.name}`,
+        Key: `public/${Date.now()}_${file.name}`,
         Body: file,
         ContentType: file.type,
-        // ACL: 'public-read',
       };
 
-      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+      s3.upload(uploadParams, async (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
         if (err) {
           console.error('Error uploading image:', err);
+          swal('Error', 'Failed to upload image', 'error');
         } else {
-          console.log('Image uploaded successfully:', data.Location);
-          // Update the profilePicUrl field with the image URL
-          setValue('profilePicUrl', data.Location);
-          setProfilePicUrl(data.Location);
+          try {
+            const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
+
+            if (userId) {
+              // Immediately update the local state
+              setValue('profilePicUrl', data.Location);
+              setProfilePicUrl(data.Location);
+
+              // Update the profile in the database
+              await editProfile({
+                userId,
+                id: userId,
+                profilePicUrl: data.Location,
+                firstName: getValues('firstName'),
+                lastName: getValues('lastName'),
+                major: getValues('major'),
+                social: getValues('social'),
+                bio: getValues('bio'),
+                collegeRole: selectedRole || CollegeRole.Student,
+              });
+
+              swal('Success', 'Profile image updated', 'success');
+            }
+          } catch (error) {
+            console.error('Error updating profile:', error);
+            swal('Error', 'Failed to update profile image', 'error');
+          }
         }
       });
     }
