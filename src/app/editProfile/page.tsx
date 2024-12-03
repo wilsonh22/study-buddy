@@ -192,38 +192,14 @@ const EditProfile: React.FC = () => {
         ContentType: file.type,
       };
 
-      s3.upload(uploadParams, async (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
         if (err) {
           console.error('Error uploading image:', err);
           swal('Error', 'Failed to upload image', 'error');
         } else {
-          try {
-            const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
-
-            if (userId) {
-              // Immediately update the local state
-              setValue('profilePicUrl', data.Location);
-              setProfilePicUrl(data.Location);
-
-              // Update the profile in the database
-              await editProfile({
-                userId,
-                id: userId,
-                profilePicUrl: data.Location,
-                firstName: getValues('firstName'),
-                lastName: getValues('lastName'),
-                major: getValues('major'),
-                social: getValues('social'),
-                bio: getValues('bio'),
-                collegeRole: selectedRole || CollegeRole.Student,
-              });
-
-              swal('Success', 'Profile image updated', 'success');
-            }
-          } catch (error) {
-            console.error('Error updating profile:', error);
-            swal('Error', 'Failed to update profile image', 'error');
-          }
+          setValue('profilePicUrl', data.Location);
+          setProfilePicUrl(data.Location);
+          swal('Success', 'Profile image uploaded. Please complete editing other fields.', 'success');
         }
       });
     }
