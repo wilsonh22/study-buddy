@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Search } from 'react-bootstrap-icons';
 
 interface SearchBarProps {
