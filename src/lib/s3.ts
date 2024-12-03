@@ -8,16 +8,20 @@
 // });
 
 // export default s3;
-
 import { S3Client } from '@aws-sdk/client-s3';
-import { awsCredentialsProvider } from '@vercel/functions/oidc';
+
+// Check required environment variables
+if (!process.env.NEXT_PUBLIC_AWS_REGION || !process.env.NEXT_PUBLIC_S3_BUCKET) {
+  throw new Error('Missing required AWS configuration');
+}
 
 const s3 = new S3Client({
-  // region: process.env.NEXT_PUBLIC_AWS_REGION!,
-  region: 'us-west-1',
-  credentials: awsCredentialsProvider({
-    roleArn: process.env.NEXT_PUBLIC_AWS_ROLE_ARN!,
-  }),
+  region: process.env.NEXT_PUBLIC_AWS_REGION,
+  credentials: {
+    // Use standard AWS credentials
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY!,
+  },
 });
 
 export default s3;
