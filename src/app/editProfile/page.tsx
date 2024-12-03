@@ -25,7 +25,6 @@ const EditProfile: React.FC = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(CreateProfileSchema),
