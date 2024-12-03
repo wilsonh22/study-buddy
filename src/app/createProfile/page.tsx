@@ -73,7 +73,6 @@ const CreateProfile: React.FC = () => {
         Key: `public/${Date.now()}_${file.name}`,
         Body: file,
         ContentType: file.type,
-        // ACL: 'public-read',
       };
 
       s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {

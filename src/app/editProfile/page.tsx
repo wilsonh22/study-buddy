@@ -30,48 +30,6 @@ const EditProfile: React.FC = () => {
     resolver: yupResolver(CreateProfileSchema),
   });
 
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       // Use type assertion to handle the any type
-  //       const userId = session?.user && 'id' in session.user ? parseInt((session.user as any).id, 10) : null;
-
-  //       if (userId) {
-  //         const profileData = await getProfile(userId);
-
-  //         if (profileData) {
-  //           // Populate form fields
-  //           if (profileData.profilePicUrl) {
-  //             setValue('profilePicUrl', profileData.profilePicUrl);
-  //             setProfilePicUrl(profileData.profilePicUrl);
-  //           }
-
-  //           setValue('firstName', profileData.firstName || '');
-  //           setValue('lastName', profileData.lastName || '');
-  //           setValue('major', profileData.major || '');
-  //           setValue('social', profileData.social || '');
-  //           setValue('bio', profileData.bio || '');
-
-  //           // Set the selected role
-  //           if (profileData.collegeRole) {
-  //             setSelectedRole(profileData.collegeRole);
-  //             setValue('collegeRole', profileData.collegeRole);
-  //           }
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching profile:', error);
-  //       swal('Error', 'Failed to load profile', 'error');
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   if (status === 'authenticated') {
-  //     fetchProfile();
-  //   }
-  // }, [session, setValue, status]);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -155,31 +113,6 @@ const EditProfile: React.FC = () => {
     }
   };
 
-  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0];
-
-  //     const uploadParams = {
-  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-  //       Key: `public/${file.name}`,
-  //       Body: file,
-  //       ContentType: file.type,
-  //       // ACL: 'public-read',
-  //     };
-
-  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
-  //       if (err) {
-  //         console.error('Error uploading image:', err);
-  //       } else {
-  //         console.log('Image uploaded successfully:', data.Location);
-  //         // Update the profilePicUrl field with the image URL
-  //         setValue('profilePicUrl', data.Location);
-  //         setProfilePicUrl(data.Location);
-  //       }
-  //     });
-  //   }
-  // }
-
   function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -203,38 +136,6 @@ const EditProfile: React.FC = () => {
       });
     }
   }
-
-  // function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
-  //   console.log('DEBUGGING S3 UPLOAD');
-  //   console.log('Bucket:', process.env.NEXT_PUBLIC_S3_BUCKET);
-  //   console.log('Access Key ID:', process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID?.slice(0, 5));
-  //   console.log('Region:', process.env.NEXT_PUBLIC_AWS_REGION);
-
-  //   if (e.target.files && e.target.files[0]) {
-  //     const file = e.target.files[0];
-
-  //     // Log the exact parameters being used
-  //     const uploadParams = {
-  //       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-  //       Key: `public/${file.name}`,
-  //       Body: file,
-  //       ContentType: file.type,
-  //     };
-
-  //     console.log('Upload Params:', JSON.stringify(uploadParams, null, 2));
-
-  //     s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
-  //       if (err) {
-  //         console.error('FULL ERROR DETAILS:', err);
-  //         console.error('Error Name:', err.name);
-  //         console.error('Error Message:', err.message);
-  //         console.error('Error Stack:', err.stack);
-  //       } else {
-  //         console.log('Upload Successful:', data);
-  //       }
-  //     });
-  //   }
-  // }
 
   // Loading state
   if (status === 'loading' || isLoading) {
