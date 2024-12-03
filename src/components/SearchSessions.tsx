@@ -23,9 +23,9 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
 
   return (
     <div className="filterDiv">
-      <div
+      <div 
         style={{
-          width: '100%',
+          paddingTop:'15px'
         }}
       >
         <div className="searchBar px-3">
@@ -47,6 +47,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             size={20}
           />
         </div>
+        {/*
         <Container className="btnContainer">
           <button
             type="button"
@@ -63,6 +64,7 @@ const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             Accepted
           </button>
         </Container>
+        */}
       </div>
     </div>
   );
