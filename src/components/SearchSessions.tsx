@@ -13,7 +13,7 @@ interface SearchBarProps {
 }
 
 const SearchSessions: React.FC<SearchBarProps> = ({ search, setSearch }) => {
-  const [activeButton, setActiveButton] = useState<string>('');
+  const [] = useState<string>('');
   /*
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName === activeButton ? '' : buttonName);
