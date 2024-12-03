@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
-import './signup.css';
+import '../../../styles/signup.style.css';
 
 type SignUpForm = {
   email: string;
@@ -99,7 +99,7 @@ const SignUp = () => {
               </Card.Body>
               <Card.Footer>
                 Already have an account?
-                <a href="/auth/signin">Sign in</a>
+                <a href="/auth/signin"> Sign in</a>
               </Card.Footer>
             </Card>
           </Col>
