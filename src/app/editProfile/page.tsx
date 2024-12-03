@@ -117,10 +117,11 @@ const EditProfile: React.FC = () => {
       const file = e.target.files[0];
 
       const uploadParams = {
-        Bucket: 'uhm-studymax-img', // Your S3 bucket name
-        Key: `public/${file.name}`,
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!, // Your S3 bucket name
+        Key: `public/${Date.now()}-${file.name}`,
         Body: file,
         ContentType: file.type,
+        // ACL: 'public-read',
       };
 
       s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
@@ -162,11 +163,7 @@ const EditProfile: React.FC = () => {
                     {profilePicUrl ? (
                       <Image src={profilePicUrl} alt="Profile" className="uploaded-image" />
                     ) : (
-                      <div className="placeholder-image py-5">
-                        No image
-                        <br />
-                        uploaded
-                      </div>
+                      <div className="placeholder-image">No image uploaded</div>
                     )}
                     <Button
                       className="add-icon-circle"
