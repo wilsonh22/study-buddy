@@ -69,8 +69,7 @@ const CreateProfile: React.FC = () => {
       const file = e.target.files[0];
 
       const uploadParams = {
-        // Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
-        Bucket: 'uhm-studymax-img',
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
         Key: `public/${file.name}`,
         Body: file,
         ContentType: file.type,
