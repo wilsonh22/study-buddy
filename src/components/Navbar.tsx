@@ -22,6 +22,7 @@ const NavBar: React.FC = () => {
             width="70"
             height="70"
             className="logo d-inline-block align-top"
+            alt="logo"
           />
         </Navbar.Brand>
         </div>
