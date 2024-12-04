@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
         <div className="navbar-div">
         <Navbar.Brand href="/">
           <Image
-            src="logo-png.png"
+            src="Logo.png"
             width="70"
             height="70"
             className="logo d-inline-block align-top"
