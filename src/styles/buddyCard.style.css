@@ -2,27 +2,35 @@
 .buddyCardBorder {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   border: none;
+  margin: 10px auto;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
   padding: 15px;
   width: 320px;
+  transition: all 0.3s ease;
   height: 458.6px;
   background-color: #7cfbdf;
 }
 .buddyCards {
-  width: 100%;
-  height: 100%;
-  display: flex;
+  padding-top: 15px;
+  display: grid;
   justify-content: center;
   align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 .buddyCardCont {
   width: 300px;
   height: 430px;
   font-size: small;
   border: none;
+  transition: all 0.3s ease;
   border-radius: 20px;
 }
 .profilePic {
@@ -70,4 +78,67 @@
   box-shadow: none !important;
   background-color: #0cc89f !important;
   color: black;
+}
+
+/* transitions */
+
+.buddyCardBorder:hover {
+  cursor: pointer;
+  transform: translateY(-15px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.buddyCardCont:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+p {
+  padding: 0;
+  line-height: 1.8;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.fixOverflow {
+  display: inline-block;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* screen adapt */
+@media (min-width: 1400px) {
+  .buddyCards {
+    grid-template-columns: repeat(4, 1fr); /* Force 4 columns at largest width */
+  }
+}
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .buddyCards {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium-large screens */
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .buddyCards {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium-large screens */
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .buddyCards {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 767px) {
+  .buddyCards {
+    grid-template-columns: 1fr; /* Single column for small screens */
+  }
 }
