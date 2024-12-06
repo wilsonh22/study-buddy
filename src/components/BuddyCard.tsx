@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-// import { addBuddy } from '@/lib/dbActions';
+import { addBuddy } from '@/lib/dbActions';
 import { Buddy } from '@prisma/client';
+import { StarFill } from 'react-bootstrap-icons';
+import swal from 'sweetalert';
 import { Card, Button } from 'react-bootstrap';
 import SearchBuddies from './SearchBuddies';
 import '../styles/buddyCard.style.css';
@@ -19,6 +21,15 @@ type ExtendedBuddy = Buddy & {
 
 const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; currentUser: number }) => {
   const [search, setSearch] = useState('');
+
+  const addBuddyBtn = async (buddy: ExtendedBuddy) => {
+    console.log('Buddy ID:', buddy.id);
+    console.log('Current User ID:', currentUser);
+    await addBuddy(buddy.id, currentUser);
+    swal('Success', 'Added Buddy', 'success', {
+      timer: 1000,
+    });
+  };
 
   const buddySearch = buddyList.filter((buddy) => {
     const firstName = buddy.userDupe.profile?.firstName ?? '';
@@ -67,7 +78,9 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                       Edit Profile
                     </Button>
                   ) : (
-                    <Button className="requestBtn">Request</Button>
+                    <Button className="requestBtn" onClick={() => addBuddyBtn(buddy)}>
+                      <StarFill />
+                    </Button>
                   )}
                 </Card.Body>
               </Card.Body>
