@@ -32,6 +32,13 @@ const myBuddies = async () => {
   // Fetch buddies on the server
 
   const buddyList: ExtendedBuddy[] = (await prisma.buddy.findMany({
+    where: {
+      users: {
+        some: {
+          id: currentUser,
+        },
+      },
+    },
     include: {
       userDupe: {
         include: {

@@ -205,6 +205,28 @@ export async function addSession(studySessionId: number, userId: number) {
   redirect('/mySessions');
 }
 
+export async function addBuddy(buddyId: number, userId: number) {
+  // Check if the buddy exists
+  const buddyExists = await prisma.buddy.findUnique({
+    where: { id: buddyId },
+  });
+
+  if (!buddyExists) {
+    throw new Error(`Buddy with ID ${buddyId} does not exist.`);
+  }
+
+  // Update the buddy to include the current user
+  await prisma.buddy.update({
+    where: { id: buddyId },
+    data: {
+      users: {
+        connect: { id: userId },
+      },
+    },
+  });
+  redirect('/myBuddies');
+}
+
 export async function updateSession(studySessionId: number, studySession: Partial<StudySession>) {
   await prisma.studySession.update({
     where: { id: studySessionId },
