@@ -40,7 +40,7 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
       </div>
       <div className="buddyCards">
         {buddySearch.map((buddy) => (
-          <div className="buddyCardBorder">
+          <div key={buddy.userDupe.id} className="buddyCardBorder">
             <Card className="buddyCardCont">
               <Card.Body>
                 <div className="profilePic" />

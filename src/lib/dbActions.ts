@@ -284,7 +284,6 @@ export async function createUser(credentials: { email: string; password: string 
 }
 
 export async function createBuddy(user: { id: number }) {
-  // Create the user first
   await prisma.buddy.create({
     data: {
       userDupe: {
