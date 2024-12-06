@@ -53,7 +53,7 @@ model Buddy {
   id       Int    @id @default(autoincrement())
   users    User[] @relation("UserBuddies")
   // uses userId of buddy
-  buddyId  Int?   @unique
+  buddyId  Int    @unique
   userDupe User?  @relation(fields: [buddyId], references: [id])
 }
 

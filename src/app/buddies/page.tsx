@@ -42,7 +42,7 @@ const Buddies = async () => {
   })) as ExtendedBuddy[];
 
   return (
-    <div className="buddiess">
+    <div className="buddies">
       <h1 className="buddiesPageTitle">
         <strong>Buddies</strong>
       </h1>

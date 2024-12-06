@@ -270,10 +270,26 @@ export async function deleteStuff(id: number) {
 export async function createUser(credentials: { email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
-  await prisma.user.create({
+
+  const user = await prisma.user.create({
     data: {
       email: credentials.email,
       password,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return user;
+}
+
+export async function createBuddy(user: { id: number }) {
+  // Create the user first
+  await prisma.buddy.create({
+    data: {
+      userDupe: {
+        connect: { id: user.id },
+      },
     },
   });
 }
