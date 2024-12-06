@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { addBuddy } from '@/lib/dbActions';
 import { Buddy } from '@prisma/client';
-import { StarFill } from 'react-bootstrap-icons';
+// import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
 import { Card, Button } from 'react-bootstrap';
 import SearchBuddies from './SearchBuddies';
@@ -79,7 +79,8 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                     </Button>
                   ) : (
                     <Button className="requestBtn" onClick={() => addBuddyBtn(buddy)}>
-                      <StarFill />
+                      Favorite
+                      {/* <StarFill /> */}
                     </Button>
                   )}
                 </Card.Body>
