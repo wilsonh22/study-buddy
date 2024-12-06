@@ -1,34 +1,82 @@
 'use client';
 
+import { useState } from 'react';
+// import { addBuddy } from '@/lib/dbActions';
+import { Buddy } from '@prisma/client';
 import { Card, Button } from 'react-bootstrap';
+import SearchBuddies from './SearchBuddies';
 import '../styles/buddyCard.style.css';
 
-const BuddyCard = () => (
-  <div className="buddyCard">
-    <div className="sessionCardBorder">
-      <Card className="sessionCardCont">
-        <Card.Body>
-          <div className="profilePic" />
-          <Card.Title className="pt-3">Ralph Ramos</Card.Title>
-          <Card.Text>
-            <strong>Bio: </strong>
-            Coding is Hard
-          </Card.Text>
-          <Card.Text>
-            <strong>Major: </strong>
-            Computer Science
-          </Card.Text>
-          <Card.Text>
-            <strong>Buddies: </strong>
-            John, Wilson, Lukas, Reo
-          </Card.Text>
-          <Card.Body className="cardBtnDiv">
-            <Button className="requestBtn">Request</Button>
-          </Card.Body>
-        </Card.Body>
-      </Card>
+type ExtendedBuddy = Buddy & {
+  userDupe: {
+    id: number;
+    profile?: {
+      firstName: string;
+      lastName: string;
+    };
+  };
+};
+
+const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; currentUser: number }) => {
+  const [search, setSearch] = useState('');
+
+  const buddySearch = buddyList.filter((buddy) => {
+    const firstName = buddy.userDupe.profile?.firstName ?? '';
+    const lastName = buddy.userDupe.profile?.lastName ?? '';
+    const combinedName = `${firstName} ${lastName}`.toLowerCase();
+    const searchLower = search.toLowerCase();
+
+    return (
+      buddy.userDupe.profile?.firstName?.toLowerCase().includes(searchLower) ||
+      buddy.userDupe.profile?.lastName?.toLowerCase().includes(searchLower) ||
+      combinedName.includes(searchLower)
+    );
+  });
+
+  return (
+    <div>
+      <div>
+        <SearchBuddies search={search} setSearch={setSearch} />
+      </div>
+      <div className="buddyCards">
+        {buddySearch.map((buddy) => (
+          <div key={buddy.userDupe.id} className="buddyCardBorder">
+            <Card className="buddyCardCont">
+              <Card.Body>
+                <div className="profilePic" />
+                <Card.Title className="pt-3">
+                  {buddy.userDupe?.profile
+                    ? `${buddy.userDupe.profile.firstName} ${buddy.userDupe.profile.lastName}`
+                    : 'Unknown'}
+                </Card.Title>
+                <Card.Text>
+                  <strong>Bio: </strong>
+                  Coding is Hard
+                </Card.Text>
+                <Card.Text>
+                  <strong>Major: </strong>
+                  Computer Science
+                </Card.Text>
+                <Card.Text>
+                  <strong>Buddies: </strong>
+                  John, Wilson, Lukas, Reo
+                </Card.Text>
+                <Card.Body className="cardBtnDiv">
+                  {currentUser === buddy.userDupe.id ? (
+                    <Button className="requestBtn" href="/editProfile">
+                      Edit Profile
+                    </Button>
+                  ) : (
+                    <Button className="requestBtn">Request</Button>
+                  )}
+                </Card.Body>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default BuddyCard;
