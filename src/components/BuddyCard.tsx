@@ -60,18 +60,24 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                     ? `${buddy.userDupe.profile.firstName} ${buddy.userDupe.profile.lastName}`
                     : 'Unknown'}
                 </Card.Title>
-                <Card.Text>
-                  <strong>Bio: </strong>
-                  Coding is Hard
-                </Card.Text>
-                <Card.Text>
-                  <strong>Major: </strong>
-                  Computer Science
-                </Card.Text>
-                <Card.Text>
-                  <strong>Buddies: </strong>
-                  John, Wilson, Lukas, Reo
-                </Card.Text>
+                <div>
+                  <p>
+                    <strong>Bio:</strong>
+                    Bio Field
+                  </p>
+                  <p>
+                    <strong>Major:</strong>
+                    Major Field
+                  </p>
+                  <p>
+                    <strong>Role:</strong>
+                    College Role Field
+                  </p>
+                  <p>
+                    <strong>Socials:</strong>
+                    Social Field
+                  </p>
+                </div>
                 <Card.Body className="cardBtnDiv">
                   {currentUser === buddy.userDupe.id ? (
                     <Button className="requestBtn" href="/editProfile">
