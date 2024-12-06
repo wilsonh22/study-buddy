@@ -51,7 +51,7 @@ const myBuddies = async () => {
   return (
     <div className="buddies">
       <h1 className="buddiesPageTitle">
-        <strong>Buddies</strong>
+        <strong>My Buddies</strong>
       </h1>
       {/* <SearchBuddies search={search} setSearch={setSearch} /> */}
       <div className="buddiesListDiv">
