@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { addSession } from '@/lib/dbActions';
+import { addSession, leaveSession } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 import { Card, Button } from 'react-bootstrap';
 import swal from 'sweetalert';
@@ -42,6 +42,14 @@ const SessionCard = ({
       timer: 1000,
     });
   };
+  const leaveSessionBtn = async (studySession: ExtendedStudySession) => {
+    console.log('Leaving Study Session ID:', studySession.id);
+    console.log('Current User ID:', currentUser);
+    await leaveSession(studySession.id, currentUser);
+    swal('Success', 'Left Session', 'success', {
+      timer: 1000,
+    });
+  };
   const studySessionsSearch = studySessions.filter((session) => {
     const firstName = session.owner.profile?.firstName ?? '';
     const lastName = session.owner.profile?.lastName ?? '';
@@ -58,6 +66,7 @@ const SessionCard = ({
       session.place.toLowerCase().includes(searchLower)
     );
   });
+
   return (
     <div>
       <div>
@@ -124,15 +133,31 @@ const SessionCard = ({
                 </div>
                 <div className="py-1" />
 
-                {currentUser === studySessionInfo.owner.id ? (
-                  <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
-                    Edit
-                  </Button>
-                ) : (
-                  <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
-                    Add
-                  </Button>
-                )}
+                {(() => {
+                  if (studySessionInfo.owner.id === currentUser) {
+                    return (
+                      <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
+                        Edit
+                      </Button>
+                    );
+                  }
+
+                  const isUserInSession = studySessionInfo.users?.some((user) => user.id === currentUser);
+
+                  if (isUserInSession) {
+                    return (
+                      <Button className="requestBtn" onClick={() => leaveSessionBtn(studySessionInfo)}>
+                        Leave Session
+                      </Button>
+                    );
+                  }
+
+                  return (
+                    <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
+                      Add
+                    </Button>
+                  );
+                })()}
               </Card.Body>
             </Card>
           </div>
