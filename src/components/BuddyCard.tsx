@@ -50,50 +50,52 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
         <SearchBuddies search={search} setSearch={setSearch} />
       </div>
       <div className="buddyCards">
-        {buddySearch.map((buddy) => (
-          <div key={buddy.userDupe.id} className="buddyCardBorder">
-            <Card className="buddyCardCont">
-              <Card.Body>
-                <div className="profilePic" />
-                <Card.Title className="pt-3">
-                  {buddy.userDupe?.profile
-                    ? `${buddy.userDupe.profile.firstName} ${buddy.userDupe.profile.lastName}`
-                    : 'Unknown'}
-                </Card.Title>
-                <div>
-                  <p>
-                    <strong>Bio:</strong>
-                    Bio Field
-                  </p>
-                  <p>
-                    <strong>Major:</strong>
-                    Major Field
-                  </p>
-                  <p>
-                    <strong>Role:</strong>
-                    College Role Field
-                  </p>
-                  <p>
-                    <strong>Socials:</strong>
-                    Social Field
-                  </p>
-                </div>
-                <Card.Body className="cardBtnDiv">
-                  {currentUser === buddy.userDupe.id ? (
-                    <Button className="requestBtn" href="/editProfile">
-                      Edit Profile
-                    </Button>
-                  ) : (
-                    <Button className="requestBtn" onClick={() => addBuddyBtn(buddy)}>
-                      Favorite
-                      {/* <StarFill /> */}
-                    </Button>
-                  )}
+        {buddySearch
+          .filter((buddy) => buddy.userDupe.id !== currentUser)
+          .map((buddy) => (
+            <div key={buddy.userDupe.id} className="buddyCardBorder">
+              <Card className="buddyCardCont">
+                <Card.Body>
+                  <div className="profilePic" />
+                  <Card.Title className="pt-3">
+                    {buddy.userDupe?.profile
+                      ? `${buddy.userDupe.profile.firstName} ${buddy.userDupe.profile.lastName}`
+                      : 'Unknown'}
+                  </Card.Title>
+                  <div>
+                    <p>
+                      <strong>Bio:</strong>
+                      Bio Field
+                    </p>
+                    <p>
+                      <strong>Major:</strong>
+                      Major Field
+                    </p>
+                    <p>
+                      <strong>Role:</strong>
+                      College Role Field
+                    </p>
+                    <p>
+                      <strong>Socials:</strong>
+                      Social Field
+                    </p>
+                  </div>
+                  <Card.Body className="cardBtnDiv">
+                    {currentUser === buddy.userDupe.id ? (
+                      <Button className="requestBtn" href="/editProfile">
+                        Edit Profile
+                      </Button>
+                    ) : (
+                      <Button className="requestBtn" onClick={() => addBuddyBtn(buddy)}>
+                        Favorite
+                        {/* <StarFill /> */}
+                      </Button>
+                    )}
+                  </Card.Body>
                 </Card.Body>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
+              </Card>
+            </div>
+          ))}
       </div>
     </div>
   );
