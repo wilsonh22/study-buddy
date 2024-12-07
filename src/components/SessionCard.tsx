@@ -66,6 +66,7 @@ const SessionCard = ({
       session.place.toLowerCase().includes(searchLower)
     );
   });
+
   return (
     <div>
       <div>
@@ -132,22 +133,31 @@ const SessionCard = ({
                 </div>
                 <div className="py-1" />
 
-                {currentUser == studySessionInfo.owner.id ? (
-                  <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
-                    Edit
-                  </Button>
-                ) : studySessionInfo.users.some(user => user.id === currentUser) ? (
-                  <Button
-                    className="requestBtn"
-                    onClick={() => leaveSessionBtn(studySessionInfo)}
-                  >
-                    Leave Session
-                  </Button>
-                ) : (
-                  <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
-                    Add
-                  </Button>
-                )}
+                {(() => {
+                  if (studySessionInfo.owner.id === currentUser) {
+                    return (
+                      <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
+                        Edit
+                      </Button>
+                    );
+                  }
+
+                  const isUserInSession = studySessionInfo.users?.some((user) => user.id === currentUser);
+
+                  if (isUserInSession) {
+                    return (
+                      <Button className="requestBtn" onClick={() => leaveSessionBtn(studySessionInfo)}>
+                        Leave Session
+                      </Button>
+                    );
+                  }
+
+                  return (
+                    <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
+                      Add
+                    </Button>
+                  );
+                })()}
               </Card.Body>
             </Card>
           </div>
