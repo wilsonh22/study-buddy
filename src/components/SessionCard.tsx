@@ -151,7 +151,6 @@ const SessionCard = ({
                       </Button>
                     );
                   }
-
                   return (
                     <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
                       Add

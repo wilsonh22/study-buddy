@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { TrashFill } from 'react-bootstrap-icons';
+import { TrashFill, BoxArrowInUp } from 'react-bootstrap-icons';
 import { useEffect, useState } from 'react';
 import { updateSession, getSessionById, deleteSession } from '@/lib/dbActions';
 import { useForm, Controller } from 'react-hook-form';
@@ -180,27 +180,56 @@ const EditSessionContent = ({ currentUser }: { currentUser: number }) => {
                     <Row>
                       <Col>
                         <Form.Group>
-                          <Form.Label>Class</Form.Label>
+                          <Form.Label>Session Image</Form.Label>
+                          <div className="imageDiv">
+                            <div className="sessionImg" />
+                            <div className="addBtnDiv">
+                              <Button
+                                className="add-icon-circle"
+                                onClick={() => document.getElementById('sessionImgUrl')?.click()}
+                              >
+                                <span className="add-icon">
+                                  <i className="bi bi-box-arrow-in-up" />
+                                  <BoxArrowInUp />
+                                </span>
+                              </Button>
+                            </div>
+                          </div>
                           <input
-                            type="text"
-                            {...register('class')}
-                            className="form-control"
-                            placeholder="Enter Class"
+                            id="sessionImgUrl"
+                            type="file"
+                            accept="image/png, image/jpeg image/jpg"
+                            style={{ display: 'none' }}
                           />
                         </Form.Group>
                       </Col>
-                    </Row>
-                    <Row>
                       <Col>
-                        <Form.Group>
-                          <Form.Label>Place</Form.Label>
-                          <input
-                            type="text"
-                            {...register('place')}
-                            className="form-control"
-                            placeholder="Where to study"
-                          />
-                        </Form.Group>
+                        <Row>
+                          <Col>
+                            <Form.Group>
+                              <Form.Label>Class</Form.Label>
+                              <input
+                                type="text"
+                                {...register('class')}
+                                className="form-control"
+                                placeholder="Enter Class"
+                              />
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <Form.Group>
+                              <Form.Label>Place</Form.Label>
+                              <input
+                                type="text"
+                                {...register('place')}
+                                className="form-control"
+                                placeholder="Where to study"
+                              />
+                            </Form.Group>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                     <Form.Group className="form-group">
@@ -210,7 +239,7 @@ const EditSessionContent = ({ currentUser }: { currentUser: number }) => {
                         <Col />
                         <Col>
                           <Button className="cSbutton" type="submit" variant="primary">
-                            Edit Session
+                            Save
                           </Button>
                         </Col>
                         <Col />
