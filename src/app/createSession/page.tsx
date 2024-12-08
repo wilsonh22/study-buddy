@@ -1,6 +1,8 @@
 'use client';
 
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import React, { useState, ChangeEvent } from 'react';
+import s3 from '@/lib/s3';
+import { Container, Row, Col, Card, Form, Button, Image } from 'react-bootstrap';
 import { BoxArrowInUp } from 'react-bootstrap-icons';
 import { useSession } from 'next-auth/react';
 import { createSession } from '@/lib/dbActions';
@@ -23,6 +25,7 @@ const onSubmit = async (
     sessionDate: Date;
     startTime: Date;
     endTime: Date;
+    image: string;
   },
   session: any,
 ) => {
@@ -36,7 +39,8 @@ const onSubmit = async (
 
 const CreateSessionPage: React.FC = () => {
   const { data: session, status } = useSession();
-  const { register, handleSubmit, control } = useForm({
+  const [image, setImage] = useState<string | null>(null);
+  const { register, handleSubmit, setValue, control } = useForm({
     resolver: yupResolver(CreateSessionSchema),
   });
   if (status === 'loading') {
@@ -45,6 +49,30 @@ const CreateSessionPage: React.FC = () => {
   if (status === 'unauthenticated') {
     redirect('/auth/signin');
   }
+
+  function handleImgUpload(e: ChangeEvent<HTMLInputElement>): void {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const uploadParams = {
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET!,
+        Key: `public/${Date.now()}_${file.name}`,
+        Body: file,
+        ContentType: file.type,
+      };
+
+      s3.upload(uploadParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+        if (err) {
+          console.error('Error uploading image:', err);
+        } else {
+          console.log('Image uploaded successfully:', data.Location);
+          setValue('image', data.Location);
+          setImage(data.Location);
+        }
+      });
+    }
+  }
+
   return (
     <div className="p-5">
       <h1 className="createSessionTitle text-center">
@@ -149,11 +177,21 @@ const CreateSessionPage: React.FC = () => {
                       <Form.Group>
                         <Form.Label>Session Image</Form.Label>
                         <div className="imageDiv">
-                          <div className="sessionImg" />
+                          <div className="sessionImg">
+                            {image ? (
+                              <Image src={image} alt="Session Image" className="uploaded-image" />
+                            ) : (
+                              <div className="placeholder-image py-3">
+                                No image
+                                <br />
+                                uploaded
+                              </div>
+                            )}
+                          </div>
                           <div className="addBtnDiv">
                             <Button
                               className="add-icon-circle"
-                              onClick={() => document.getElementById('sessionImgUrl')?.click()}
+                              onClick={() => document.getElementById('image')?.click()}
                             >
                               <span className="add-icon">
                                 <i className="bi bi-box-arrow-in-up" />
@@ -163,10 +201,11 @@ const CreateSessionPage: React.FC = () => {
                           </div>
                         </div>
                         <input
-                          id="sessionImgUrl"
+                          id="image"
                           type="file"
                           accept="image/png, image/jpeg image/jpg"
                           style={{ display: 'none' }}
+                          onChange={handleImgUpload}
                         />
                       </Form.Group>
                     </Col>
