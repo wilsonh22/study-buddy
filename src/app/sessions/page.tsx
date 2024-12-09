@@ -25,6 +25,11 @@ type ExtendedStudySession = StudySession & {
       social: string;
       profilePicUrl: string;
     };
+    myBuddies?: {
+      users: {
+        id: number;
+      }[];
+    }[];
   }[];
 };
 const Sessions = async () => {

@@ -28,11 +28,11 @@ type ExtendedStudySession = StudySession & {
       social: string;
       profilePicUrl: string;
     };
-    // myBuddies?: {
-    //   users: {
-    //     id: number;
-    //   }[];
-    // }[];
+    myBuddies?: {
+      users: {
+        id: number;
+      }[];
+    }[];
   }[];
 };
 
@@ -129,13 +129,13 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                   </Col>
                 </Row>
                 <Card.Body className="cardBtnDiv">
-                  {/* {(() => {
-                    let status = 'Favorite';
-                    let icon = Heart;
+                  {(() => {
+                    // let status = 'Favorite';
+                    // let icon = Heart;
 
                     if (user.id === currentUser) {
-                      status = 'you';
-                      icon = Pencil;
+                      // status = 'you';
+                      // icon = Pencil;
                       return (
                         <Button className="requestBtnModal" href="/editProfile">
                           <Pencil />
@@ -143,20 +143,25 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                       );
                     }
 
-                    if (user.id !== currentUser) {
-                      if{user.id === }
-                      
+                    if (user.myBuddies?.some((buddy) => buddy.users.some((u) => u.id === currentUser))) {
+                      console.log('Found buddy match');
+                      // status = 'Buddies';
+                      // icon = HeartFill;
+                      return (
+                        <Button className="requestBtnModal" onClick={() => removeBuddyBtn(user)}>
+                          <HeartFill />
+                        </Button>
+                      );
                     }
 
-                    if (user.profile?.collegeRole === 'TA') {
-                      role = 'TA';
-                      pillColor = 'danger';
-                    }
+                    return (
+                      <Button className="requestBtnModal" onClick={() => addBuddyBtn(user)}>
+                        <Heart />
+                      </Button>
+                    );
+                  })()}
 
-                    return <Button className="requestBtnModal">{icon}</Button>;
-                  })()} */}
-
-                  {currentUser === user.id ? (
+                  {/* {currentUser === user.id ? (
                     <Button className="requestBtnModal" href="/editProfile">
                       <Pencil />
                     </Button>
@@ -164,7 +169,7 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                     <Button className="requestBtnModal" onClick={() => addBuddyBtn(user)}>
                       <Heart />
                     </Button>
-                  )}
+                  )} */}
                 </Card.Body>
               </Card.Body>
             </Card>
