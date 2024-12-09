@@ -19,6 +19,11 @@ type ExtendedMySession = StudySession & {
     profile?: {
       firstName: string;
       lastName: string;
+      bio: string;
+      major: string;
+      collegeRole: string;
+      social: string;
+      profilePicUrl: string;
     };
   }[];
 };
@@ -49,12 +54,7 @@ const mySessions = async () => {
       users: {
         select: {
           id: true,
-          profile: {
-            select: {
-              firstName: true,
-              lastName: true,
-            },
-          },
+          profile: true,
         },
       },
     },

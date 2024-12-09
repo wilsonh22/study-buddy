@@ -24,7 +24,7 @@ type ExtendedBuddy = Buddy & {
   };
 };
 
-const Buddies = async () => {
+const myBuddies = async () => {
   // const [search, setSearch] = useState('');
 
   const session = await getServerSession(authOptions);
@@ -37,6 +37,13 @@ const Buddies = async () => {
   // Fetch buddies on the server
 
   const buddyList: ExtendedBuddy[] = (await prisma.buddy.findMany({
+    where: {
+      users: {
+        some: {
+          id: currentUser,
+        },
+      },
+    },
     include: {
       userDupe: {
         include: {
@@ -49,13 +56,12 @@ const Buddies = async () => {
   return (
     <div className="buddies">
       <h1 className="buddiesPageTitle">
-        <strong>Buddies</strong>
+        <strong>My Buddies</strong>
       </h1>
-      {/* <SearchBuddies search={search} setSearch={setSearch} /> */}
       <div className="buddiesListDiv">
         <BuddyCard buddyList={buddyList} currentUser={currentUser} />
       </div>
     </div>
   );
 };
-export default Buddies;
+export default myBuddies;

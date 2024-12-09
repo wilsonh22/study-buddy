@@ -107,6 +107,21 @@ p {
   white-space: nowrap;
 }
 
+.nonOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4 !important;
+  line-clamp: 4 !important;
+}
+/* MODAL STYLING */
+
+.cardImgModal {
+  width: 400px;
+  min-height: 300px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
 /* screen adapt */
 @media (min-width: 1400px) {
   .sessionCards {

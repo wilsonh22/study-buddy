@@ -1,6 +1,5 @@
 import { Button } from 'react-bootstrap';
 import '../../styles/buddyProfile.style.css';
-import BuddyCard from '../../components/BuddyCard';
 
 const buddyProfile = () => (
   <div className="myBuddy p-5">
@@ -39,15 +38,6 @@ const buddyProfile = () => (
     <h1 className="py-4 px-5">
       <strong>My buddies</strong>
     </h1>
-
-    <div className="sessionListDiv">
-      <div className="sessionsList">
-        <BuddyCard />
-        <BuddyCard />
-        <BuddyCard />
-        <BuddyCard />
-      </div>
-    </div>
   </div>
 );
 

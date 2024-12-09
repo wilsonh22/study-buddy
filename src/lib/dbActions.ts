@@ -174,6 +174,7 @@ export async function createSession(studySession: StudySession) {
       sessionDate: studySession.sessionDate,
       startTime: studySession.startTime,
       endTime: studySession.endTime,
+      image: studySession.image,
       users: {
         connect: { id: studySession.userId },
       },
@@ -205,6 +206,40 @@ export async function addSession(studySessionId: number, userId: number) {
   redirect('/mySessions');
 }
 
+export async function addBuddy(buddyId: number, userId: number) {
+  // Check if the buddy exists
+  const buddyExists = await prisma.buddy.findUnique({
+    where: { id: buddyId },
+  });
+
+  if (!buddyExists) {
+    throw new Error(`Buddy with ID ${buddyId} does not exist.`);
+  }
+
+  // Update the buddy to include the current user
+  await prisma.buddy.update({
+    where: { id: buddyId },
+    data: {
+      users: {
+        connect: { id: userId },
+      },
+    },
+  });
+  redirect('/myBuddies');
+}
+
+export async function leaveSession(studySessionId: number, userId: number) {
+  await prisma.studySession.update({
+    where: { id: studySessionId },
+    data: {
+      users: {
+        disconnect: { id: userId },
+      },
+    },
+  });
+  redirect('/mySessions');
+}
+
 export async function updateSession(studySessionId: number, studySession: Partial<StudySession>) {
   await prisma.studySession.update({
     where: { id: studySessionId },
@@ -216,6 +251,7 @@ export async function updateSession(studySessionId: number, studySession: Partia
       sessionDate: studySession.sessionDate,
       startTime: studySession.startTime,
       endTime: studySession.endTime,
+      image: studySession.image,
       users: {
         connect: { id: studySession.userId },
       },
@@ -270,10 +306,25 @@ export async function deleteStuff(id: number) {
 export async function createUser(credentials: { email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
-  await prisma.user.create({
+
+  const user = await prisma.user.create({
     data: {
       email: credentials.email,
       password,
+    },
+    select: {
+      id: true,
+    },
+  });
+  return user;
+}
+
+export async function createBuddy(user: { id: number }) {
+  await prisma.buddy.create({
+    data: {
+      userDupe: {
+        connect: { id: user.id },
+      },
     },
   });
 }

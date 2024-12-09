@@ -29,8 +29,11 @@ model User {
   role         Role           @default(USER)
   profile      Profile?
   mySessions   StudySession[] @relation("mySessions")
+  myBuddies    Buddy[]        @relation("UserBuddies")
   //public sessions all sessions:
   StudySession StudySession[]
+  //public buddies all buddies:
+  buddy        Buddy[]
 }
 
 model Profile {
@@ -44,6 +47,14 @@ model Profile {
   bio           String
   collegeRole   CollegeRole
   profilePicUrl String
+}
+
+model Buddy {
+  id       Int    @id @default(autoincrement())
+  users    User[] @relation("UserBuddies")
+  // uses userId of buddy
+  buddyId  Int    @unique
+  userDupe User?  @relation(fields: [buddyId], references: [id])
 }
 
 enum CollegeRole {
@@ -67,6 +78,7 @@ model StudySession {
   sessionDate DateTime
   startTime   DateTime
   endTime     DateTime
+  image       String
 }
 
 enum Condition {
