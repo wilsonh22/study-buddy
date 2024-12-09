@@ -1,0 +1,153 @@
+/* SESSION CARD STYLING */
+.buddyCardBorder {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  margin: 10px auto;
+  border-radius: 20px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  width: 533px;
+  transition: all 0.3s ease;
+  height: 180px;
+  background-color: #7cfbdf;
+}
+.buddyCards {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.buddyCardCont {
+  width: 500px;
+  height: 150px;
+  font-size: small;
+  border: none;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+}
+.profilePic {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background-color: grey;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 2px black solid;
+}
+#profilePicCol {
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.no-gap .list-group-item {
+  border: none;
+}
+
+/* Custom button styles */
+.requestBtnModal {
+  background-color: #7cfbdf;
+  color: black;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+.cardBtnDiv {
+  padding-top: 20px;
+}
+/* Custom hover, focus, and active states */
+.requestBtnModal:hover,
+.requestBtnModal:focus,
+.requestBtnModal:active {
+  background-color: #0cc89f;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.requestBtnModal:focus,
+.requestBtnModal:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #0cc89f !important;
+  color: black;
+}
+
+/* transitions */
+
+.buddyCardBorder:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.buddyCardCont:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+p {
+  padding: 0;
+  line-height: 1.8;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.fixOverflow {
+  display: inline-block;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* screen adapt */
+@media (min-width: 1400px) {
+  .buddyCards {
+    grid-template-columns: repeat(4, 1fr); /* Force 4 columns at largest width */
+  }
+}
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .buddyCards {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium-large screens */
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .buddyCards {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium-large screens */
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .buddyCards {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
+  }
+}
+
+@media (max-width: 767px) {
+  .buddyCards {
+    grid-template-columns: 1fr; /* Single column for small screens */
+  }
+}

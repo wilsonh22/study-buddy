@@ -5,6 +5,7 @@ import { addSession, leaveSession } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 import { Card, Button, Modal, Image, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import swal from 'sweetalert';
+import SessionBuddyCard from './SessionBuddyCard';
 import SearchSessions from './SearchSessions';
 import '../styles/sessionCard.style.css';
 
@@ -21,6 +22,11 @@ type ExtendedStudySession = StudySession & {
     profile?: {
       firstName: string;
       lastName: string;
+      bio: string;
+      major: string;
+      collegeRole: string;
+      social: string;
+      profilePicUrl: string;
     };
   }[];
 };
@@ -206,7 +212,7 @@ const SessionCard = ({
             <Modal.Title>{selectedSession.title}</Modal.Title>
           </Modal.Header>
           <Card.Body>
-            <Tabs defaultActiveKey="info" id="uncontrolled-tab-example" className="mb-3">
+            <Tabs defaultActiveKey="info" className="mb-3">
               <Tab eventKey="info" title="Study Session Info">
                 <Row>
                   <Col>
@@ -269,14 +275,9 @@ const SessionCard = ({
                 </Row>
               </Tab>
               <Tab eventKey="buddies" title="Buddies">
-                <p>
-                  <strong>Buddies: </strong>
-                  {selectedSession.users?.length > 0 &&
-                    selectedSession.users
-                      .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
-                      .join(', ')}
-                  {(!selectedSession.users || selectedSession.users.length === 0) && 'No buddies yet'}
-                </p>
+                <div className="buddyListDiv" style={{ height: '500px', overflowY: 'scroll' }}>
+                  <SessionBuddyCard buddyList={[selectedSession]} currentUser={currentUser} />
+                </div>
               </Tab>
             </Tabs>
           </Card.Body>
