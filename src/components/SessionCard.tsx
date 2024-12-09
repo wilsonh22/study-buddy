@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { addSession, leaveSession } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Modal, Image, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import swal from 'sweetalert';
+import SessionBuddyCard from './SessionBuddyCard';
 import SearchSessions from './SearchSessions';
 import '../styles/sessionCard.style.css';
 
@@ -21,6 +22,11 @@ type ExtendedStudySession = StudySession & {
     profile?: {
       firstName: string;
       lastName: string;
+      bio: string;
+      major: string;
+      collegeRole: string;
+      social: string;
+      profilePicUrl: string;
     };
   }[];
 };
@@ -33,6 +39,8 @@ const SessionCard = ({
   currentUser: number;
 }) => {
   const [search, setSearch] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedSession, setSelectedSession] = useState<ExtendedStudySession | null>(null);
 
   const addSessionBtn = async (studySession: ExtendedStudySession) => {
     console.log('Study Session ID:', studySession.id);
@@ -67,6 +75,16 @@ const SessionCard = ({
     );
   });
 
+  const handleShowModal = (session: ExtendedStudySession) => {
+    setSelectedSession(session);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedSession(null);
+  };
+
   return (
     <div>
       <div>
@@ -74,7 +92,14 @@ const SessionCard = ({
       </div>
       <div className="sessionCards">
         {studySessionsSearch.map((studySessionInfo) => (
-          <div key={studySessionInfo.id} className="sessionCardBorder">
+          <div
+            key={studySessionInfo.id}
+            className="sessionCardBorder"
+            onClick={() => handleShowModal(studySessionInfo)}
+            onKeyDown={(e) => e.key === 'Enter' && handleShowModal(studySessionInfo)}
+            role="button"
+            tabIndex={0}
+          >
             <Card className="sessionCardCont">
               <Card.Img
                 variant="top"
@@ -136,7 +161,13 @@ const SessionCard = ({
                 {(() => {
                   if (studySessionInfo.owner.id === currentUser) {
                     return (
-                      <Button className="requestBtn" href={`/editSession?id=${studySessionInfo.id}`}>
+                      <Button
+                        className="requestBtn"
+                        href={`/editSession?id=${studySessionInfo.id}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
                         Edit
                       </Button>
                     );
@@ -146,13 +177,25 @@ const SessionCard = ({
 
                   if (isUserInSession) {
                     return (
-                      <Button className="requestBtn" onClick={() => leaveSessionBtn(studySessionInfo)}>
+                      <Button
+                        className="requestBtn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          leaveSessionBtn(studySessionInfo);
+                        }}
+                      >
                         Leave Session
                       </Button>
                     );
                   }
                   return (
-                    <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
+                    <Button
+                      className="requestBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addSessionBtn(studySessionInfo);
+                      }}
+                    >
                       Add
                     </Button>
                   );
@@ -162,6 +205,89 @@ const SessionCard = ({
           </div>
         ))}
       </div>
+
+      {selectedSession && (
+        <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedSession.title}</Modal.Title>
+          </Modal.Header>
+          <Card.Body>
+            <Tabs defaultActiveKey="info" className="mb-3">
+              <Tab eventKey="info" title="Study Session Info">
+                <Row>
+                  <Col>
+                    <Image src={selectedSession.image} className="cardImgModal" alt={selectedSession.title} />
+                  </Col>
+                  <Col>
+                    <Row>
+                      <p className="nonOverflow">
+                        <strong>Description:</strong>
+                        {selectedSession.description}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Organizer:</strong>
+                        {selectedSession.owner.profile
+                          ? `${selectedSession.owner.profile.firstName} ${selectedSession.owner.profile.lastName}`
+                          : 'Unknown'}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Class:</strong>
+                        {selectedSession.class}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Where:</strong>
+                        {selectedSession.place}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Date: </strong>
+                        {new Date(selectedSession.sessionDate).toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Time: </strong>
+                        {new Date(selectedSession.startTime).toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
+                        -
+                        {new Date(selectedSession.endTime).toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
+                      </p>
+                    </Row>
+                  </Col>
+                </Row>
+              </Tab>
+              <Tab eventKey="buddies" title="Buddies">
+                <div className="buddyListDiv" style={{ height: '500px', overflowY: 'scroll' }}>
+                  <SessionBuddyCard buddyList={[selectedSession]} currentUser={currentUser} />
+                </div>
+              </Tab>
+            </Tabs>
+          </Card.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
