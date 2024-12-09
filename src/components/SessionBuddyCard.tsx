@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { addBuddy } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
-import { HeartFill, Heart, Pencil } from 'react-bootstrap-icons';
+import { Heart, Pencil } from 'react-bootstrap-icons';
 import { Card, Button, Image, Col, Row, Badge } from 'react-bootstrap';
-import SearchBuddies from './SearchBuddies';
+// import SearchBuddies from './SearchBuddies';
 import '../styles/sessionBuddyCard.style.css';
 
 type ExtendedStudySession = StudySession & {
@@ -35,27 +34,15 @@ type ExtendedStudySession = StudySession & {
 const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudySession[]; currentUser: number }) => {
   const users = buddyList.flatMap((buddy) => buddy.users);
 
-  //   const addBuddyBtn = async (buddy: ExtendedStudySession) => {
-  //     console.log('Buddy ID:', buddy.id);
-  //     console.log('Current User ID:', currentUser);
-  //     await addBuddy(buddy.id, currentUser);
-  //     swal('Success', 'Added Buddy', 'success', {
-  //       timer: 1000,
-  //     });
-  //   };
+  const addBuddyBtn = async (user: { id: number }) => {
+    console.log('Buddy ID:', user.id);
+    console.log('Current User ID:', currentUser);
+    await addBuddy(user.id, currentUser);
+    swal('Success', 'Added Buddy', 'success', {
+      timer: 1000,
+    });
+  };
 
-  //   const buddySearch = buddyList.filter((buddy) => {
-  //     const firstName = buddy.userDupe.profile?.firstName ?? '';
-  //     const lastName = buddy.userDupe.profile?.lastName ?? '';
-  //     const combinedName = `${firstName} ${lastName}`.toLowerCase();
-  //     const searchLower = search.toLowerCase();
-
-  // return (
-  //   buddy.userDupe.profile?.firstName?.toLowerCase().includes(searchLower) ||
-  //   buddy.userDupe.profile?.lastName?.toLowerCase().includes(searchLower) ||
-  //   combinedName.includes(searchLower)
-  // );
-  //   });
   return (
     <div>
       <div>{/* <SearchBuddies search={search} setSearch={setSearch} /> */}</div>
@@ -133,7 +120,7 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                       <Pencil />
                     </Button>
                   ) : (
-                    <Button className="requestBtnModal">
+                    <Button className="requestBtnModal" onClick={() => addBuddyBtn(user)}>
                       <Heart />
                     </Button>
                   )}
