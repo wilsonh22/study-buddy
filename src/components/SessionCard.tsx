@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { addSession, leaveSession } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
-import { Card, Button, Modal, Image } from 'react-bootstrap';
+import { Card, Button, Modal, Image, Tabs, Tab, Row, Col } from 'react-bootstrap';
 import swal from 'sweetalert';
 import SearchSessions from './SearchSessions';
 import '../styles/sessionCard.style.css';
@@ -205,22 +205,55 @@ const SessionCard = ({
           <Modal.Header closeButton>
             <Modal.Title>{selectedSession.title}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Image
-              src={selectedSession.image}
-              className="cardImgModal"
-              style={{ height: '150px', objectFit: 'cover' }}
-              alt={selectedSession.title}
-            />
-            <p>
-              <strong>Buddies: </strong>
-              {selectedSession.users?.length > 0 &&
-                selectedSession.users
-                  .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
-                  .join(', ')}
-              {(!selectedSession.users || selectedSession.users.length === 0) && 'No buddies yet'}
-            </p>
-          </Modal.Body>
+          <Card.Body>
+            <Tabs defaultActiveKey="info" id="uncontrolled-tab-example" className="mb-3">
+              <Tab eventKey="info" title="Study Session Info">
+                <Row>
+                  <Col>
+                    <Image src={selectedSession.image} className="cardImgModal" alt={selectedSession.title} />
+                  </Col>
+                  <Col>
+                    <Row>
+                      <p>
+                        <strong>Description:</strong>
+                        {selectedSession.description}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Organizer:</strong>
+                        {selectedSession.owner.profile
+                          ? `${selectedSession.owner.profile.firstName} ${selectedSession.owner.profile.lastName}`
+                          : 'Unknown'}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Class:</strong>
+                        {selectedSession.class}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Where:</strong>
+                        {selectedSession.place}
+                      </p>
+                    </Row>
+                  </Col>
+                </Row>
+              </Tab>
+              <Tab eventKey="buddies" title="Buddies">
+                <p>
+                  <strong>Buddies: </strong>
+                  {selectedSession.users?.length > 0 &&
+                    selectedSession.users
+                      .map((buddy) => `${buddy.profile?.firstName || ''} ${buddy.profile?.lastName || ''}`.trim())
+                      .join(', ')}
+                  {(!selectedSession.users || selectedSession.users.length === 0) && 'No buddies yet'}
+                </p>
+              </Tab>
+            </Tabs>
+          </Card.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
               Close
