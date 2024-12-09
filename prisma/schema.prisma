@@ -78,6 +78,7 @@ model StudySession {
   sessionDate DateTime
   startTime   DateTime
   endTime     DateTime
+  image       String
 }
 
 enum Condition {

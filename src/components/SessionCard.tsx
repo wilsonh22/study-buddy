@@ -78,7 +78,7 @@ const SessionCard = ({
             <Card className="sessionCardCont">
               <Card.Img
                 variant="top"
-                src="/cardImgExample.jpg"
+                src={studySessionInfo.image}
                 className="cardImg"
                 style={{ height: '150px', objectFit: 'cover' }}
               />
@@ -151,7 +151,6 @@ const SessionCard = ({
                       </Button>
                     );
                   }
-
                   return (
                     <Button className="requestBtn" onClick={() => addSessionBtn(studySessionInfo)}>
                       Add
