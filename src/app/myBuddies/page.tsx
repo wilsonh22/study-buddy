@@ -58,7 +58,6 @@ const myBuddies = async () => {
       <h1 className="buddiesPageTitle">
         <strong>My Buddies</strong>
       </h1>
-      {/* <SearchBuddies search={search} setSearch={setSearch} /> */}
       <div className="buddiesListDiv">
         <BuddyCard buddyList={buddyList} currentUser={currentUser} />
       </div>
