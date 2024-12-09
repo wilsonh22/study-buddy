@@ -251,6 +251,7 @@ export async function updateSession(studySessionId: number, studySession: Partia
       sessionDate: studySession.sessionDate,
       startTime: studySession.startTime,
       endTime: studySession.endTime,
+      image: studySession.image,
       users: {
         connect: { id: studySession.userId },
       },
