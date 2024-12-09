@@ -68,14 +68,6 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                       : 'Unknown'}
                   </Card.Title>
                   <div>
-                    <p>
-                      <strong>Bio:</strong>
-                      {buddy.userDupe.profile?.bio ?? 'No Bio'}
-                    </p>
-                    <p>
-                      <strong>Major:</strong>
-                      {buddy.userDupe.profile?.major ?? 'No Major'}
-                    </p>
                     {(() => {
                       let role = 'role';
 
@@ -101,6 +93,14 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                         </Badge>
                       );
                     })()}
+                    <p>
+                      <strong>Bio:</strong>
+                      {buddy.userDupe.profile?.bio ?? 'No Bio'}
+                    </p>
+                    <p>
+                      <strong>Major:</strong>
+                      {buddy.userDupe.profile?.major ?? 'No Major'}
+                    </p>
                     {buddy.userDupe.profile?.collegeRole ?? 'No College Role'}
                     <p>
                       <strong>Socials:</strong>
