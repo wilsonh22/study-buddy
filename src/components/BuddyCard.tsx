@@ -5,7 +5,7 @@ import { addBuddy } from '@/lib/dbActions';
 import { Buddy } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Image } from 'react-bootstrap';
 import SearchBuddies from './SearchBuddies';
 import '../styles/buddyCard.style.css';
 
@@ -15,6 +15,11 @@ type ExtendedBuddy = Buddy & {
     profile?: {
       firstName: string;
       lastName: string;
+      bio: string;
+      major: string;
+      collegeRole: string;
+      social: string;
+      profilePicUrl: string;
     };
   };
 };
@@ -56,7 +61,7 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
             <div key={buddy.userDupe.id} className="buddyCardBorder">
               <Card className="buddyCardCont">
                 <Card.Body>
-                  <div className="profilePic" />
+                  <Image className="profilePic" src={buddy.userDupe.profile?.profilePicUrl} />
                   <Card.Title className="pt-3">
                     {buddy.userDupe?.profile
                       ? `${buddy.userDupe.profile.firstName} ${buddy.userDupe.profile.lastName}`
@@ -66,18 +71,22 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                     <p>
                       <strong>Bio:</strong>
                       Bio Field
+                      {buddy.userDupe.profile?.bio ?? 'No Bio'}
                     </p>
                     <p>
                       <strong>Major:</strong>
                       Major Field
+                      {buddy.userDupe.profile?.major ?? 'No Major'}
                     </p>
                     <p>
                       <strong>Role:</strong>
                       College Role Field
+                      {buddy.userDupe.profile?.collegeRole ?? 'No College Role'}
                     </p>
                     <p>
                       <strong>Socials:</strong>
                       Social Field
+                      {buddy.userDupe.profile?.social ?? 'No Social'}
                     </p>
                   </div>
                   <Card.Body className="cardBtnDiv">
