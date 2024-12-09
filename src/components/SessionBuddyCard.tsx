@@ -1,10 +1,10 @@
 'use client';
 
-import { addBuddy } from '@/lib/dbActions';
+import { addBuddy, removeBuddy } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
-import { Heart, Pencil } from 'react-bootstrap-icons';
+import { HeartFill, Heart, Pencil } from 'react-bootstrap-icons';
 import { Card, Button, Image, Col, Row, Badge } from 'react-bootstrap';
 // import SearchBuddies from './SearchBuddies';
 import '../styles/sessionBuddyCard.style.css';
@@ -28,6 +28,11 @@ type ExtendedStudySession = StudySession & {
       social: string;
       profilePicUrl: string;
     };
+    // myBuddies?: {
+    //   users: {
+    //     id: number;
+    //   }[];
+    // }[];
   }[];
 };
 
@@ -39,6 +44,15 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
     console.log('Current User ID:', currentUser);
     await addBuddy(user.id, currentUser);
     swal('Success', 'Added Buddy', 'success', {
+      timer: 1000,
+    });
+  };
+
+  const removeBuddyBtn = async (user: { id: number }) => {
+    console.log('Buddy ID:', user.id);
+    console.log('Current User ID:', currentUser);
+    await removeBuddy(user.id, currentUser);
+    swal('Success', 'Removed Buddy', 'success', {
       timer: 1000,
     });
   };
@@ -115,6 +129,33 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                   </Col>
                 </Row>
                 <Card.Body className="cardBtnDiv">
+                  {/* {(() => {
+                    let status = 'Favorite';
+                    let icon = Heart;
+
+                    if (user.id === currentUser) {
+                      status = 'you';
+                      icon = Pencil;
+                      return (
+                        <Button className="requestBtnModal" href="/editProfile">
+                          <Pencil />
+                        </Button>
+                      );
+                    }
+
+                    if (user.id !== currentUser) {
+                      if{user.id === }
+                      
+                    }
+
+                    if (user.profile?.collegeRole === 'TA') {
+                      role = 'TA';
+                      pillColor = 'danger';
+                    }
+
+                    return <Button className="requestBtnModal">{icon}</Button>;
+                  })()} */}
+
                   {currentUser === user.id ? (
                     <Button className="requestBtnModal" href="/editProfile">
                       <Pencil />

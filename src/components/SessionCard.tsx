@@ -28,6 +28,9 @@ type ExtendedStudySession = StudySession & {
       social: string;
       profilePicUrl: string;
     };
+    // myBuddies?: {
+    //   id: number;
+    // }[];
   }[];
 };
 
