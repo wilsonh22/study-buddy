@@ -214,7 +214,7 @@ const SessionCard = ({
                   </Col>
                   <Col>
                     <Row>
-                      <p>
+                      <p className="nonOverflow">
                         <strong>Description:</strong>
                         {selectedSession.description}
                       </p>
@@ -237,6 +237,32 @@ const SessionCard = ({
                       <p>
                         <strong>Where:</strong>
                         {selectedSession.place}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Date: </strong>
+                        {new Date(selectedSession.sessionDate).toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </p>
+                    </Row>
+                    <Row>
+                      <p>
+                        <strong>Time: </strong>
+                        {new Date(selectedSession.startTime).toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
+                        -
+                        {new Date(selectedSession.endTime).toLocaleTimeString('en-US', {
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                        })}
                       </p>
                     </Row>
                   </Col>
