@@ -15,6 +15,11 @@ type ExtendedBuddy = Buddy & {
     profile?: {
       firstName: string;
       lastName: string;
+      bio: string;
+      major: string;
+      collegeRole: string;
+      social: string;
+      profilePicUrl: string;
     };
   };
 };
