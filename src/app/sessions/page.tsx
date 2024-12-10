@@ -25,6 +25,9 @@ type ExtendedStudySession = StudySession & {
       social: string;
       profilePicUrl: string;
     };
+    myBuddies?: {
+      buddyId: number;
+    }[];
   }[];
 };
 const Sessions = async () => {
@@ -47,6 +50,7 @@ const Sessions = async () => {
       users: {
         include: {
           profile: true,
+          myBuddies: true,
         },
       },
     },

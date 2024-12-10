@@ -30,7 +30,7 @@ const onSubmit = async (
   session: any,
 ) => {
   const currentUser = parseInt(session?.user?.id, 10);
-  await createSession({ ...data, id: currentUser, userId: currentUser, added: true });
+  await createSession({ ...data, id: currentUser, userId: currentUser });
 
   swal('Success', 'created session', 'success', {
     timer: 1000,

@@ -166,7 +166,6 @@ export async function createSession(studySession: StudySession) {
   await prisma.studySession.create({
     data: {
       title: studySession.title,
-      added: studySession.added,
       userId: studySession.userId,
       description: studySession.description,
       class: studySession.class,
@@ -226,6 +225,73 @@ export async function addBuddy(buddyId: number, userId: number) {
     },
   });
   redirect('/myBuddies');
+}
+
+export async function removeBuddy(buddyId: number, userId: number) {
+  // Check if the buddy exists
+  const buddyExists = await prisma.buddy.findUnique({
+    where: { id: buddyId },
+  });
+
+  if (!buddyExists) {
+    throw new Error(`Buddy with ID ${buddyId} does not exist.`);
+  }
+
+  // Update the buddy to include the current user
+  await prisma.buddy.update({
+    where: { id: buddyId },
+    data: {
+      users: {
+        disconnect: { id: userId },
+      },
+    },
+  });
+  redirect('/myBuddies');
+}
+
+// gets the id of the buddy model that corresponds to the user id
+export async function getBuddyIdByUserId(userId: number): Promise<number | null> {
+  console.log('Searching for buddy with userId:', userId);
+
+  try {
+    const buddy = await prisma.buddy.findFirst({
+      where: {
+        buddyId: userId, // Look for a Buddy where the buddyId matches the user's ID
+      },
+      select: {
+        id: true, // Select the Buddy model's id
+        buddyId: true,
+      },
+    });
+
+    console.log('Found buddy:', buddy);
+
+    return buddy ? buddy.id : null;
+  } catch (error) {
+    console.error('Error finding buddy:', error);
+    return null;
+  }
+}
+
+// checks if current user is a buddy of the user with the given id
+export async function isBuddyWithCurrentUser(userId: number, currentUser: number) {
+  try {
+    const buddy = await prisma.buddy.findFirst({
+      where: {
+        buddyId: userId,
+        users: {
+          some: {
+            id: currentUser,
+          },
+        },
+      },
+    });
+
+    return !!buddy;
+  } catch (error) {
+    console.error('Error finding buddy:', error);
+    return false;
+  }
 }
 
 export async function leaveSession(studySessionId: number, userId: number) {
