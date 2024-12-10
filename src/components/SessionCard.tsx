@@ -178,7 +178,7 @@ const SessionCard = ({
                   if (isUserInSession) {
                     return (
                       <Button
-                        className="sessionBtn"
+                        className="removeBtn"
                         onClick={(e) => {
                           e.stopPropagation();
                           leaveSessionBtn(studySessionInfo);
