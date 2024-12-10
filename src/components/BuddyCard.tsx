@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addBuddy, removeBuddy, isBuddyWithCurrentUser } from '@/lib/dbActions';
 import { Buddy } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
@@ -26,6 +26,14 @@ type ExtendedBuddy = Buddy & {
 
 const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; currentUser: number }) => {
   const [search, setSearch] = useState('');
+  const [buddyStatus, setBuddyStatus] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    buddyList.forEach(async (buddy) => {
+      const isBuddy = await isBuddyWithCurrentUser(buddy.userDupe.id, currentUser);
+      setBuddyStatus((prev) => ({ ...prev, [buddy.userDupe.id]: isBuddy }));
+    });
+  }, [buddyList, currentUser]);
 
   const addBuddyBtn = async (buddy: ExtendedBuddy) => {
     console.log('Buddy ID:', buddy.id);
@@ -40,7 +48,7 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
     console.log('Buddy ID:', buddy.id);
     console.log('Current User ID:', currentUser);
     await removeBuddy(buddy.id, currentUser);
-    swal('Success', 'Added Buddy', 'success', {
+    swal('Success', 'Removed Buddy', 'error', {
       timer: 1000,
     });
   };
@@ -65,7 +73,7 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
       </div>
       <div className="buddyCards">
         {buddySearch
-          .filter((buddy) => buddy.userDupe.id !== currentUser)
+          .filter((buddy) => buddy.userDupe.id !== currentUser && buddy.userDupe.profile)
           .map((buddy) => (
             <div key={buddy.userDupe.id} className="buddyCardBorder">
               <Card className="buddyCardCont">
@@ -131,14 +139,12 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                         );
                       }
 
-                      const [buddyStatus, setBuddyStatus] = useState<{ [key: number]: boolean }>({});
-
-                      useEffect(() => {
-                        buddyList.forEach(async (buddy) => {
-                          const isBuddy = await isBuddyWithCurrentUser(buddy.userDupe.id, currentUser);
-                          setBuddyStatus((prev) => ({ ...prev, [buddy.userDupe.id]: isBuddy }));
-                        });
-                      }, [buddyList, currentUser]);
+                      // useEffect(() => {
+                      //   buddyList.forEach(async (buddy) => {
+                      //     const isBuddy = await isBuddyWithCurrentUser(buddy.userDupe.id, currentUser);
+                      //     setBuddyStatus((prev) => ({ ...prev, [buddy.userDupe.id]: isBuddy }));
+                      //   });
+                      // }, [buddyList, currentUser]);
 
                       if (buddyStatus[buddy.userDupe.id]) {
                         return (
