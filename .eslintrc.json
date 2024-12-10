@@ -21,6 +21,10 @@
     "react/react-in-jsx-scope": "off",
     "operator-linebreak": ["off"],
     "import/no-extraneous-dependencies": ["off"],
-    "indent": "off"
+    "indent": "off",
+    "@typescript-eslint/indent": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/no-shadow": "off"
   }
 }
