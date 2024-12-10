@@ -3,7 +3,7 @@
 // import { useState } from 'react';
 import authOptions from '@/lib/auth';
 import { getServerSession } from 'next-auth';
-import { prisma } from '@/lib/prisma';
+// import { prisma } from '@/lib/prisma';
 // import SearchBuddies from '../../components/SearchBuddies';
 import { Card } from 'react-bootstrap';
 import '../../styles/studyPlaylist.style.css';
