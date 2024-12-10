@@ -29,9 +29,7 @@ type ExtendedStudySession = StudySession & {
       profilePicUrl: string;
     };
     myBuddies?: {
-      users: {
-        id: number;
-      }[];
+      buddyId: number;
     }[];
   }[];
 };

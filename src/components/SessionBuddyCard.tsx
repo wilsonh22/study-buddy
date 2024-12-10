@@ -1,6 +1,7 @@
 'use client';
 
-import { addBuddy, removeBuddy } from '@/lib/dbActions';
+import React, { useState, useEffect, useMemo } from 'react';
+import { addBuddy, removeBuddy, getBuddyIdByUserId, isBuddyWithCurrentUser } from '@/lib/dbActions';
 import { StudySession } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
@@ -29,32 +30,104 @@ type ExtendedStudySession = StudySession & {
       profilePicUrl: string;
     };
     myBuddies?: {
-      users: {
-        id: number;
-      }[];
+      buddyId: number;
     }[];
   }[];
 };
 
 const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudySession[]; currentUser: number }) => {
-  const users = buddyList.flatMap((buddy) => buddy.users);
+  // const users = buddyList.flatMap((buddy) => buddy.users);
 
-  const addBuddyBtn = async (user: { id: number }) => {
-    console.log('Buddy ID:', user.id);
+  const users = useMemo(() => buddyList.flatMap((buddy) => buddy.users), [buddyList]);
+
+  const addBuddyBtn = async (user: {
+    id: number;
+    profile?:
+      | {
+          firstName: string;
+          lastName: string;
+          bio: string;
+          major: string;
+          collegeRole: string;
+          social: string;
+          profilePicUrl: string;
+        }
+      | undefined;
+    myBuddies?: { buddyId: number }[] | undefined;
+  }) => {
+    // Assuming you want to use the owner's ID or the first user's ID
+
+    const idOfBuddyModel = await getBuddyIdByUserId(user.id);
+    const idOfBuddyModelCurrentUser = await getBuddyIdByUserId(currentUser);
+
+    console.log('id of buddy from id of user:', idOfBuddyModel);
+    console.log('Buddy model ID to add as buddy:', idOfBuddyModel);
     console.log('Current User ID:', currentUser);
-    await addBuddy(user.id, currentUser);
-    swal('Success', 'Added Buddy', 'success', {
-      timer: 1000,
-    });
+    console.log('Current User ID of Buddy Model:', idOfBuddyModelCurrentUser);
+
+    try {
+      if (idOfBuddyModel) {
+        await addBuddy(idOfBuddyModel, currentUser);
+        await addBuddy(idOfBuddyModelCurrentUser!, idOfBuddyModel);
+        swal('Success', 'Added Buddy', 'success', {
+          timer: 1000,
+        });
+      } else {
+        swal('Error', 'No buddy ID found', 'error', {
+          timer: 1000,
+        });
+      }
+    } catch (error) {
+      console.error('Error adding buddy:', error);
+      swal('Error', 'Failed to add buddy', 'error', {
+        timer: 1000,
+      });
+    }
   };
 
-  const removeBuddyBtn = async (user: { id: number }) => {
-    console.log('Buddy ID:', user.id);
+  const removeBuddyBtn = async (user: {
+    id: number;
+    profile?:
+      | {
+          firstName: string;
+          lastName: string;
+          bio: string;
+          major: string;
+          collegeRole: string;
+          social: string;
+          profilePicUrl: string;
+        }
+      | undefined;
+    myBuddies?: { buddyId: number }[] | undefined;
+  }) => {
+    // Assuming you want to use the owner's ID or the first user's ID
+
+    const idOfBuddyModel = await getBuddyIdByUserId(user.id);
+    const idOfBuddyModelCurrentUser = await getBuddyIdByUserId(currentUser);
+
+    console.log('id of buddy from id of user:', idOfBuddyModel);
+    console.log('Buddy model ID to remove as buddy:', idOfBuddyModel);
     console.log('Current User ID:', currentUser);
-    await removeBuddy(user.id, currentUser);
-    swal('Success', 'Removed Buddy', 'success', {
-      timer: 1000,
-    });
+    console.log('Current User ID of Buddy Model:', idOfBuddyModelCurrentUser);
+
+    try {
+      if (idOfBuddyModel) {
+        await removeBuddy(idOfBuddyModel, currentUser);
+        await removeBuddy(idOfBuddyModelCurrentUser!, idOfBuddyModel);
+        swal('Success', 'Removed Buddy', 'error', {
+          timer: 1000,
+        });
+      } else {
+        swal('Error', 'No buddy ID found', 'error', {
+          timer: 1000,
+        });
+      }
+    } catch (error) {
+      console.error('Error adding buddy:', error);
+      swal('Error', 'Failed to add buddy', 'error', {
+        timer: 1000,
+      });
+    }
   };
 
   return (
@@ -130,12 +203,7 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                 </Row>
                 <Card.Body className="cardBtnDiv">
                   {(() => {
-                    // let status = 'Favorite';
-                    // let icon = Heart;
-
                     if (user.id === currentUser) {
-                      // status = 'you';
-                      // icon = Pencil;
                       return (
                         <Button className="requestBtnModal" href="/editProfile">
                           <Pencil />
@@ -143,17 +211,31 @@ const SessionBuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedStudy
                       );
                     }
 
-                    if (user.myBuddies?.some((buddy) => buddy.users.some((u) => u.id === currentUser))) {
-                      console.log('Found buddy match');
-                      // status = 'Buddies';
-                      // icon = HeartFill;
+                    // const isBuddy = user.myBuddies?.some((buddy) => buddy.buddyId === currentUser);
+
+                    // const isBuddy = user.myBuddies?.some((buddy) => {
+                    //   console.log('Buddy:', buddy);
+                    //   console.log('Current User:', currentUser);
+                    //   console.log('Comparison:', buddy.buddyId === currentUser);
+                    //   return buddy.buddyId === currentUser;
+                    // });
+
+                    const [buddyStatus, setBuddyStatus] = useState<{ [key: number]: boolean }>({});
+
+                    useEffect(() => {
+                      users.forEach(async (user) => {
+                        const isBuddy = await isBuddyWithCurrentUser(user.id, currentUser);
+                        setBuddyStatus((prev) => ({ ...prev, [user.id]: isBuddy }));
+                      });
+                    }, [users, currentUser]);
+
+                    if (buddyStatus[user.id]) {
                       return (
                         <Button className="requestBtnModal" onClick={() => removeBuddyBtn(user)}>
                           <HeartFill />
                         </Button>
                       );
                     }
-
                     return (
                       <Button className="requestBtnModal" onClick={() => addBuddyBtn(user)}>
                         <Heart />

@@ -20,6 +20,7 @@
     "react/one-expression-per-line": "off",
     "react/react-in-jsx-scope": "off",
     "operator-linebreak": ["off"],
-    "import/no-extraneous-dependencies": ["off"]
+    "import/no-extraneous-dependencies": ["off"],
+    "indent": "off"
   }
 }
