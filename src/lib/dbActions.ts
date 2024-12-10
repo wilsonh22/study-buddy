@@ -166,7 +166,6 @@ export async function createSession(studySession: StudySession) {
   await prisma.studySession.create({
     data: {
       title: studySession.title,
-      added: studySession.added,
       userId: studySession.userId,
       description: studySession.description,
       class: studySession.class,
@@ -226,6 +225,38 @@ export async function addBuddy(buddyId: number, userId: number) {
     },
   });
   redirect('/myBuddies');
+}
+
+export async function removeBuddy(buddyId: number, userId: number) {
+  await prisma.buddy.update({
+    where: { id: buddyId },
+    data: {
+      users: {
+        disconnect: { id: userId },
+      },
+    },
+  });
+  redirect('/myBuddies');
+}
+
+export async function isBuddyWithCurrentUser(userId: number, currentUser: number) {
+  try {
+    const buddy = await prisma.buddy.findFirst({
+      where: {
+        buddyId: userId,
+        users: {
+          some: {
+            id: currentUser,
+          },
+        },
+      },
+    });
+
+    return !!buddy;
+  } catch (error) {
+    console.error('Error finding buddy:', error);
+    return false;
+  }
 }
 
 export async function leaveSession(studySessionId: number, userId: number) {

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { addBuddy } from '@/lib/dbActions';
+import React, { useState, useEffect, useMemo } from 'react';
+import { addBuddy, removeBuddy, isBuddyWithCurrentUser } from '@/lib/dbActions';
 import { Buddy } from '@prisma/client';
 // import { StarFill } from 'react-bootstrap-icons';
 import swal from 'sweetalert';
@@ -31,6 +31,15 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
     console.log('Buddy ID:', buddy.id);
     console.log('Current User ID:', currentUser);
     await addBuddy(buddy.id, currentUser);
+    swal('Success', 'Added Buddy', 'success', {
+      timer: 1000,
+    });
+  };
+
+  const removeBuddyBtn = async (buddy: ExtendedBuddy) => {
+    console.log('Buddy ID:', buddy.id);
+    console.log('Current User ID:', currentUser);
+    await removeBuddy(buddy.id, currentUser);
     swal('Success', 'Added Buddy', 'success', {
       timer: 1000,
     });
@@ -108,16 +117,54 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                     </p>
                   </div>
                   <Card.Body className="cardBtnDiv">
-                    {currentUser === buddy.userDupe.id ? (
-                      <Button className="requestBtn" href="/editProfile">
-                        Edit Profile
-                      </Button>
-                    ) : (
-                      <Button className="requestBtn" onClick={() => addBuddyBtn(buddy)}>
-                        Favorite
-                        {/* <StarFill /> */}
-                      </Button>
-                    )}
+                    {(() => {
+                      if (buddy.userDupe.id === currentUser) {
+                        return (
+                          <Button
+                            className="requestBtn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            Edit Profile
+                          </Button>
+                        );
+                      }
+
+                      const [buddyStatus, setBuddyStatus] = useState<{ [key: number]: boolean }>({});
+
+                      useEffect(() => {
+                        buddyList.forEach(async (buddy) => {
+                          const isBuddy = await isBuddyWithCurrentUser(buddy.userDupe.id, currentUser);
+                          setBuddyStatus((prev) => ({ ...prev, [buddy.userDupe.id]: isBuddy }));
+                        });
+                      }, [buddyList, currentUser]);
+
+                      if (buddyStatus[buddy.userDupe.id]) {
+                        return (
+                          <Button
+                            className="requestBtn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeBuddyBtn(buddy);
+                            }}
+                          >
+                            Remove
+                          </Button>
+                        );
+                      }
+                      return (
+                        <Button
+                          className="requestBtn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addBuddyBtn(buddy);
+                          }}
+                        >
+                          Add
+                        </Button>
+                      );
+                    })()}
                   </Card.Body>
                 </Card.Body>
               </Card>
