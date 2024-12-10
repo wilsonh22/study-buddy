@@ -162,7 +162,7 @@ const SessionCard = ({
                   if (studySessionInfo.owner.id === currentUser) {
                     return (
                       <Button
-                        className="requestBtn"
+                        className="sessionBtn"
                         href={`/editSession?id=${studySessionInfo.id}`}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -178,7 +178,7 @@ const SessionCard = ({
                   if (isUserInSession) {
                     return (
                       <Button
-                        className="requestBtn"
+                        className="sessionBtn"
                         onClick={(e) => {
                           e.stopPropagation();
                           leaveSessionBtn(studySessionInfo);
@@ -190,7 +190,7 @@ const SessionCard = ({
                   }
                   return (
                     <Button
-                      className="requestBtn"
+                      className="sessionBtn"
                       onClick={(e) => {
                         e.stopPropagation();
                         addSessionBtn(studySessionInfo);

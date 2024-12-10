@@ -42,8 +42,22 @@
 }
 
 /* Custom button styles */
-.requestBtn {
+.sessionBtn {
   background-color: #7cfbdf;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border: none;
+  width: 200px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.removeBtn {
+  background-color: #fb7c7c;
   color: black;
   display: flex;
   justify-content: center;
