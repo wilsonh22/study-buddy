@@ -70,7 +70,6 @@ model StudySession {
   // accepted  Boolean @default(false)
   userId      Int
   owner       User     @relation(fields: [userId], references: [id])
-  added       Boolean  @default(false)
   users       User[]   @relation("mySessions")
   description String
   class       String
