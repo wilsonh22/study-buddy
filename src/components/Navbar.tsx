@@ -18,14 +18,10 @@ const NavBar: React.FC = () => {
         <div className="navbar-div">
         <Navbar.Brand href="/">
           <Image
-<<<<<<< Updated upstream
-            src="Logo.png"
-            width="70px"
-=======
             src="/Logo.PNG"
             width="70"
             height="70"
->>>>>>> Stashed changes
+
             className="logo d-inline-block align-top"
             alt="logo"
           />
