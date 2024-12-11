@@ -71,20 +71,39 @@
 }
 
 /* Custom hover, focus, and active states */
-.requestBtn:hover,
-.requestBtn:focus,
-.requestBtn:active {
+.sessionBtn:hover,
+.sessionBtn:focus,
+.sessionBtn:active {
   background-color: #0cc89f;
   color: black;
   outline: none;
   box-shadow: none;
 }
 
-.requestBtn:focus,
-.requestBtn:active {
+.sessionBtn:focus,
+.sessionBtn:active {
   outline: none !important;
   box-shadow: none !important;
   background-color: #0cc89f !important;
+  color: black;
+}
+
+/* removeBtn effects */
+
+.removeBtn:hover,
+.removeBtn:focus,
+.removeBtn:active {
+  background-color: #f90d0d;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.removeBtn:focus,
+.removeBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #f90d0d !important;
   color: black;
 }
 

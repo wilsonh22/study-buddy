@@ -81,6 +81,38 @@
   color: black;
 }
 
+/* remove btn  */
+
+.removeBtn {
+  background-color: #fb7c7c;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px auto 0 auto;
+  border: none;
+  width: 200px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+}
+
+.removeBtn:hover,
+.removeBtn:focus,
+.removeBtn:active {
+  background-color: #f90d0d;
+  color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.removeBtn:focus,
+.removeBtn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #f90d0d !important;
+  color: black;
+}
 /* transitions */
 
 .buddyCardBorder:hover {

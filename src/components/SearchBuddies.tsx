@@ -1,8 +1,8 @@
 'use client';
 
 import '../styles/searchBuddies.style.css';
-import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import React from 'react';
+// import { Container } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
 
 interface SearchBarProps {
@@ -11,11 +11,11 @@ interface SearchBarProps {
 }
 
 const SearchBuddies: React.FC<SearchBarProps> = ({ search, setSearch }) => {
-  const [activeButton, setActiveButton] = useState<string>('');
+  // const [activeButton, setActiveButton] = useState<string>('');
 
-  const handleButtonClick = (buttonName: string) => {
-    setActiveButton(buttonName === activeButton ? '' : buttonName);
-  };
+  // const handleButtonClick = (buttonName: string) => {
+  //   setActiveButton(buttonName === activeButton ? '' : buttonName);
+  // };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -47,14 +47,14 @@ const SearchBuddies: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             size={20}
           />
         </div>
-        <Container className="btnContainer">
-          <button
+        <div className="btnContainer">
+          {/* <button
             type="button"
             className={`myBuddiesBtn filterBtn ${activeButton === 'My Buddies' ? 'active' : ''}`}
             onClick={() => handleButtonClick('My Buddies')}
           >
             My Buddies
-          </button>
+          </button> */}
           {/*
           <button
             type="button"
@@ -71,7 +71,7 @@ const SearchBuddies: React.FC<SearchBarProps> = ({ search, setSearch }) => {
             Requested
           </button>
           */}
-        </Container>
+        </div>
       </div>
     </div>
   );

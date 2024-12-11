@@ -149,7 +149,7 @@ const BuddyCard = ({ buddyList, currentUser }: { buddyList: ExtendedBuddy[]; cur
                       if (buddyStatus[buddy.userDupe.id]) {
                         return (
                           <Button
-                            className="requestBtn"
+                            className="removeBtn"
                             onClick={(e) => {
                               e.stopPropagation();
                               removeBuddyBtn(buddy);
